@@ -1772,21 +1772,38 @@ window.addToCart = async function addToCart(productIdOrProduct) {
     console.log("✅ DEBUG: ADD_TO_CART PASSED VALIDATION - Product object:", product);
     
     // Add to Firestore cart
+    console.log('🔍 [app.js] Checking if addToFirestoreCart exists in authModule...');
+    console.log('🔍 [app.js] authModule keys:', Object.keys(authModule));
+    console.log('🔍 [app.js] addToFirestoreCart type:', typeof authModule.addToFirestoreCart);
+    
     if (authModule.addToFirestoreCart) {
+      console.log('✅ [app.js] addToFirestoreCart function found, calling it...');
       // Ensure product.id is a string for consistent comparison
       const productIdString = String(product.id || '').trim();
       if (!productIdString) {
         throw new Error('Product ID is required');
       }
       
-      await authModule.addToFirestoreCart({
+      console.log('🔍 [app.js] Calling addToFirestoreCart with:', {
         id: productIdString,
-        name: product.name || 'Unknown Product',
-        price: product.price || product.price_after || product.priceAfter || 0,
-        image: product.image || product.image_url || 'assets/images/products/placeholder.jpg',
-        category: product.category || ''
+        name: product.name,
+        price: product.price || product.price_after || product.priceAfter || 0
       });
-      console.log('✅ Product added to Firestore cart');
+      
+      try {
+        await authModule.addToFirestoreCart({
+          id: productIdString,
+          name: product.name || 'Unknown Product',
+          price: product.price || product.price_after || product.priceAfter || 0,
+          image: product.image || product.image_url || 'assets/images/products/placeholder.jpg',
+          category: product.category || ''
+        });
+        console.log('✅ [app.js] Product added to Firestore cart - function returned successfully');
+      } catch (innerError) {
+        console.error('❌ [app.js] Error inside addToFirestoreCart call:', innerError);
+        console.error('❌ [app.js] Inner error stack:', innerError.stack);
+        throw innerError; // Re-throw to be caught by outer catch
+      }
       
       // Show notification
       if (typeof JAJewelry !== 'undefined' && JAJewelry.showNotification) {
