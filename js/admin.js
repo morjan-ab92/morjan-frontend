@@ -1835,4 +1835,3 @@ function setupViewAllCouponsButton() {
         }
     });
 }
-
