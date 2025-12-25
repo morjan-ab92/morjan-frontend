@@ -654,7 +654,7 @@ let currentSlide = 0;
 let carouselInterval;
 
 // API Configuration
-const API_BASE_URL = 'http://127.0.0.1:8081';
+const API_BASE_URL = 'https://morjan-backend.onrender.com';
 
 // Initialize app when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
