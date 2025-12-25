@@ -928,7 +928,7 @@ export async function addToCart(productId) {
 }
 
 /**
- * Add product to Firestore cart (using product object)
+ * Add product to cart via backend API (using product object)
  * @param {Object} product - Product object with id, name, price, image
  * @returns {Promise<void>}
  */
@@ -945,56 +945,55 @@ export async function addToFirestoreCart(product) {
         }
         const productId = String(product.id);
         
-        const userId = currentUser.uid;
-        const cartItemRef = doc(db, 'users', userId, 'cart', productId);
-        const cartItemDoc = await getDoc(cartItemRef);
+        // Get Firebase ID token for authentication
+        console.log('🔄 Getting Firebase ID token for cart API call...');
+        const firebaseToken = await currentUser.getIdToken();
         
-        // Use imageUrl if available, with fallback for backward compatibility
-        let imageUrl = product.imageUrl || product.image || product.image_url || '';
-        imageUrl = String(imageUrl || '').trim();
+        // Call backend API to add item to cart
+        console.log('🔄 Calling backend API to add product to cart:', productId);
+        const response = await fetch(`${BACKEND_URL}/cart/add`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${firebaseToken}`
+            },
+            body: JSON.stringify({
+                product_id: productId,
+                quantity: 1
+            })
+        });
         
-        // Validate image URL - reject numeric-only values
-        const isValidImageUrl = (url) => {
-            if (!url || url.length < 3) return false;
-            if (/^\d+$/.test(url)) return false; // Just numbers
-            if (/^\/\d+$/.test(url) || /^\/\d+\//.test(url)) return false; // Numeric paths
-            const validPrefixes = ['http://', 'https://', '/', 'assets/', 'data:', './'];
-            if (!validPrefixes.some(prefix => url.startsWith(prefix))) return false;
-            return true;
-        };
+        console.log('📡 Backend response status:', response.status);
         
-        if (!isValidImageUrl(imageUrl)) {
-            imageUrl = 'assets/images/products/placeholder.jpg';
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('❌ Backend error response:', errorText);
+            let errorMessage = 'Error adding product to cart. Please try again.';
+            
+            try {
+                const errorData = JSON.parse(errorText);
+                errorMessage = errorData.detail || errorMessage;
+            } catch (e) {
+                // If response is not JSON, use the text or default message
+                if (errorText) {
+                    errorMessage = errorText;
+                }
+            }
+            
+            throw new Error(errorMessage);
         }
         
-        const cartItemData = {
-            name: product.name,
-            price: product.price,
-            imageUrl: imageUrl,
-            category: product.category || '',
-            quantity: 1,
-            updatedAt: serverTimestamp()
-        };
+        const responseData = await response.json();
+        console.log('✅ Product added to cart via backend API:', responseData);
         
-        if (cartItemDoc.exists()) {
-            // Item exists - increment quantity
-            const existingData = cartItemDoc.data();
-            cartItemData.quantity = (existingData.quantity || 1) + 1;
-            cartItemData.createdAt = existingData.createdAt; // Preserve original createdAt
-        } else {
-            // New item - set createdAt
-            cartItemData.createdAt = serverTimestamp();
-        }
-        
-        await setDoc(cartItemRef, cartItemData, { merge: true });
-        console.log('✅ Product added to Firestore cart:', productId);
-        
-        // Update cart badge
+        // Update cart badge (you may need to fetch cart from backend instead)
+        // For now, keeping the Firestore badge update - you might want to update this
+        // to call the backend /cart endpoint instead
         updateCartBadgeFromFirestore();
         
-        return cartItemData;
+        return responseData;
     } catch (error) {
-        console.error('❌ Error adding to Firestore cart:', error);
+        console.error('❌ Error adding to cart via backend API:', error);
         throw error;
     }
 }
