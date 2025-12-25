@@ -408,7 +408,7 @@ async function applyCoupon() {
         }
         
         // Call backend API
-        const response = await fetch('/apply-coupon', {
+        const response = await fetch('https://morjan-backend.onrender.com/apply-coupon', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
