@@ -1,0 +1,333 @@
+[
+  {
+    "id": "bag_bausch_tommy_men_001",
+    "name": "Bausch Tommy Men Bag",
+    "brand": "BAUSCH TOMMY",
+    "category": "bags",
+    "type": "men",
+    "price_before": 200,
+    "price_after": 180,
+    "image_url": ""
+  },
+  {
+    "id": "bag_bausch_tommy_men_002",
+    "name": "Bausch Tommy Men Bag",
+    "brand": "BAUSCH TOMMY",
+    "category": "bags",
+    "type": "men",
+    "price_before": 200,
+    "price_after": 180,
+    "image_url": ""
+  },
+  {
+    "id": "bag_bausch_tommy_men_003",
+    "name": "Bausch Tommy Men Bag",
+    "brand": "BAUSCH TOMMY",
+    "category": "bags",
+    "type": "men",
+    "price_before": 200,
+    "price_after": 180,
+    "image_url": ""
+  },
+  {
+    "id": "bag_bausch_tommy_men_004",
+    "name": "Bausch Tommy Men Bag",
+    "brand": "BAUSCH TOMMY",
+    "category": "bags",
+    "type": "men",
+    "price_before": 200,
+    "price_after": 180,
+    "image_url": ""
+  },
+  {
+    "id": "bag_bausch_tommy_men_005",
+    "name": "Bausch Tommy Men Bag",
+    "brand": "BAUSCH TOMMY",
+    "category": "bags",
+    "type": "men",
+    "price_before": 200,
+    "price_after": 180,
+    "image_url": ""
+  },
+  {
+    "id": "bag_bausch_tommy_men_006",
+    "name": "Bausch Tommy Men Bag",
+    "brand": "BAUSCH TOMMY",
+    "category": "bags",
+    "type": "men",
+    "price_before": 200,
+    "price_after": 180,
+    "image_url": ""
+  },
+  {
+    "id": "bag_bausch_tommy_men_007",
+    "name": "Bausch Tommy Men Bag",
+    "brand": "BAUSCH TOMMY",
+    "category": "bags",
+    "type": "men",
+    "price_before": 200,
+    "price_after": 180,
+    "image_url": ""
+  },
+  {
+    "id": "bag_bausch_tommy_men_008",
+    "name": "Bausch Tommy Men Bag",
+    "brand": "BAUSCH TOMMY",
+    "category": "bags",
+    "type": "men",
+    "price_before": 200,
+    "price_after": 180,
+    "image_url": ""
+  },
+  {
+    "id": "bag_bausch_boss_men_001",
+    "name": "Bausch Boss Men Bag",
+    "brand": "BAUSCH BOSS",
+    "category": "bags",
+    "type": "men",
+    "price_before": 200,
+    "price_after": 180,
+    "image_url": ""
+  },
+  {
+    "id": "bag_bausch_boss_men_002",
+    "name": "Bausch Boss Men Bag",
+    "brand": "BAUSCH BOSS",
+    "category": "bags",
+    "type": "men",
+    "price_before": 200,
+    "price_after": 180,
+    "image_url": ""
+  },
+  {
+    "id": "bag_bausch_lacost_men_001",
+    "name": "Bausch Lacost Men Bag",
+    "brand": "BAUSCH LACOST",
+    "category": "bags",
+    "type": "men",
+    "price_before": 200,
+    "price_after": 180,
+    "image_url": ""
+  },
+  {
+    "id": "bag_bausch_lacost_men_002",
+    "name": "Bausch Lacost Men Bag",
+    "brand": "BAUSCH LACOST",
+    "category": "bags",
+    "type": "men",
+    "price_before": 200,
+    "price_after": 180,
+    "image_url": ""
+  },
+  {
+    "id": "bag_bausch_lacost_men_003",
+    "name": "Bausch Lacost Men Bag",
+    "brand": "BAUSCH LACOST",
+    "category": "bags",
+    "type": "men",
+    "price_before": 200,
+    "price_after": 180,
+    "image_url": ""
+  },
+  {
+    "id": "bag_bausch_lacost_men_004",
+    "name": "Bausch Lacost Men Bag",
+    "brand": "BAUSCH LACOST",
+    "category": "bags",
+    "type": "men",
+    "price_before": 200,
+    "price_after": 180,
+    "image_url": ""
+  },
+  {
+    "id": "bag_bausch_lacost_men_005",
+    "name": "Bausch Lacost Men Bag",
+    "brand": "BAUSCH LACOST",
+    "category": "bags",
+    "type": "men",
+    "price_before": 200,
+    "price_after": 180,
+    "image_url": ""
+  },
+  {
+    "id": "bag_bausch_lacost_men_006",
+    "name": "Bausch Lacost Men Bag",
+    "brand": "BAUSCH LACOST",
+    "category": "bags",
+    "type": "men",
+    "price_before": 200,
+    "price_after": 180,
+    "image_url": ""
+  },
+  {
+    "id": "bag_bausch_lacost_men_007",
+    "name": "Bausch Lacost Men Bag",
+    "brand": "BAUSCH LACOST",
+    "category": "bags",
+    "type": "men",
+    "price_before": 200,
+    "price_after": 180,
+    "image_url": ""
+  },
+  {
+    "id": "bag_bausch_lacost_men_008",
+    "name": "Bausch Lacost Men Bag",
+    "brand": "BAUSCH LACOST",
+    "category": "bags",
+    "type": "men",
+    "price_before": 200,
+    "price_after": 180,
+    "image_url": ""
+  },
+  {
+    "id": "bag_bausch_swiss_men_001",
+    "name": "Bausch Swiss Men Bag",
+    "brand": "BAUSCH SWISS",
+    "category": "bags",
+    "type": "men",
+    "price_before": 200,
+    "price_after": 180,
+    "image_url": ""
+  },
+  {
+    "id": "bag_bausch_swiss_men_002",
+    "name": "Bausch Swiss Men Bag",
+    "brand": "BAUSCH SWISS",
+    "category": "bags",
+    "type": "men",
+    "price_before": 200,
+    "price_after": 180,
+    "image_url": ""
+  },
+  {
+    "id": "bag_bausch_swiss_men_003",
+    "name": "Bausch Swiss Men Bag",
+    "brand": "BAUSCH SWISS",
+    "category": "bags",
+    "type": "men",
+    "price_before": 200,
+    "price_after": 180,
+    "image_url": ""
+  },
+  {
+    "id": "bag_bausch_swiss_men_004",
+    "name": "Bausch Swiss Men Bag",
+    "brand": "BAUSCH SWISS",
+    "category": "bags",
+    "type": "men",
+    "price_before": 200,
+    "price_after": 180,
+    "image_url": ""
+  },
+  {
+    "id": "bag_bausch_swiss_men_005",
+    "name": "Bausch Swiss Men Bag",
+    "brand": "BAUSCH SWISS",
+    "category": "bags",
+    "type": "men",
+    "price_before": 200,
+    "price_after": 180,
+    "image_url": ""
+  },
+  {
+    "id": "bag_bausch_swiss_men_006",
+    "name": "Bausch Swiss Men Bag",
+    "brand": "BAUSCH SWISS",
+    "category": "bags",
+    "type": "men",
+    "price_before": 200,
+    "price_after": 180,
+    "image_url": ""
+  },
+  {
+    "id": "bag_bausch_swiss_men_007",
+    "name": "Bausch Swiss Men Bag",
+    "brand": "BAUSCH SWISS",
+    "category": "bags",
+    "type": "men",
+    "price_before": 200,
+    "price_after": 180,
+    "image_url": ""
+  },
+  {
+    "id": "bag_bausch_swiss_men_008",
+    "name": "Bausch Swiss Men Bag",
+    "brand": "BAUSCH SWISS",
+    "category": "bags",
+    "type": "men",
+    "price_before": 200,
+    "price_after": 180,
+    "image_url": ""
+  },
+  {
+    "id": "bag_bausch_swiss_men_009",
+    "name": "Bausch Swiss Men Bag",
+    "brand": "BAUSCH SWISS",
+    "category": "bags",
+    "type": "men",
+    "price_before": 200,
+    "price_after": 180,
+    "image_url": ""
+  },
+  {
+    "id": "bag_bausch_swiss_men_010",
+    "name": "Bausch Swiss Men Bag",
+    "brand": "BAUSCH SWISS",
+    "category": "bags",
+    "type": "men",
+    "price_before": 200,
+    "price_after": 180,
+    "image_url": ""
+  },
+  {
+    "id": "bag_gym_men_001",
+    "name": "Gym Bag",
+    "brand": "GYM",
+    "category": "bags",
+    "type": "men",
+    "price_before": 200,
+    "price_after": 140,
+    "image_url": ""
+  },
+  {
+    "id": "bag_gym_men_002",
+    "name": "Gym Bag",
+    "brand": "GYM",
+    "category": "bags",
+    "type": "men",
+    "price_before": 200,
+    "price_after": 140,
+    "image_url": ""
+  },
+  {
+    "id": "bag_gym_men_003",
+    "name": "Gym Bag",
+    "brand": "GYM",
+    "category": "bags",
+    "type": "men",
+    "price_before": 200,
+    "price_after": 140,
+    "image_url": ""
+  },
+  {
+    "id": "bag_gym_men_004",
+    "name": "Gym Bag",
+    "brand": "GYM",
+    "category": "bags",
+    "type": "men",
+    "price_before": 200,
+    "price_after": 140,
+    "image_url": ""
+  },
+  {
+    "id": "bag_gym_men_005",
+    "name": "Gym Bag",
+    "brand": "GYM",
+    "category": "bags",
+    "type": "men",
+    "price_before": 200,
+    "price_after": 140,
+    "image_url": ""
+  }
+]
+

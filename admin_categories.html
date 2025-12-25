@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories Management - J&A Jewelry</title>
+    <link rel="icon" href="data:,">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Cairo:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="admin-styles.css">
+    <style>
+        html, body {
+            margin: 0 !important;
+            padding: 0 !important;
+            border: 0 !important;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .admin-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 90px;
+            background: #0e0e0e;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 25px;
+            z-index: 9999;
+        }
+
+        .admin-header-content {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0;
+        }
+
+        .admin-header-left {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .admin-header-logo {
+            font-family: var(--font-primary);
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #d4af37;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .admin-header-subtitle {
+            font-family: var(--font-secondary);
+            font-size: 0.85rem;
+            color: rgba(212, 175, 55, 0.7);
+            font-weight: 500;
+        }
+
+        .admin-header-categories {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+        }
+
+        .admin-header-category-link {
+            font-family: var(--font-secondary);
+            font-size: 16px;
+            color: #d4af37;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            text-transform: lowercase;
+        }
+
+        .admin-header-category-link:hover {
+            color: #f0d97a;
+            text-decoration: underline;
+        }
+
+        .admin-header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-shrink: 0;
+        }
+
+        .admin-header-nav {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .admin-header-btn {
+            font-family: var(--font-secondary);
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            padding: 0.6rem 1.25rem;
+            border-radius: 999px;
+            border: 1px solid transparent;
+            background: transparent;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .admin-header-btn:hover {
+            color: #d4af37;
+            border-color: rgba(212, 175, 55, 0.4);
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .admin-header-btn.active {
+            background: linear-gradient(135deg, #d4af37, #f0d97a);
+            color: #0e0e0e;
+            border-color: #d4af37;
+        }
+
+        .admin-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .admin-header-lang-toggle {
+            font-family: var(--font-secondary);
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.8);
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 0.6rem 1.25rem;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .admin-header-lang-toggle:hover {
+            color: #d4af37;
+            border-color: rgba(212, 175, 55, 0.4);
+        }
+
+        .admin-header-logout {
+            font-family: var(--font-secondary);
+            font-weight: 600;
+            color: #0b0b0b;
+            background: linear-gradient(135deg, #b8941f, #9d7f1a);
+            border: none;
+            padding: 0.6rem 1.25rem;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .admin-header-logout:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .admin-page-content {
+            margin-top: 90px !important;
+            padding-top: 0 !important;
+        }
+
+        .categories-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .categories-title {
+            font-size: 2rem;
+            color: #d4af37;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="admin-header">
+        <div class="admin-header-content">
+            <div class="admin-header-left">
+                <a href="admin.html" class="admin-header-logo">
+                    <i class="fa fa-crown"></i>
+                    <span>J&A Jewelry</span>
+                </a>
+                <span class="admin-header-subtitle">Admin Dashboard</span>
+            </div>
+            
+            <nav class="admin-header-categories">
+                <a href="admin_watches.html" class="admin-header-category-link" id="category-watches">watches</a>
+                <a href="admin_bags.html" class="admin-header-category-link" id="category-bags">bags</a>
+                <a href="admin_accessories.html" class="admin-header-category-link" id="category-accessories">accessories</a>
+                <a href="admin_perfumes.html" class="admin-header-category-link" id="category-perfumes">parfums</a>
+            </nav>
+            
+            <div class="admin-header-right">
+                <nav class="admin-header-nav">
+                    <a href="admin.html" class="admin-header-btn admin-nav-dashboard" id="header-nav-dashboard">Dashboard</a>
+                    <a href="admin_categories.html" class="admin-header-btn admin-nav-categories active" id="header-nav-categories">Categories</a>
+                    <a href="admin_orders.html" class="admin-header-btn admin-nav-orders" id="header-nav-orders">Orders</a>
+                </nav>
+                
+                <div class="admin-header-actions">
+                    <button id="admin-header-lang-toggle" class="admin-header-lang-toggle admin-nav-lang" data-lang="ar">العربية</button>
+                    <button id="admin-header-logout" class="admin-header-logout admin-nav-logout">
+                        <i class="fa fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="admin-page-content">
+        <div class="categories-container">
+            <h1 class="categories-title">Categories Management</h1>
+            <div style="
+                background: rgba(20, 20, 20, 0.6);
+                border: 1px solid rgba(212, 175, 55, 0.2);
+                border-radius: 12px;
+                padding: 3rem 2rem;
+                text-align: center;
+                margin-top: 2rem;
+            ">
+                <i class="fa fa-tools" style="font-size: 4rem; color: rgba(212, 175, 55, 0.3); margin-bottom: 1.5rem;"></i>
+                <h2 style="color: #d4af37; font-size: 1.5rem; margin-bottom: 1rem;">Page Under Development</h2>
+                <p style="color: rgba(255, 255, 255, 0.7); font-size: 1rem; margin: 0;">
+                    Categories management functionality is currently being developed.<br>
+                    Please use the product management pages for now.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.SKIP_APP_INIT = true;
+    </script>
+    <script type="module">
+        import { applyAdminTranslations, getStoredAdminLang } from './assets/js/translations_admin.js';
+        import { enforceAdminAccess, setupAdminLogoutButtons } from './assets/js/admin_auth.js';
+        
+        // Enforce admin access on page load
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Check authentication first
+            const isAuthorized = await enforceAdminAccess();
+            if (!isAuthorized) {
+                return; // Redirect already happened
+            }
+            
+            // Apply translations
+            applyAdminTranslations(getStoredAdminLang());
+            
+            // Setup logout buttons
+            setupAdminLogoutButtons();
+        });
+    </script>
+</body>
+</html>
+

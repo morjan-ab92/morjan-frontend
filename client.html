@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate="client.title">J&A Jewelry - Shop</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Cairo:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header / Navbar -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <!-- Logo -->
+                <a href="index.html" class="logo"><span dir="ltr" class="brand-name">J&amp;A Jewelry</span></a>
+                
+                <!-- Navigation -->
+                <nav class="nav">
+                    <a href="index.html" class="nav-link" data-translate="navigation.home">Home</a>
+                    <a href="#products" class="nav-link active" data-translate="navigation.products">Products</a>
+                    <a href="cart.html" class="nav-link" data-translate="navigation.cart">Cart</a>
+                </nav>
+                
+                <!-- Header Actions -->
+                <div class="header-actions">
+                    <!-- Language Toggle -->
+                    <div class="language-toggle">
+                        <button class="lang-btn active" data-lang="ar" onclick="JAJewelry.switchLanguage('ar')">العربية</button>
+                        <button class="lang-btn" data-lang="he" onclick="JAJewelry.switchLanguage('he')">עברית</button>
+                        <button class="lang-btn" data-lang="en" onclick="JAJewelry.switchLanguage('en')">English</button>
+                    </div>
+                    
+                    <!-- Cart Icon -->
+                    <a href="cart.html" class="cart-icon" style="text-decoration: none; color: inherit;">
+                        🛒
+                        <span class="cart-badge">0</span>
+                    </a>
+                    
+                    <!-- Logout Button -->
+                    <button class="login-btn" onclick="JAJewelry.logout()" data-translate="auth.logout">Logout</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Content -->
+    <main style="margin-top: 100px;">
+        <!-- Hero Section -->
+        <section class="hero" style="height: 60vh;">
+            <div class="hero-content fade-in">
+                <h1 data-translate="client.title">Shop Collection</h1>
+                <p data-translate="client.subtitle">Browse our complete catalog of luxury items</p>
+            </div>
+        </section>
+
+        <!-- Filters Section -->
+        <section class="filters-section">
+            <div class="container">
+                <div class="filters-content fade-in">
+                    <div class="filter-group">
+                        <label data-translate="filters category">Category:</label>
+                        <select id="categoryFilter" class="form-input" onchange="filterProducts()">
+                            <option value="" data-translate="filters all categories">All Categories</option>
+                            <option value="perfumes" data-translate="perfumes">Perfumes</option>
+                            <option value="watches" data-translate=".watches">Watches</option>
+                            <option value="bags" data-translate="bags">Bags</option>
+                            <option value="accessories" data-translate="accessories">Accessories</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label data-translate="filters.gender">Gender:</label>
+                        <select id="genderFilter" class="form-input" onchange="filterProducts()">
+                            <option value="" data-translate="filters all genders">All Genders</option>
+                            <option value="men" data-translate="genders.men">Men</option>
+                            <option value="women" data-translate="genders.women">Women</option>
+                            <option value="unisex" data-translate="genders.unisex">Unisex</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label data-translate="filters.sort">Sort by:</label>
+                        <select id="sortFilter" class="form-input" onchange="filterProducts()">
+                            <option value="name" data-translate="filters.sort_name">Name</option>
+                            <option value="price_low" data-translate="filters.sort_price_low">Price: Low to High</option>
+                            <option value="price_high" data-translate="filters.sort_price_high">Price: High to Low</option>
+                            <option value="category" data-translate="filters.sort_category">Category</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <button class="btn btn-secondary" onclick="clearFilters()" data-translate="filters.clear">Clear Filters</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Grid -->
+        <section id="products" class="products-section">
+            <div class="container">
+                <div class="products-header fade-in">
+                    <h2 data-translate="products.title">Our Products</h2>
+                    <div class="products-count">
+                        <span id="productsCount" data-translate="products.count">0 products found</span>
+                    </div>
+                </div>
+                
+                <div class="products-grid" id="productsGrid">
+                    <!-- Products will be loaded dynamically -->
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p data-translate="products.loading">Loading products...</p>
+                    </div>
+                </div>
+                
+                <!-- Load More Button -->
+                <div class="text-center mt-5" id="loadMoreContainer" style="display: none;">
+                    <button class="btn btn-primary" onclick="loadMoreProducts()" data-translate="products.load_more">Load More</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+    <script src="favorites.js"></script>
+    <script>
+        // Page-specific variables
+        let allProducts = [];
+        let filteredProducts = [];
+        let currentPage = 1;
+        const productsPerPage = 12;
+        let isLoading = false;
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Check authentication
+            if (!JAJewelry.isAuthenticated()) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Set category filter from URL parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const categoryParam = urlParams.get('category');
+            if (categoryParam) {
+                document.getElementById('categoryFilter').value = categoryParam;
+            }
+
+            // Load products
+            await loadProducts();
+            
+            // Initialize scroll animations
+            initializeScrollAnimations();
+        });
+
+        // Load products from API
+        async function loadProducts() {
+            if (isLoading) return;
+            
+            isLoading = true;
+            
+            try {
+                const products = await JAJewelry.loadProducts();
+                allProducts = products;
+                applyFilters();
+                updateProductsCount();
+            } catch (error) {
+                console.error('Failed to load products:', error);
+                showError('Failed to load products');
+            } finally {
+                isLoading = false;
+            }
+        }
+
+        // Apply filters to products
+        function applyFilters() {
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            const genderFilter = document.getElementById('genderFilter').value;
+            const sortFilter = document.getElementById('sortFilter').value;
+
+            filteredProducts = allProducts.filter(product => {
+                const matchesCategory = !categoryFilter || product.category === categoryFilter;
+                const matchesGender = !genderFilter || product.gender === genderFilter;
+                return matchesCategory && matchesGender;
+            });
+
+            // Sort products
+            filteredProducts.sort((a, b) => {
+                switch (sortFilter) {
+                    case 'price_low':
+                        return (a.price || 0) - (b.price || 0);
+                    case 'price_high':
+                        return (b.price || 0) - (a.price || 0);
+                    case 'category':
+                        return (a.category || '').localeCompare(b.category || '');
+                    case 'name':
+                    default:
+                        return (a.name || '').localeCompare(b.name || '');
+                }
+            });
+
+            renderProducts();
+        }
+
+        // Render products in grid
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            const startIndex = 0;
+            const endIndex = currentPage * productsPerPage;
+            const productsToShow = filteredProducts.slice(startIndex, endIndex);
+
+            if (productsToShow.length === 0) {
+                grid.innerHTML = '<p class="text-center" data-translate="products.no_products">No products found</p>';
+                document.getElementById('loadMoreContainer').style.display = 'none';
+                    return;
+                }
+
+            grid.innerHTML = productsToShow.map(product => {
+                const productData = JSON.stringify({
+                    id: product.id || product.name,
+                    name: product.name || 'Unnamed Product',
+                    price: product.price || 0,
+                    image: product.image || 'assets/images/products/placeholder.jpg',
+                    category: product.category || '',
+                    gender: product.gender || 'unisex',
+                    brand: product.brand || ''
+                }).replace(/'/g, "&#39;");
+                return `
+                <div class="product-card fade-in" data-product-data='${productData}'>
+                    <div class="favorite-icon" data-product-id="${product.id || product.name || ''}">
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+                    <img src="${product.image || 'assets/images/products/placeholder.jpg'}" 
+                         alt="${product.name}" class="product-image" loading="lazy">
+                    ${product.category ? `<div class="product-badge">${getCategoryName(product.category)}</div>` : ''}
+                    <div class="product-info">
+                        <h3 class="product-name">${product.name || 'Unnamed Product'}</h3>
+                        <div class="product-details">
+                            ${product.gender ? `<span class="product-gender">${getGenderName(product.gender)}</span>` : ''}
+                            <div class="product-price">$${product.price || '0.00'}</div>
+                        </div>
+                        <button class="add-to-cart" onclick="addToCart('${product.id || product.name}')">
+                            <span data-translate="products.add_to_cart">Add to Cart</span>
+                        </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Show/hide load more button
+            const hasMoreProducts = endIndex < filteredProducts.length;
+            document.getElementById('loadMoreContainer').style.display = hasMoreProducts ? 'block' : 'none';
+
+            // Re-initialize scroll animations for new elements
+            initializeScrollAnimations();
+            
+            // Update favorite icons after rendering
+            if (window.updateAllFavoriteIcons) {
+                window.updateAllFavoriteIcons();
+            }
+        }
+
+        // Filter products when filters change
+        function filterProducts() {
+            currentPage = 1;
+            applyFilters();
+            updateProductsCount();
+        }
+
+        // Clear all filters
+        function clearFilters() {
+            document.getElementById('categoryFilter').value = '';
+            document.getElementById('genderFilter').value = '';
+            document.getElementById('sortFilter').value = 'name';
+            filterProducts();
+        }
+
+        // Load more products
+        function loadMoreProducts() {
+            currentPage++;
+            renderProducts();
+        }
+
+        // Update products count
+        function updateProductsCount() {
+            const count = filteredProducts.length;
+            const countElement = document.getElementById('productsCount');
+            countElement.textContent = `${count} ${count === 1 ? 'product' : 'products'} found`;
+        }
+
+        // Add product to cart
+        function addToCart(productId) {
+            const product = allProducts.find(p => p.id === productId || p.name === productId);
+            if (product) {
+                JAJewelry.addToCart(product);
+            }
+        }
+
+        // Get category name for display
+        function getCategoryName(category) {
+            const categoryNames = {
+                'perfumes': 'Perfumes',
+                'watches': 'Watches',
+                'bags': 'Bags',
+                'accessories': 'Accessories'
+            };
+            return categoryNames[category] || category;
+        }
+
+        // Get gender name for display
+        function getGenderName(gender) {
+            const genderNames = {
+                'men': 'Men',
+                'women': 'Women',
+                'unisex': 'Unisex'
+            };
+            return genderNames[gender] || gender;
+        }
+
+        // Show error message
+        function showError(message) {
+            JAJewelry.showNotification(message, 'error');
+        }
+
+        // Initialize scroll animations
+        function initializeScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+            
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+        }
+    </script>
+    
+    <!-- Set up auth UI updates after DOM loads -->
+    <script type="module">
+        import { auth, updateAuthUI } from './assets/js/auth_frontend.js';
+        import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js';
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('✅ DOM loaded, setting up auth UI updates on client.html');
+            onAuthStateChanged(auth, (user) => {
+                console.log('🔐 Auth state changed on client.html:', user ? 'User logged in' : 'User logged out');
+                updateAuthUI(user);
+            });
+        });
+    </script>
+</body>
+</html>

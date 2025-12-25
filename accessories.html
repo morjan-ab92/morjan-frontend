@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J&A Jewelry - Elegant Accessories</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Cairo:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #1a1a1a;
+            --gold: #d4af37;
+            --gold-light: #f0e6b2;
+            --gold-dark: #b8941f;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --text-muted: #888888;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: #000 !important;
+            color: #fff !important;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        html {
+            background: #000 !important;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 2.5rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            padding: 0;
+            background: #000;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 1rem;
+            margin-top: 2.5rem;
+            position: relative;
+        }
+
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+            text-align: center;
+            width: 100%;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-card {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.2);
+            border-color: var(--gold);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .products-grid .product-image {
+            position: static;
+            pointer-events: none;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .products-grid .favorite-icon {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 1000;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 50%;
+            min-width: 36px;
+            width: 36px;
+            min-height: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            border: none;
+            padding: 0;
+            margin: 0;
+            pointer-events: auto;
+            isolation: isolate;
+        }
+
+        .products-grid .favorite-icon:hover {
+            background: rgba(0, 0, 0, 0.8);
+            transform: scale(1.15);
+        }
+
+        .products-grid .favorite-icon i {
+            font-size: 18px;
+            color: transparent;
+            -webkit-text-stroke: 2px #ffffff;
+            text-stroke: 2px #ffffff;
+            transition: all 0.3s ease;
+            font-weight: 400;
+            pointer-events: none;
+        }
+
+        .products-grid .favorite-icon.active i {
+            color: #d4af37;
+            -webkit-text-stroke: 0;
+            text-stroke: 0;
+            font-weight: 900;
+        }
+
+        .products-grid .favorite-icon.active {
+            background: rgba(212, 175, 55, 0.15);
+        }
+
+        .products-grid .favorite-icon.active:hover {
+            background: rgba(212, 175, 55, 0.25);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .product-brand {
+            color: var(--gold);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .product-price-before {
+            color: var(--text-muted);
+            font-size: 1rem;
+            text-decoration: line-through;
+            font-weight: 400;
+        }
+        
+        .product-price-after {
+            color: var(--gold);
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+        
+        .product-material,
+        .product-color,
+        .product-type {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin: 0.25rem 0;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-primary);
+            border: none;
+            padding: 0.8rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .add-to-cart:hover {
+            background: linear-gradient(135deg, var(--gold-light), var(--gold));
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+
+
+        /* Filter Section */
+        .filter-section {
+            background: #2a2a2a;
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-bottom: 2rem;
+            border: none;
+        }
+
+        .filter-container {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 0;
+            flex-wrap: nowrap;
+            align-items: center;
+            direction: ltr !important;
+            flex-direction: row !important;
+        }
+        
+        [dir="rtl"] .filter-container {
+            direction: ltr !important;
+            flex-direction: row !important;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-select {
+            padding: 10px 15px;
+            background-color: #111;
+            border: 1px solid #cba135;
+            border-radius: 6px;
+            color: white;
+            font-weight: 500;
+            min-width: 160px;
+            text-align: right;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-select:hover {
+            border-color: var(--gold);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .sort-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sort-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .sort-select {
+            background: var(--bg-primary);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--text-primary);
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sort-select:hover {
+            border-color: var(--gold);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+        }
+
+        /* VIEW AS Grid Layout Icons */
+        .view-as-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .view-as-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .view-as-icons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .view-icon {
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            background: var(--bg-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+        }
+
+        .view-icon:hover {
+            border-color: var(--gold);
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .view-icon.active {
+            border-color: var(--gold);
+            background: var(--gold);
+        }
+
+        .view-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--text-secondary);
+            transition: fill 0.3s ease;
+        }
+
+        .view-icon.active svg {
+            fill: var(--bg-primary);
+        }
+
+        .view-icon:hover svg {
+            fill: var(--gold);
+        }
+
+        /* Grid Layout Variations */
+        .products-grid.grid-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .products-grid.grid-list .product-card {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            max-width: none;
+        }
+
+        .products-grid.grid-list .product-image {
+            width: 150px;
+            height: 150px;
+            flex-shrink: 0;
+        }
+
+        .products-grid.grid-list .product-info {
+            flex: 1;
+            text-align: left;
+        }
+
+        .products-grid.grid-2-col {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .products-grid.grid-3-col {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .products-grid.grid-4-col {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        @media (max-width: 1200px) {
+            .products-grid.grid-4-col {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .products-grid.grid-3-col,
+            .products-grid.grid-4-col {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .products-grid.grid-2-col,
+            .products-grid.grid-3-col,
+            .products-grid.grid-4-col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+
+            .filter-container {
+                flex-direction: column;
+                gap: 1rem;
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header / Navbar -->
+    <header class="header" style="background: #111 !important; display: flex !important; align-items: center !important; justify-content: space-between !important; padding: 0 40px !important; direction: ltr !important; flex-direction: row !important;">
+        <a href="index.html" class="logo" style="font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; background: linear-gradient(45deg, #d4af37, #ffd700); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; transition: all 0.3s ease; color: #d4af37;">
+            <span dir="ltr" class="brand-name">J&amp;A Jewelry</span>
+        </a>
+
+        <nav class="nav-links" style="display: flex !important; gap: 30px !important; align-items: center !important; flex-direction: row !important; direction: ltr !important; flex-wrap: nowrap !important; margin: 0 !important;">
+            <a href="index.html" data-translate="nav-home" style="color: #d4af37 !important; text-decoration: none !important; font-size: 1rem !important; font-weight: 500 !important; white-space: nowrap !important;">Home</a>
+            <a href="perfumes.html" data-translate="nav-perfumes" style="color: #d4af37 !important; text-decoration: none !important; font-size: 1rem !important; font-weight: 500 !important; white-space: nowrap !important;">Perfumes</a>
+            <a href="watches.html" data-translate="nav-watches" style="color: #d4af37 !important; text-decoration: none !important; font-size: 1rem !important; font-weight: 500 !important; white-space: nowrap !important;">Watches</a>
+            <a href="bags.html" data-translate="nav-bags" style="color: #d4af37 !important; text-decoration: none !important; font-size: 1rem !important; font-weight: 500 !important; white-space: nowrap !important;">Bags</a>
+            <a href="accessories.html" class="active" data-translate="nav-accessories" style="color: #d4af37 !important; text-decoration: none !important; font-size: 1rem !important; font-weight: 500 !important; white-space: nowrap !important; border-bottom: 1px solid #d4af37 !important; padding-bottom: 2px !important;">Accessories</a>
+            <a href="#about" data-translate="nav-about" style="color: #d4af37 !important; text-decoration: none !important; font-size: 1rem !important; font-weight: 500 !important; white-space: nowrap !important;">About</a>
+            <a href="#contact" data-translate="nav-contact" style="color: #d4af37 !important; text-decoration: none !important; font-size: 1rem !important; font-weight: 500 !important; white-space: nowrap !important;">Contact</a>
+        </nav>
+
+        <div class="nav-icons" style="display: flex !important; gap: 1.5rem !important; align-items: center !important; flex-direction: row !important; direction: ltr !important; flex-wrap: nowrap !important;">
+            <a href="cart.html" style="color: #d4af37 !important; text-decoration: none !important; position: relative !important; display: inline-flex !important; align-items: center !important; justify-content: center !important;">
+                <i class="fa-solid fa-bag-shopping" id="header-cart-icon" style="color: #d4af37 !important; font-size: 1.25rem !important;">
+                    <span class="cart-badge" id="cart-badge" style="position: absolute; top: -8px; right: -8px; background: #d4af37; color: #ffffff; border-radius: 50%; min-width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: bold;">5</span>
+                </i>
+            </a>
+            <i class="fa-solid fa-heart" style="color: #d4af37 !important; font-size: 1.25rem !important; cursor: pointer !important;"></i>
+            <button onclick="window.handleUserIconClick()" style="background: none !important; border: none !important; color: inherit !important; cursor: pointer !important; padding: 0 !important;">
+                <i class="fa-solid fa-user" id="header-account-icon" style="color: #d4af37 !important; font-size: 1.25rem !important;"></i>
+            </button>
+            <div id="user-profile-area" class="user-profile-area" style="display: flex !important; margin-left: 1.5rem !important; align-items: center !important;">
+                <span id="user-greeting" class="user-greeting" style="color: #fff !important; font-size: 0.95rem !important; font-weight: 500 !important; white-space: nowrap !important;">Welcome, <span id="user-display-name" style="color: #d4af37 !important; font-weight: 600 !important;">testmorjan</span> 👑</span>
+            </div>
+        </div>
+
+        <button id="lang-toggle" class="lang-switch" data-lang="ar" onclick="cycleLanguage()" style="background: #0a0a0a !important; border: 1px solid #d4af37 !important; padding: 0.5rem 1rem !important; border-radius: 25px !important; color: #d4af37 !important; font-size: 0.9rem !important; font-weight: 500 !important; cursor: pointer !important; min-width: 100px !important; text-align: center !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; margin-left: 1rem !important; white-space: nowrap !important;">English</button>
+        <button class="menu-toggle" type="button" onclick="window.toggleUserDrawer()" aria-label="Open menu" aria-expanded="false" aria-controls="user-drawer">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content" style="background: #000; min-height: 100vh;">
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title" data-translate="categories-accessories">Elegant Accessories</h1>
+                <p class="page-subtitle" data-translate="accessories-description">Complete your look with our stunning collection of jewelry and accessories</p>
+            </div>
+
+            <!-- Filter Section -->
+            <div class="filter-section">
+                <div class="filter-container">
+                    <!-- Filter Label -->
+                    <span class="filter-label" 
+                          data-en="Filter" 
+                          data-ar="تصفية" 
+                          data-he="סינון">تصفية</span>
+                    
+                    <!-- Gender Filter -->
+                    <div class="filter-group">
+                        <div class="filter-dropdown">
+                            <select id="genderFilter" class="filter-select">
+                                <option value="all" data-en="Gender" data-ar="الجنس" data-he="מין">الجنس</option>
+                                <option value="men" data-en="Men" data-ar="رجالي" data-he="גברים">رجالي</option>
+                                <option value="women" data-en="Women" data-ar="نسائي" data-he="נשים">نسائي</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Availability Filter -->
+                    <div class="filter-group">
+                        <div class="filter-dropdown">
+                            <select id="availabilityFilter" class="filter-select">
+                                <option value="all" data-en="Availability" data-ar="التوفر" data-he="זמינות">التوفر</option>
+                                <option value="available" data-en="Available" data-ar="متوفر" data-he="זמין">متوفر</option>
+                                <option value="unavailable" data-en="Out of stock" data-ar="غير متوفر" data-he="לא זמין">غير متوفر</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <div class="filter-dropdown">
+                            <select id="brandFilter" class="filter-select">
+                                <option value="all" data-en="Brand" data-ar="العلامة التجارية" data-he="מותג">العلامة التجارية</option>
+                                <!-- Options will be populated dynamically -->
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <div class="filter-dropdown">
+                            <select id="priceFilter" class="filter-select">
+                                <option value="all" data-en="Price" data-ar="السعر" data-he="מחיר">السعر</option>
+                                <option value="0-500">₪0 - ₪500</option>
+                                <option value="500-2000">₪500 - ₪2000</option>
+                                <option value="2000+">+₪2000</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="sort-group">
+                        <label class="sort-label" data-translate="filter-sort-by">SORT BY</label>
+                        <select id="sort-by" class="sort-select">
+                            <option value="featured" data-translate="filter-featured">Featured</option>
+                            <option value="price-low" data-translate="filter-price-low">Price: Low to High</option>
+                            <option value="price-high" data-translate="filter-price-high">Price: High to Low</option>
+                            <option value="name" data-translate="filter-name">Name A-Z</option>
+                        </select>
+                    </div>
+                    
+                    <div class="view-as-section">
+                        <label class="view-as-label" data-translate="filter-view-as">VIEW AS</label>
+                        <div class="view-as-icons">
+                            <div class="view-icon" data-layout="list">
+                                <svg viewBox="0 0 24 24">
+                                    <rect x="3" y="6" width="18" height="2" rx="1"/>
+                                    <rect x="3" y="10" width="18" height="2" rx="1"/>
+                                    <rect x="3" y="14" width="18" height="2" rx="1"/>
+                                </svg>
+                            </div>
+                            <div class="view-icon" data-layout="2-col">
+                                <svg viewBox="0 0 24 24">
+                                    <rect x="3" y="3" width="8" height="8" rx="1"/>
+                                    <rect x="13" y="3" width="8" height="8" rx="1"/>
+                                    <rect x="3" y="13" width="8" height="8" rx="1"/>
+                                    <rect x="13" y="13" width="8" height="8" rx="1"/>
+                                </svg>
+                            </div>
+                            <div class="view-icon active" data-layout="3-col">
+                                <svg viewBox="0 0 24 24">
+                                    <rect x="2" y="2" width="6" height="6" rx="1"/>
+                                    <rect x="9" y="2" width="6" height="6" rx="1"/>
+                                    <rect x="16" y="2" width="6" height="6" rx="1"/>
+                                    <rect x="2" y="9" width="6" height="6" rx="1"/>
+                                    <rect x="9" y="9" width="6" height="6" rx="1"/>
+                                    <rect x="16" y="9" width="6" height="6" rx="1"/>
+                                </svg>
+                            </div>
+                            <div class="view-icon" data-layout="4-col">
+                                <svg viewBox="0 0 24 24">
+                                    <rect x="1" y="1" width="5" height="5" rx="1"/>
+                                    <rect x="7" y="1" width="5" height="5" rx="1"/>
+                                    <rect x="13" y="1" width="5" height="5" rx="1"/>
+                                    <rect x="19" y="1" width="4" height="5" rx="1"/>
+                                    <rect x="1" y="7" width="5" height="5" rx="1"/>
+                                    <rect x="7" y="7" width="5" height="5" rx="1"/>
+                                    <rect x="13" y="7" width="5" height="5" rx="1"/>
+                                    <rect x="19" y="7" width="4" height="5" rx="1"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <section id="accessories-container" class="products-grid"></section>
+        </div>
+    </main>
+
+    <!-- Firebase Frontend Configuration and Shop Scripts -->
+    <script type="module" src="firebase-frontend-config.js"></script>
+    <script src="app.js" defer></script>
+    <script src="assets/js/userMenu.js"></script>
+    <script src="favorites.js"></script>
+    <script type="module">
+        // Import Firestore functions
+        import { collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
+        import { db } from "./firebase-frontend-config.js";
+
+        // Load accessories from Firestore
+        let allProducts = [];
+        let genderFilter, availabilityFilter, brandFilter, priceFilter, sortBy, productsGrid, viewIcons;
+        
+        // CRITICAL: Guard flag to prevent infinite reload loops
+        let accessoriesLoaded = false;
+        let accessoriesLoading = false;
+
+        // Helper function to check if we're on the accessories page
+        // Must be defined early so other functions can use it
+        function isAccessoriesPage() {
+            // Check for accessories-specific elements that only exist on accessories.html
+            return document.getElementById('genderFilter') !== null || 
+                   document.querySelector('.page-title[data-translate="categories-accessories"]') !== null ||
+                   window.location.pathname.includes('accessories.html');
+        }
+
+        // Translation cache loaded from JSON files
+        let translationCache = {
+            en: null,
+            ar: null,
+            he: null
+        };
+        
+        // Load translations from JSON files
+        async function loadTranslationsFromJSON(lang) {
+            if (translationCache[lang]) {
+                return translationCache[lang];
+            }
+            
+            try {
+                const response = await fetch(`lang/${lang}.json`);
+                if (response.ok) {
+                    const translations = await response.json();
+                    translationCache[lang] = translations;
+                    return translations;
+                }
+            } catch (error) {
+                console.warn(`Failed to load translations from lang/${lang}.json:`, error);
+            }
+            
+            return null;
+        }
+        
+        // Helper function to get translation
+        function getTranslation(key) {
+            // First, try to use window.getTranslation from app.js if available
+            if (typeof window.getTranslation === 'function') {
+                const translation = window.getTranslation(key);
+                if (translation && translation !== key) {
+                    return translation;
+                }
+            }
+            
+            // Fallback: try to get from loaded JSON translations
+            const lang = document.documentElement.lang || 'en';
+            const langCode = lang.split('-')[0];
+            
+            if (translationCache[langCode]) {
+                const keys = key.split('.');
+                let value = translationCache[langCode];
+                
+                for (const k of keys) {
+                    if (value && typeof value === 'object' && value.hasOwnProperty(k)) {
+                        value = value[k];
+                    } else {
+                        console.warn(`Translation key not found: ${key} in language: ${langCode}`);
+                        return key;
+                    }
+                }
+                
+                return value || key;
+            }
+            
+            // Last resort: return the key itself
+            return key;
+        }
+        
+        // Load translations on page load
+        async function initializeTranslations() {
+            const currentLang = document.documentElement.lang || 'en';
+            const langCode = currentLang.split('-')[0];
+            
+            // Load all languages for faster switching
+            await Promise.all([
+                loadTranslationsFromJSON('en'),
+                loadTranslationsFromJSON('ar'),
+                loadTranslationsFromJSON('he')
+            ]);
+            
+            console.log('✅ Translations loaded from JSON files');
+        }
+        
+        // Favorites management is now handled by favorites.js global click handler
+        // No duplicate handlers needed here
+        
+        // Helper function to get multilingual product name
+        function getProductName(product, lang = null) {
+            if (!product || !product.name) {
+                return "Unknown Product";
+            }
+            
+            // If name is an object with language keys
+            if (typeof product.name === 'object' && product.name !== null) {
+                const currentLang = lang || document.documentElement.lang || localStorage.getItem('language') || 'ar';
+                const langCode = currentLang.split('-')[0];
+                
+                // Try current language first
+                if (product.name[langCode]) {
+                    return product.name[langCode];
+                }
+                
+                // Fallback to Arabic
+                if (product.name.ar) {
+                    return product.name.ar;
+                }
+                
+                // Fallback to English
+                if (product.name.en) {
+                    return product.name.en;
+                }
+                
+                // Fallback to any available language
+                const availableLang = Object.keys(product.name)[0];
+                if (availableLang) {
+                    return product.name[availableLang];
+                }
+            }
+            
+            // Backward compatibility: if name is a string, return it
+            if (typeof product.name === 'string') {
+                return product.name;
+            }
+            
+            return "Unknown Product";
+        }
+        
+        // Store original products for language updates
+        let cachedProductsForUpdate = [];
+        
+        // Helper function to translate product values
+        function translateProductValue(value, category) {
+            if (!value) return value;
+            
+            const valueStr = String(value).trim();
+            const valueLower = valueStr.toLowerCase();
+            const lang = document.documentElement.lang || 'en';
+            const langCode = lang.split('-')[0];
+            
+            // Try to get translation using app.js function
+            if (typeof window.getTranslation === 'function') {
+                // Normalize the value for translation key lookup
+                let normalizedValue = valueLower
+                    .replace(/\s+/g, '_')
+                    .replace(/[^a-z0-9_]/g, '');
+                
+                // Handle common variations
+                if (category === 'materials') {
+                    if (valueLower.includes('925') || valueLower.includes('silver 925') || valueLower === 'silver') {
+                        normalizedValue = valueLower.includes('925') ? 'silver_925' : 'silver';
+                    } else if (valueLower.includes('gold filled') || valueLower.includes('gold-filled') || valueLower === 'gold filled') {
+                        normalizedValue = 'gold_filled';
+                    } else if (valueLower === 'gold' || valueLower.includes('gold')) {
+                        normalizedValue = 'gold';
+                    } else if (valueLower.includes('stainless steel') || valueLower.includes('stainless-steel')) {
+                        normalizedValue = 'stainless_steel';
+                    } else if (valueLower.includes('rose gold') || valueLower.includes('rose-gold')) {
+                        normalizedValue = 'rose_gold';
+                    } else if (valueLower.includes('platinum')) {
+                        normalizedValue = 'platinum';
+                    }
+                } else if (category === 'colors') {
+                    if (valueLower.includes('rose gold') || valueLower.includes('rose-gold')) {
+                        normalizedValue = 'rose_gold';
+                    } else if (valueLower === 'gold' || (valueLower.includes('gold') && !valueLower.includes('rose'))) {
+                        normalizedValue = 'gold';
+                    } else if (valueLower === 'silver' || valueLower.includes('silver')) {
+                        normalizedValue = 'silver';
+                    }
+                } else if (category === 'types') {
+                    // Handle type variations
+                    if (valueLower === 'bracelet' || valueLower.includes('bracelet')) {
+                        normalizedValue = 'bracelet';
+                    } else if (valueLower === 'ring' || valueLower.includes('ring')) {
+                        normalizedValue = 'ring';
+                    } else if (valueLower === 'necklace' || valueLower.includes('necklace')) {
+                        normalizedValue = 'necklace';
+                    } else if (valueLower.includes('earring')) {
+                        normalizedValue = valueLower.includes('earrings') ? 'earrings' : 'earring';
+                    } else if (valueLower === 'set' || valueLower.includes('set')) {
+                        normalizedValue = 'set';
+                    }
+                }
+                
+                const translationKey = `product.${category}.${normalizedValue}`;
+                const translation = window.getTranslation(translationKey);
+                if (translation && translation !== translationKey) {
+                    return translation;
+                }
+            }
+            
+            // Fallback: return original value
+            return valueStr;
+        }
+        
+        // Render products function
+        function renderProducts(productsToRender) {
+            if (!productsGrid) return;
+            
+            productsGrid.innerHTML = '';
+            
+            if (productsToRender.length === 0) {
+                productsGrid.innerHTML = '<div class="empty-state"><p>No accessories found matching your filters.</p></div>';
+                return;
+            }
+            
+            // Store products for language updates
+            cachedProductsForUpdate = productsToRender;
+            
+            productsToRender.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                
+                const imageUrl = product.imageUrl || product.image || product.image_url || "assets/images/products/placeholder.jpg";
+                const name = getProductName(product);
+                const brand = product.brand || "";
+                const material = product.material || "";
+                const color = product.color || "";
+                const type = product.type || "";
+                const priceBefore = product.price_before || 0;
+                const priceAfter = product.price_after || product.price || 0;
+                const currency = product.currency || "₪";
+                
+                // Translate labels
+                const materialLabel = getTranslation('product.material') || 'Material';
+                const colorLabel = getTranslation('product.color') || 'Color';
+                const typeLabel = getTranslation('product.type') || 'Type';
+                
+                // Translate values
+                const translatedMaterial = translateProductValue(material, 'materials');
+                const translatedColor = translateProductValue(color, 'colors');
+                const translatedType = translateProductValue(type, 'types');
+                
+                // Build price display
+                let priceHTML = '';
+                if (priceBefore > 0 && priceBefore > priceAfter) {
+                    priceHTML = `<span class="product-price-before">${priceBefore}${currency}</span>`;
+                }
+                priceHTML += `<span class="product-price-after">${priceAfter}${currency}</span>`;
+                
+                // Get translated "Add to Cart" text using translation function
+                const addToCartText = getTranslation('products.add_to_cart');
+                // Ensure we have a valid translation, not the key itself
+                const finalAddToCartText = (addToCartText && addToCartText !== 'products.add_to_cart') 
+                    ? addToCartText 
+                    : 'Add to Cart';
+                
+                // Normalize product data to ensure all required fields are present
+                // Use ONLY: id, name, brand, price, quantity, image (matching cart.js structure)
+                const normalizedProduct = {
+                    id: product.id || '',
+                    name: product.name || {},
+                    price: product.price_after || product.price || priceAfter || 0,
+                    original_price: product.price_before || product.original_price || (priceBefore > 0 && priceBefore > priceAfter ? priceBefore : null),
+                    currency: product.currency || currency || '₪',
+                    image: product.image || product.image_url || 'assets/images/products/placeholder.jpg',
+                    gender: product.gender || 'unisex',
+                    brand: product.brand || brand || '',
+                    category: product.category || 'accessories',
+                    material: product.material || material || null,
+                    color: product.color || color || null,
+                    type: product.type || type || null
+                };
+                
+                const productDataEscaped = JSON.stringify(normalizedProduct).replace(/'/g, "&#39;").replace(/"/g, '&quot;');
+                productCard.innerHTML = `
+                    <div class="favorite-icon" data-product-id="${product.id}">
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+                    <img src="${imageUrl}" alt="${name}" class="product-image" onerror="this.src='assets/images/products/placeholder.jpg'">
+                    <div class="product-info">
+                        <h3 class="product-name" data-id="${product.id}">${name}</h3>
+                        ${brand ? `<p class="product-brand">${brand}</p>` : ''}
+                        <div class="product-price">
+                            ${priceHTML}
+                        </div>
+                        <button class="add-to-cart" data-translate="products.add_to_cart" data-id="${product.id}" data-product="${JSON.stringify({
+                            id: product.id,
+                            name: name,
+                            brand: brand || '',
+                            price: priceAfter || 0,
+                            image: normalizedProduct.image || 'assets/images/products/placeholder.jpg',
+                            category: product.category || 'accessories'
+                        }).replace(/"/g, '&quot;')}" onclick="window.addToCart(JSON.parse(this.getAttribute('data-product')))">${finalAddToCartText}</button>
+                    </div>
+                `;
+                
+                // Store material, color, and type as data attributes for filtering (not displayed)
+                if (material) productCard.setAttribute('data-material', material);
+                if (color) productCard.setAttribute('data-color', color);
+                if (type) productCard.setAttribute('data-type', type);
+                
+                // Store normalized product data for language updates and favorites
+                productCard.setAttribute('data-product-data', JSON.stringify(normalizedProduct));
+                
+                productsGrid.appendChild(productCard);
+            });
+            
+            // Update favorite icons after rendering
+            if (window.updateAllFavoriteIcons) {
+                window.updateAllFavoriteIcons();
+            }
+            
+            console.log(`✅ Displayed ${productsToRender.length} accessories from Firestore`);
+        }
+        
+        // Function to update product card translations (buttons, labels, names)
+        // PAGE GUARD: Only runs on accessories.html
+        async function updateProductCardTranslations() {
+            // Guard: Only run on accessories page
+            if (!isAccessoriesPage()) {
+                return; // Silently return - this might be called from global language switch
+            }
+            
+            if (!productsGrid) return;
+            
+            // Ensure translations are loaded
+            const currentLang = document.documentElement.lang || 'en';
+            const langCode = currentLang.split('-')[0];
+            if (!translationCache[langCode]) {
+                await loadTranslationsFromJSON(langCode);
+            }
+            
+            // Update all "Add to Cart" buttons
+            productsGrid.querySelectorAll('.add-to-cart[data-translate="products.add_to_cart"]').forEach(button => {
+                const translatedText = getTranslation('products.add_to_cart');
+                if (translatedText && translatedText !== 'products.add_to_cart') {
+                    button.textContent = translatedText;
+                } else {
+                    // Fallback if translation not found
+                    button.textContent = 'Add to Cart';
+                }
+            });
+            
+            // Update all product names
+            productsGrid.querySelectorAll('.product-name[data-product-id]').forEach(nameElement => {
+                const productDataStr = nameElement.closest('.product-card')?.getAttribute('data-product-data');
+                if (productDataStr) {
+                    try {
+                        const productData = JSON.parse(productDataStr);
+                        const translatedName = getProductName(productData, langCode);
+                        nameElement.textContent = translatedName;
+                        
+                        // Also update alt text and data attributes
+                        const img = nameElement.closest('.product-card')?.querySelector('.product-image');
+                        if (img) {
+                            img.alt = translatedName;
+                        }
+                        
+                        // Update button data attributes
+                        const button = nameElement.closest('.product-card')?.querySelector('.add-to-cart');
+                        if (button) {
+                            button.setAttribute('data-product-name', translatedName.replace(/'/g, "&#39;"));
+                        }
+                    } catch (e) {
+                        console.warn('Failed to parse product data for name update:', e);
+                    }
+                }
+            });
+        }
+        
+        // Function to update product details translations (no longer needed since we hide them)
+        // But keeping for compatibility with language switching
+        function updateProductDetailsTranslations() {
+            // Material, Color, and Type are now hidden from cards but still used for filtering
+            // Filter labels are updated via translatePage() which handles data-translate attributes
+            // Update product card buttons
+            updateProductCardTranslations();
+        }
+        
+        // Make function available globally for language switching
+        window.updateAccessoriesProductDetails = updateProductDetailsTranslations;
+
+        // Filter products function
+        // PAGE GUARD: Only runs on accessories.html
+        function filterProducts() {
+            // Guard: Only run on accessories page
+            if (!isAccessoriesPage()) {
+                console.warn('⚠️ filterProducts() called but not on accessories.html - skipping');
+                return;
+            }
+            
+            if (!genderFilter || !availabilityFilter || !brandFilter || !priceFilter || !sortBy) {
+                renderProducts(allProducts);
+                return;
+            }
+            
+            const selectedGender = genderFilter.value;
+            const selectedAvailability = availabilityFilter.value;
+            const selectedBrand = brandFilter.value;
+            const selectedPrice = priceFilter.value;
+            
+            let filteredProducts = allProducts.filter(product => {
+                let matches = true;
+                
+                // Filter by gender
+                if (selectedGender !== 'all') {
+                    const productGender = String(product.gender || '').trim().toLowerCase();
+                    if (productGender !== selectedGender.toLowerCase()) {
+                        matches = false;
+                    }
+                }
+                
+                // Filter by availability
+                if (selectedAvailability !== 'all') {
+                    const isAvailable = product.available !== false && product.availability !== 'unavailable';
+                    if (selectedAvailability === 'available' && !isAvailable) {
+                        matches = false;
+                    } else if (selectedAvailability === 'unavailable' && isAvailable) {
+                        matches = false;
+                    }
+                }
+                
+                // Filter by brand (case-insensitive)
+                if (selectedBrand !== 'all') {
+                    const productBrand = String(product.brand || '').trim();
+                    if (productBrand.toLowerCase() !== selectedBrand.toLowerCase()) {
+                        matches = false;
+                    }
+                }
+                
+                // Filter by price
+                if (selectedPrice !== 'all') {
+                    const price = product.price_after || product.price || 0;
+                    if (selectedPrice === '0-500' && (price < 0 || price > 500)) {
+                        matches = false;
+                    } else if (selectedPrice === '500-2000' && (price < 500 || price > 2000)) {
+                        matches = false;
+                    } else if (selectedPrice === '2000+' && price < 2000) {
+                        matches = false;
+                    }
+                }
+                
+                return matches;
+            });
+            
+            // Sort products
+            const sortValue = sortBy.value;
+            if (sortValue === 'price-low') {
+                filteredProducts.sort((a, b) => (a.price_after || a.price || 0) - (b.price_after || b.price || 0));
+            } else if (sortValue === 'price-high') {
+                filteredProducts.sort((a, b) => (b.price_after || b.price || 0) - (a.price_after || a.price || 0));
+            } else if (sortValue === 'name') {
+                filteredProducts.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+            }
+            
+            renderProducts(filteredProducts);
+        }
+        
+        // Populate filter options dynamically
+        // PAGE GUARD: Only runs on accessories.html
+        function populateFilters() {
+            // Guard: Only run on accessories page
+            if (!isAccessoriesPage()) {
+                console.warn('⚠️ populateFilters() called but not on accessories.html - skipping');
+                return;
+            }
+            
+            if (!genderFilter || !availabilityFilter || !brandFilter) {
+                console.warn('⚠️ Filter elements not found - skipping populateFilters');
+                return;
+            }
+            
+            const brands = new Set();
+            
+            allProducts.forEach(product => {
+                if (product.brand) {
+                    const brand = String(product.brand).trim();
+                    if (brand) brands.add(brand);
+                }
+            });
+            
+            // Populate brand filter with translated options
+            const brandSelect = brandFilter;
+            const currentBrand = brandSelect.value;
+            brandSelect.innerHTML = '<option value="all" data-en="Brand" data-ar="العلامة التجارية" data-he="מותג">العلامة التجارية</option>';
+            Array.from(brands).sort().forEach(brand => {
+                const option = document.createElement('option');
+                option.value = brand;
+                option.textContent = brand;
+                brandSelect.appendChild(option);
+            });
+            brandSelect.value = currentBrand || 'all';
+        }
+        
+        // Function to update filter dropdown translations when language changes
+        // PAGE GUARD: Only runs on accessories.html
+        function updateFilterTranslations() {
+            // Guard: Only run on accessories page
+            if (!isAccessoriesPage()) {
+                return; // Silently return - this might be called from global language switch
+            }
+            
+            if (!genderFilter || !availabilityFilter || !brandFilter) return;
+            
+            // Gender and availability filters have static options that are already translated via data attributes
+            // Brand filter options don't need translation as they are brand names
+        }
+        
+        // Make functions available globally for language switching
+        window.updateAccessoriesFilterTranslations = updateFilterTranslations;
+        window.updateProductCardTranslations = updateProductCardTranslations;
+        
+        // Load accessories from Firestore "accessories" collection
+        // PAGE GUARD: Only runs on accessories.html
+        async function loadAccessories() {
+            // CRITICAL: Prevent infinite loop - only load once per page load
+            if (accessoriesLoaded || accessoriesLoading) {
+                console.log('⚠️ loadAccessories() already called - skipping to prevent loop');
+                return;
+            }
+            
+            // Guard: Only run on accessories page
+            if (!isAccessoriesPage()) {
+                console.warn('⚠️ loadAccessories() called but not on accessories.html - skipping');
+                return;
+            }
+            
+            // Set loading flag immediately
+            accessoriesLoading = true;
+
+            try {
+                let querySnapshot;
+                
+                // Try querying with category filter first (preferred method)
+                try {
+                    const accessoriesQuery = query(
+                        collection(db, "accessories"),
+                        where("category", "==", "accessories")
+                    );
+                    querySnapshot = await getDocs(accessoriesQuery);
+                    console.log('✅ Using Firestore query filter for category === "accessories"');
+                } catch (queryError) {
+                    // Fallback: If query fails (e.g., no category field or index issue), load all and filter client-side
+                    console.warn('⚠️ Firestore query filter failed, loading all and filtering client-side:', queryError);
+                    querySnapshot = await getDocs(collection(db, "accessories"));
+                }
+                
+                allProducts = [];
+                querySnapshot.forEach((doc) => {
+                    const product = {
+                        id: doc.id,  // Use doc.id (Firestore document ID)
+                        ...doc.data()
+                    };
+                    
+                    // STRICT client-side filter: Only add products where category === "accessories" (case-insensitive)
+                    const productCategory = String(product.category || '').toLowerCase().trim();
+                    if (productCategory === 'accessories') {
+                        allProducts.push(product);
+                    } else {
+                        // Log skipped products for debugging
+                        console.warn(`⚠️ Skipping non-accessory product: ${product.id}, category: "${product.category}" (expected: "accessories")`);
+                    }
+                });
+                console.log('✅ Loaded accessories from Firestore "accessories" collection (filtered by category === "accessories"):', allProducts.length);
+                
+                // Populate filters with unique values
+                populateFilters();
+                
+                // Call filterProducts to display all products
+                filterProducts();
+                
+                // CRITICAL: Mark as loaded to prevent re-execution
+                accessoriesLoaded = true;
+            } catch (error) {
+                console.error('❌ Error loading accessories:', error);
+                if (productsGrid) {
+                    productsGrid.innerHTML = '<div class="empty-state"><p>Error loading accessories. Please try again later.</p></div>';
+                }
+            } finally {
+                // Always reset loading flag
+                accessoriesLoading = false;
+            }
+        }
+
+        // Filter functionality - Initialize on DOM ready
+        // CRITICAL: Use a flag to prevent multiple DOMContentLoaded executions
+        let domContentLoadedExecuted = false;
+        document.addEventListener('DOMContentLoaded', function() {
+            // Prevent multiple executions
+            if (domContentLoadedExecuted) {
+                console.warn('⚠️ DOMContentLoaded already executed - skipping to prevent loop');
+                return;
+            }
+            domContentLoadedExecuted = true;
+            
+            // PAGE GUARD: Only run accessories logic on accessories.html
+            if (!isAccessoriesPage()) {
+                console.log('⚠️ Accessories page logic skipped - not on accessories.html');
+                return;
+            }
+
+            // Initialize language system
+            // CRITICAL: Do NOT call switchLanguage here as it might trigger overridden function
+            // Language will be set by app.js or other global handlers
+            // We only set up our own language change listeners below
+
+            // Get DOM elements
+            genderFilter = document.getElementById('genderFilter');
+            availabilityFilter = document.getElementById('availabilityFilter');
+            brandFilter = document.getElementById('brandFilter');
+            priceFilter = document.getElementById('priceFilter');
+            sortBy = document.getElementById('sort-by');
+            productsGrid = document.querySelector('.products-grid');
+            viewIcons = document.querySelectorAll('.view-icon');
+            
+            // Grid layout switching
+            function switchGridLayout(layout) {
+                viewIcons.forEach(icon => icon.classList.remove('active'));
+                const activeIcon = document.querySelector(`[data-layout="${layout}"]`);
+                if (activeIcon) activeIcon.classList.add('active');
+                if (productsGrid) {
+                    productsGrid.className = 'products-grid';
+                    productsGrid.classList.add(`grid-${layout}`);
+                }
+            }
+            
+            // Add event listeners for view icons
+            viewIcons.forEach(icon => {
+                icon.addEventListener('click', () => {
+                    const layout = icon.getAttribute('data-layout');
+                    switchGridLayout(layout);
+                });
+            });
+            
+            // Event listeners for filters
+            if (genderFilter) genderFilter.addEventListener('change', filterProducts);
+            if (availabilityFilter) availabilityFilter.addEventListener('change', filterProducts);
+            if (brandFilter) brandFilter.addEventListener('change', filterProducts);
+            if (priceFilter) priceFilter.addEventListener('change', filterProducts);
+            if (sortBy) sortBy.addEventListener('change', filterProducts);
+            
+            // Initialize translations first
+            initializeTranslations().then(() => {
+                // Load accessories from Firestore after translations are ready
+                loadAccessories();
+            });
+            
+            // CRITICAL: Language change listeners - ONLY update text, NEVER reload data
+            // Use a one-time flag to prevent multiple listener registrations
+            let languageListenersSetup = false;
+            
+            if (isAccessoriesPage() && !languageListenersSetup) {
+                languageListenersSetup = true;
+                
+                // Listen for language change events - ONLY update translations, NOT reload products
+                document.addEventListener('languageChanged', async () => {
+                    // Double-check we're still on accessories page
+                    if (!isAccessoriesPage() || !accessoriesLoaded) return;
+                    
+                    // CRITICAL: Only update text translations, NEVER reload products
+                    const currentLang = document.documentElement.lang || 'en';
+                    const langCode = currentLang.split('-')[0];
+                    await loadTranslationsFromJSON(langCode);
+                    
+                    // Update filter dropdown translations (text only)
+                    setTimeout(async () => {
+                        updateFilterTranslations();
+                        await updateProductCardTranslations();
+                    }, 100);
+                    
+                    // DO NOT call loadAccessories() or filterProducts() here
+                });
+            }
+            
+            // Check login state from localStorage
+            if (typeof window.checkLoginState === 'function') {
+                window.checkLoginState();
+            } else {
+                // Import checkLoginState if not available
+                import('./assets/js/auth_frontend.js').then(module => {
+                    if (module.checkLoginState) {
+                        setTimeout(() => {
+                            module.checkLoginState();
+                        }, 500);
+                    }
+                }).catch(err => {
+                    console.warn('Could not load auth_frontend.js:', err);
+                });
+            }
+        });
+        
+        console.log('✅ accessories.html now loads dynamically from Firestore \'accessories\' collection.');
+        console.log('✅ accessories.html now hides material/color/type but enables filtering by them.');
+        console.log('✅ Dynamic product translations now update with language switch.');
+        console.log('✅ Add-to-Cart button and product texts now translate correctly.');
+        console.log('✅ Multilingual product name support enabled across all categories.');
+    </script>
+    
+    <!-- Load auth_frontend.js to make checkLoginState available -->
+    <script type="module" src="assets/js/auth_frontend.js"></script>
+    <script type="module" src="assets/js/welcome.js"></script>
+    
+    <!-- Set up auth UI updates after DOM loads -->
+    <script type="module">
+        import { auth, updateAuthUI } from './assets/js/auth_frontend.js';
+        import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js';
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            // PAGE GUARD: Only run on accessories.html
+            if (!document.getElementById('material-filter') && !window.location.pathname.includes('accessories.html')) {
+                return;
+            }
+            
+            console.log('✅ DOM loaded, setting up auth UI updates on accessories.html');
+            
+            // CRITICAL: Auth state changes should ONLY update UI, NEVER reload products
+            onAuthStateChanged(auth, (user) => {
+                // Guard: Only log if still on accessories page
+                if (document.getElementById('genderFilter') || window.location.pathname.includes('accessories.html')) {
+                    console.log('🔐 Auth state changed on accessories.html:', user ? 'User logged in' : 'User logged out');
+                    updateAuthUI(user);
+                    // CRITICAL: DO NOT call loadAccessories() here - it causes infinite loops
+                    // Products are already loaded, only update favorite icons if needed
+                    if (accessoriesLoaded && window.updateAllFavoriteIcons) {
+                        setTimeout(() => {
+                            window.updateAllFavoriteIcons();
+                        }, 500);
+                    }
+                }
+            });
+        });
+    </script>
+    
+    <!-- Check login state on page load -->
+    <script type="module">
+        import { checkLoginState } from './assets/js/auth_frontend.js';
+        
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                setTimeout(() => {
+                    checkLoginState();
+                    if (typeof window.displayWelcomeMessage === 'function') {
+                        window.displayWelcomeMessage();
+                    }
+                }, 500);
+            });
+        } else {
+            setTimeout(() => {
+                checkLoginState();
+                if (typeof window.displayWelcomeMessage === 'function') {
+                    window.displayWelcomeMessage();
+                }
+            }, 500);
+        }
+    </script>
+    
+    <!-- Header Icons and Menu Toggle Handler -->
+    <script>
+        // Header icon navigation functions
+        function goToCartPage() {
+            window.location.href = 'cart.html';
+        }
+        
+        function goToFavoritesPage() {
+            window.location.href = 'favorites.html';
+        }
+        
+        function goToLoginPage() {
+            window.location.href = 'login.html';
+        }
+        
+        // Legacy toggleMenu function removed - using user-drawer instead
+        
+        // Initialize header icons on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cart icon - already wrapped in <a href="cart.html">, no need for event listener
+            
+            // Favorites icon
+            const favoritesIcon = document.querySelector('.nav-icons .fa-heart');
+            if (favoritesIcon) {
+                favoritesIcon.style.cursor = 'pointer';
+                favoritesIcon.addEventListener('click', goToFavoritesPage);
+            }
+            
+            // User/Login icon
+            const userIcon = document.querySelector('.nav-icons .fa-user');
+            if (userIcon) {
+                userIcon.style.cursor = 'pointer';
+                userIcon.addEventListener('click', goToLoginPage);
+            }
+            
+            // Menu toggle - handled by userMenu.js and onclick="window.toggleUserDrawer()" in HTML
+        });
+        
+        // Make functions globally available
+        window.goToCartPage = goToCartPage;
+        window.goToFavoritesPage = goToFavoritesPage;
+        window.goToLoginPage = goToLoginPage;
+    </script>
+    
+    <!-- Placeholder sections -->
+    <section id="about"></section>
+    <section id="contact"></section>
+
+    <!-- User Account Drawer -->
+    <div id="user-drawer-overlay" onclick="window.toggleUserDrawer()"></div>
+
+    <aside id="user-drawer">
+        <button class="user-drawer-close" onclick="window.toggleUserDrawer()">×</button>
+
+        <div class="user-drawer-header">
+            <span class="user-name" id="drawer-user-name"></span>
+            <button class="logout-btn" onclick="logout()" data-translate="navigation.logout">Logout</button>
+        </div>
+
+        <nav class="user-drawer-nav">
+            <a href="index.html" data-translate="navigation.home">Home</a>
+            <a href="perfumes.html" data-translate="navigation.perfumes">Perfumes</a>
+            <a href="watches.html" data-translate="navigation.watches">Watches</a>
+            <a href="bags.html" data-translate="navigation.bags">Bags</a>
+            <a href="accessories.html" data-translate="navigation.accessories">Accessories</a>
+            <a href="index.html#about-section" data-translate="navigation.about">About</a>
+            <a href="index.html#contact-section" data-translate="navigation.contact">Contact</a>
+        </nav>
+    </aside>
+</body>
+</html>

@@ -1,0 +1,118 @@
+/* ===== J&A JEWELRY - ADMIN STYLES ===== */
+/* This file contains the base styles required by admin pages */
+/* Copied from styles.css to enable safe separation */
+
+/* === Brand Name Protection === */
+.brand-name {
+  direction: ltr !important;
+  unicode-bidi: embed;
+  display: inline-block;
+  font-family: var(--font-primary, 'Playfair Display', serif);
+  font-weight: 600;
+  color: var(--gold, #d4af37);
+  text-decoration: none;
+}
+
+/* Ensure brand name is never reversed in RTL */
+[dir="rtl"] .brand-name {
+  direction: ltr !important;
+  unicode-bidi: embed;
+}
+
+/* === CSS Variables === */
+:root {
+  /* Colors */
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #1a1a1a;
+  --bg-tertiary: #2a2a2a;
+  --text-primary: #ffffff;
+  --text-secondary: #cccccc;
+  --text-muted: #888888;
+  --gold: #d4af37;
+  --gold-light: #f4d03f;
+  --gold-dark: #b7950b;
+  --accent: #ffd700;
+  --border: #333333;
+  --shadow: 0 20px 60px rgba(0,0,0,0.4);
+  --shadow-gold: 0 10px 30px rgba(212,175,55,0.2);
+  
+  /* Typography */
+  --font-primary: 'Playfair Display', serif;
+  --font-secondary: 'Cairo', 'Poppins', sans-serif;
+  
+  /* Spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  --spacing-xxl: 4rem;
+  
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+/* === Reset & Base === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+    background: #111 !important;
+    color: #eee !important;
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+}
+
+/* === Typography === */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-primary);
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: var(--spacing-sm);
+}
+
+h1 { font-size: 3.5rem; }
+h2 { font-size: 2.5rem; }
+h3 { font-size: 2rem; }
+h4 { font-size: 1.5rem; }
+h5 { font-size: 1.25rem; }
+h6 { font-size: 1rem; }
+
+p {
+  margin-bottom: var(--spacing-sm);
+  color: var(--text-secondary);
+}
+
+a {
+  color: #d4af37 !important;
+  text-decoration: none !important;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: #ffd879 !important;
+}
+
+/* === Container === */
+.container {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-sm);
+}
+
+.container-fluid {
+  width: 100%;
+  padding: 0 var(--spacing-md);
+}
+

@@ -1,0 +1,172 @@
+{
+  "site": {
+    "title": "J&A Jewelry",
+    "slogan": "Luxury Watches, Perfumes & Accessories"
+  },
+  "brand": {
+    "title": "J&A Jewelry – כאשר האלגנטיות פוגשת את היוקרה",
+    "slogan": "יוקרה שמדברת אליך."
+  },
+  "navigation": {
+    "home": "בית",
+    "perfumes": "בשמים",
+    "watches": "שעונים",
+    "bags": "תיקים",
+    "accessories": "אביזרים",
+    "about": "עלינו",
+    "contact": "צור קשר",
+    "cart": "עגלה",
+    "admin": "מנהל",
+    "login": "התחברות",
+    "logout": "התנתקות"
+  },
+  "greeting": {
+    "hello": "שלום",
+    "welcome": "שלום"
+  },
+  "login": {
+    "email": "כתובת אימייל",
+    "password": "סיסמה",
+    "login_button": "התחבר",
+    "google_login": "התחבר עם Google",
+    "create_account": "צור חשבון חדש",
+    "no_account": "אין לך חשבון?"
+  },
+  "categories": {
+    "perfumes": "בושם יוקרתי",
+    "watches": "שעונים אלגנטיים",
+    "bags": "תיקים יוקרתיים",
+    "accessories": "אקססוריז אלגנטיים"
+  },
+  "products": {
+    "add_to_cart": "הוסף לעגלה",
+    "dior": {
+      "name": "בושם דיור",
+      "price": "$120"
+    },
+    "chanel": {
+      "name": "בושם שאנל",
+      "price": "$150"
+    },
+    "boss": {
+      "name": "בושם בוס",
+      "price": "$100"
+    },
+    "rolex": {
+      "name": "שעון רולקס",
+      "price": "$5000"
+    },
+    "guess": {
+      "name": "שעון גאס",
+      "price": "$200"
+    },
+    "tissot": {
+      "name": "שעון טיסו",
+      "price": "$300"
+    },
+    "gucci": {
+      "name": "תיק גוצ'י",
+      "price": "$800"
+    },
+    "prada": {
+      "name": "תיק פראדה",
+      "price": "$700"
+    },
+    "ring": {
+      "name": "טבעת זהב",
+      "brand": "זהב 18 קראט",
+      "price": "$400"
+    },
+    "necklace": {
+      "name": "שרשרת אלגנטית",
+      "brand": "זהב ויהלומים",
+      "price": "$600"
+    }
+  },
+  "about": {
+    "title": "אודותינו",
+    "text1": "J&A Jewelry הוא חנות יוקרה המציעה אוסף נבחר בקפידה של בושם מקורי, שעונים אלגנטיים, אקססוריז אלגנטיים ותיקים יוקרתיים לגברים ונשים.",
+    "text2": "אנו מאמינים שכל פרט קטן עושה הבדל גדול, לכן אנו דואגים שכל פריט באוסף שלנו יהיה השתקפות של יוקרה, אלגנטיות ואיכות גבוהה."
+  },
+  "contact": {
+    "title": "צור קשר",
+    "address_title": "כתובת",
+    "address": "בקה אל-גרביה – רחוב ביר בורין",
+    "phone_title": "טלפון וווטסאפ",
+    "instagram_title": "אינסטגרם",
+    "facebook_title": "פייסבוק",
+    "tiktok_title": "טיקטוק",
+    "whatsapp_btn": "💬 צור איתנו קשר בוווטסאפ"
+  },
+  "footer": {
+    "title": "J&A Jewelry",
+    "description": "חנות יוקרה לבושם, שעונים ואקססוריז",
+    "quick_links": "קישורים מהירים",
+    "contact": "פרטי יצירת קשר",
+    "rights": "כל הזכויות שמורות.",
+    "location": "באקה אל-גרבייה – רח' ביר בורין"
+  },
+  "common": {
+    "loading": "טוען...",
+    "error": "שגיאה",
+    "success": "הצלחה",
+    "price": "מחיר",
+    "quantity": "כמות",
+    "total": "סה\"כ",
+    "empty_cart": "העגלה שלך ריקה"
+  },
+  "filter": {
+    "shop-by": "סינון",
+    "view-as": "הצג כ",
+    "brand": "מותג",
+    "category": "קטגוריה",
+    "material": "חומר",
+    "color": "צבע",
+    "type": "סוג",
+    "price": "מחיר",
+    "sort-by": "מיון לפי",
+    "featured": "מומלץ",
+    "price-low": "מחיר: נמוך לגבוה",
+    "price-high": "מחיר: גבוה לנמוך",
+    "name": "שם א-ת",
+    "address-content": "באקה אל-גרביה – רחוב ביר בורין"
+  },
+  "product": {
+    "material": "חומר",
+    "color": "צבע",
+    "type": "סוג",
+    "brand": "מותג",
+    "types": {
+      "bracelet": "צמיד",
+      "ring": "טבעת",
+      "necklace": "שרשרת",
+      "earring": "עגיל",
+      "earrings": "עגילים",
+      "set": "סט"
+    },
+    "materials": {
+      "silver": "כסף",
+      "silver_925": "כסף 925",
+      "gold": "זהב",
+      "gold_filled": "זהב מלא",
+      "stainless_steel": "פלדת אל-חלד",
+      "platinum": "פלטינה",
+      "rose_gold": "זהב ורוד"
+    },
+    "colors": {
+      "gold": "זהב",
+      "silver": "כסף",
+      "rose_gold": "זהב ורוד"
+    }
+  },
+  "admin": {
+    "dashboard": "לוח בקרה",
+    "sidebar": {
+      "dashboard": "לוח בקרה",
+      "products": "מוצרים",
+      "categories": "קטגוריות",
+      "upload": "העלאת JSON"
+    },
+    "upload_hint": "בחר קובץ JSON להעלאת מוצרים"
+  }
+}

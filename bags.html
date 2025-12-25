@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J&A Jewelry - Luxury Bags</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Cairo:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #1a1a1a;
+            --gold: #d4af37;
+            --gold-light: #f0e6b2;
+            --gold-dark: #b8941f;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --text-muted: #888888;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 2.5rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            padding: 0;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 1rem;
+            margin-top: 2.5rem;
+            position: relative;
+        }
+
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+            text-align: center;
+            width: 100%;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-card {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.2);
+            border-color: var(--gold);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .products-grid .product-image {
+            position: static;
+            pointer-events: none;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .products-grid .favorite-icon {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 1000;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 50%;
+            min-width: 36px;
+            width: 36px;
+            min-height: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            border: none;
+            padding: 0;
+            margin: 0;
+            pointer-events: auto;
+            isolation: isolate;
+        }
+
+        .products-grid .favorite-icon:hover {
+            background: rgba(0, 0, 0, 0.8);
+            transform: scale(1.15);
+        }
+
+        .products-grid .favorite-icon i {
+            font-size: 18px;
+            color: transparent;
+            -webkit-text-stroke: 2px #ffffff;
+            text-stroke: 2px #ffffff;
+            transition: all 0.3s ease;
+            font-weight: 400;
+            pointer-events: none;
+        }
+
+        .products-grid .favorite-icon.active i {
+            color: #d4af37;
+            -webkit-text-stroke: 0;
+            text-stroke: 0;
+            font-weight: 900;
+        }
+
+        .products-grid .favorite-icon.active {
+            background: rgba(212, 175, 55, 0.15);
+        }
+
+        .products-grid .favorite-icon.active:hover {
+            background: rgba(212, 175, 55, 0.25);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .product-brand {
+            color: var(--gold);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-primary);
+            border: none;
+            padding: 0.8rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .add-to-cart:hover {
+            background: linear-gradient(135deg, var(--gold-light), var(--gold));
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+
+
+        /* Filter Section */
+        .filter-section {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        .filter-container {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+            flex-wrap: nowrap;
+            align-items: center;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-select {
+            padding: 10px 15px;
+            background-color: #111;
+            border: 1px solid #cba135;
+            border-radius: 6px;
+            color: white;
+            font-weight: 500;
+            min-width: 160px;
+            text-align: right;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-select:hover {
+            border-color: var(--gold);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .sort-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sort-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .sort-select {
+            background: var(--bg-primary);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--text-primary);
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sort-select:hover {
+            border-color: var(--gold);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+        }
+
+        /* VIEW AS Grid Layout Icons */
+        .view-as-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .view-as-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .view-as-icons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .view-icon {
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            background: var(--bg-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+        }
+
+        .view-icon:hover {
+            border-color: var(--gold);
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .view-icon.active {
+            border-color: var(--gold);
+            background: var(--gold);
+        }
+
+        .view-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--text-secondary);
+            transition: fill 0.3s ease;
+        }
+
+        .view-icon.active svg {
+            fill: var(--bg-primary);
+        }
+
+        .view-icon:hover svg {
+            fill: var(--gold);
+        }
+
+        /* Grid Layout Variations */
+        .products-grid.grid-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .products-grid.grid-list .product-card {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            max-width: none;
+        }
+
+        .products-grid.grid-list .product-image {
+            width: 150px;
+            height: 150px;
+            flex-shrink: 0;
+        }
+
+        .products-grid.grid-list .product-info {
+            flex: 1;
+            text-align: left;
+        }
+
+        .products-grid.grid-2-col {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .products-grid.grid-3-col {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .products-grid.grid-4-col {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        @media (max-width: 1200px) {
+            .products-grid.grid-4-col {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .products-grid.grid-3-col,
+            .products-grid.grid-4-col {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .products-grid.grid-2-col,
+            .products-grid.grid-3-col,
+            .products-grid.grid-4-col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+
+            .filter-container {
+                flex-direction: column;
+                gap: 1rem;
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header / Navbar -->
+    <header class="header" style="background: #111 !important; display: flex !important; align-items: center !important; justify-content: space-between !important; padding: 0 40px !important; direction: ltr !important; flex-direction: row !important;">
+        <a href="index.html" class="logo" style="font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; background: linear-gradient(45deg, #d4af37, #ffd700); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; transition: all 0.3s ease; color: #d4af37;">
+            <span dir="ltr" class="brand-name">J&amp;A Jewelry</span>
+        </a>
+
+        <nav class="nav-links" style="display: flex !important; gap: 30px !important; align-items: center !important; flex-direction: row !important; direction: ltr !important; flex-wrap: nowrap !important; margin: 0 !important;">
+            <a href="index.html" data-translate="nav-home" style="color: #d4af37 !important; text-decoration: none !important; font-size: 1rem !important; font-weight: 500 !important; white-space: nowrap !important;">Home</a>
+            <a href="perfumes.html" data-translate="nav-perfumes" style="color: #d4af37 !important; text-decoration: none !important; font-size: 1rem !important; font-weight: 500 !important; white-space: nowrap !important;">Perfumes</a>
+            <a href="watches.html" data-translate="nav-watches" style="color: #d4af37 !important; text-decoration: none !important; font-size: 1rem !important; font-weight: 500 !important; white-space: nowrap !important;">Watches</a>
+            <a href="bags.html" class="active" data-translate="nav-bags" style="color: #d4af37 !important; text-decoration: none !important; font-size: 1rem !important; font-weight: 500 !important; white-space: nowrap !important; border-bottom: 1px solid #d4af37 !important; padding-bottom: 2px !important;">Bags</a>
+            <a href="accessories.html" data-translate="nav-accessories" style="color: #d4af37 !important; text-decoration: none !important; font-size: 1rem !important; font-weight: 500 !important; white-space: nowrap !important;">Accessories</a>
+            <a href="#about" data-translate="nav-about" style="color: #d4af37 !important; text-decoration: none !important; font-size: 1rem !important; font-weight: 500 !important; white-space: nowrap !important;">About</a>
+            <a href="#contact" data-translate="nav-contact" style="color: #d4af37 !important; text-decoration: none !important; font-size: 1rem !important; font-weight: 500 !important; white-space: nowrap !important;">Contact</a>
+        </nav>
+
+        <div class="nav-icons" style="display: flex !important; gap: 1.5rem !important; align-items: center !important; flex-direction: row !important; direction: ltr !important; flex-wrap: nowrap !important;">
+            <a href="cart.html" style="color: #d4af37 !important; text-decoration: none !important; position: relative !important; display: inline-flex !important; align-items: center !important; justify-content: center !important;">
+                <i class="fa-solid fa-bag-shopping" id="header-cart-icon" style="color: #d4af37 !important; font-size: 1.25rem !important;">
+                    <span class="cart-badge" id="cart-badge" style="position: absolute; top: -8px; right: -8px; background: #d4af37; color: #ffffff; border-radius: 50%; min-width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: bold;">5</span>
+                </i>
+            </a>
+            <i class="fa-solid fa-heart" style="color: #d4af37 !important; font-size: 1.25rem !important; cursor: pointer !important;"></i>
+            <button onclick="window.handleUserIconClick()" style="background: none !important; border: none !important; color: inherit !important; cursor: pointer !important; padding: 0 !important;">
+                <i class="fa-solid fa-user" id="header-account-icon" style="color: #d4af37 !important; font-size: 1.25rem !important;"></i>
+            </button>
+            <div id="user-profile-area" class="user-profile-area" style="display: flex !important; margin-left: 1.5rem !important; align-items: center !important;">
+                <span id="user-greeting" class="user-greeting" style="color: #fff !important; font-size: 0.95rem !important; font-weight: 500 !important; white-space: nowrap !important;">Welcome, <span id="user-display-name" style="color: #d4af37 !important; font-weight: 600 !important;">testmorjan</span> 👑</span>
+            </div>
+        </div>
+
+        <button id="lang-toggle" class="lang-switch" data-lang="ar" onclick="cycleLanguage()" style="background: #0a0a0a !important; border: 1px solid #d4af37 !important; padding: 0.5rem 1rem !important; border-radius: 25px !important; color: #d4af37 !important; font-size: 0.9rem !important; font-weight: 500 !important; cursor: pointer !important; min-width: 100px !important; text-align: center !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; margin-left: 1rem !important; white-space: nowrap !important;">English</button>
+        <button class="menu-toggle" type="button" onclick="window.toggleUserDrawer()" aria-label="Open menu" aria-expanded="false" aria-controls="user-drawer">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title" data-translate="categories-bags">Luxury Bags</h1>
+                <p class="page-subtitle" data-translate="bags-description">Discover our exclusive collection of designer handbags and luxury accessories</p>
+            </div>
+
+            <!-- Filter Section -->
+            <div class="filter-section">
+                <div class="filter-container">
+                    <!-- Filter Label -->
+                    <span class="filter-label" 
+                          data-en="Filter" 
+                          data-ar="تصفية" 
+                          data-he="סינון">تصفية</span>
+                    
+                    <!-- Gender Filter -->
+                    <div class="filter-group">
+                        <div class="filter-dropdown">
+                            <select id="genderFilter" class="filter-select">
+                                <option value="all" data-en="Gender" data-ar="الجنس" data-he="מין">الجنس</option>
+                                <option value="men" data-en="Men" data-ar="رجالي" data-he="גברים">رجالي</option>
+                                <option value="women" data-en="Women" data-ar="نسائي" data-he="נשים">نسائي</option>
+                                <option value="travel" data-en="Travel" data-ar="سفر" data-he="נסיעות">سفر</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Availability Filter -->
+                    <div class="filter-group">
+                        <div class="filter-dropdown">
+                            <select id="availabilityFilter" class="filter-select">
+                                <option value="all" data-en="Availability" data-ar="التوفر" data-he="זמינות">التوفر</option>
+                                <option value="available" data-en="Available" data-ar="متوفر" data-he="זמין">متوفر</option>
+                                <option value="unavailable" data-en="Out of stock" data-ar="غير متوفر" data-he="לא זמין">غير متوفر</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <div class="filter-dropdown">
+                            <select id="brandFilter" class="filter-select">
+                                <option value="all" data-en="Brand" data-ar="العلامة التجارية" data-he="מותג">العلامة التجارية</option>
+                                <option value="GUESS">GUESS</option>
+                                <option value="EMILY LORAN">EMILY LORAN</option>
+                                <option value="VERSSE">VERSSE</option>
+                                <option value="BAUSCH TOMMY">BAUSCH TOMMY</option>
+                                <option value="BAUSCH BOSS">BAUSCH BOSS</option>
+                                <option value="BAUSCH LACOST">BAUSCH LACOST</option>
+                                <option value="BAUSCH SWISS">BAUSCH SWISS</option>
+                                <option value="GYM">GYM</option>
+                                <option value="GENERIC">GENERIC</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <div class="filter-dropdown">
+                            <select id="priceFilter" class="filter-select">
+                                <option value="all" data-en="Price" data-ar="السعر" data-he="מחיר">السعر</option>
+                                <option value="0-500">₪0 - ₪500</option>
+                                <option value="500-2000">₪500 - ₪2000</option>
+                                <option value="2000+">+₪2000</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="sort-group">
+                        <label class="sort-label" data-translate="filter-sort-by">SORT BY</label>
+                        <select id="sort-by" class="sort-select">
+                            <option value="featured" data-translate="filter-featured">Featured</option>
+                            <option value="price-low" data-translate="filter-price-low">Price: Low to High</option>
+                            <option value="price-high" data-translate="filter-price-high">Price: High to Low</option>
+                            <option value="name" data-translate="filter-name">Name A-Z</option>
+                        </select>
+                    </div>
+                    
+                    <div class="view-as-section">
+                        <label class="view-as-label" data-translate="filter-view-as">VIEW AS</label>
+                        <div class="view-as-icons">
+                            <div class="view-icon" data-layout="list">
+                                <svg viewBox="0 0 24 24">
+                                    <rect x="3" y="6" width="18" height="2" rx="1"/>
+                                    <rect x="3" y="10" width="18" height="2" rx="1"/>
+                                    <rect x="3" y="14" width="18" height="2" rx="1"/>
+                                </svg>
+                            </div>
+                            <div class="view-icon" data-layout="2-col">
+                                <svg viewBox="0 0 24 24">
+                                    <rect x="3" y="3" width="8" height="8" rx="1"/>
+                                    <rect x="13" y="3" width="8" height="8" rx="1"/>
+                                    <rect x="3" y="13" width="8" height="8" rx="1"/>
+                                    <rect x="13" y="13" width="8" height="8" rx="1"/>
+                                </svg>
+                            </div>
+                            <div class="view-icon active" data-layout="3-col">
+                                <svg viewBox="0 0 24 24">
+                                    <rect x="2" y="2" width="6" height="6" rx="1"/>
+                                    <rect x="9" y="2" width="6" height="6" rx="1"/>
+                                    <rect x="16" y="2" width="6" height="6" rx="1"/>
+                                    <rect x="2" y="9" width="6" height="6" rx="1"/>
+                                    <rect x="9" y="9" width="6" height="6" rx="1"/>
+                                    <rect x="16" y="9" width="6" height="6" rx="1"/>
+                                </svg>
+                            </div>
+                            <div class="view-icon" data-layout="4-col">
+                                <svg viewBox="0 0 24 24">
+                                    <rect x="1" y="1" width="5" height="5" rx="1"/>
+                                    <rect x="7" y="1" width="5" height="5" rx="1"/>
+                                    <rect x="13" y="1" width="5" height="5" rx="1"/>
+                                    <rect x="19" y="1" width="4" height="5" rx="1"/>
+                                    <rect x="1" y="7" width="5" height="5" rx="1"/>
+                                    <rect x="7" y="7" width="5" height="5" rx="1"/>
+                                    <rect x="13" y="7" width="5" height="5" rx="1"/>
+                                    <rect x="19" y="7" width="4" height="5" rx="1"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <section id="bags-container" class="products-grid"></section>
+        </div>
+    </main>
+
+    <!-- Firebase Frontend Configuration and Shop Scripts -->
+    <script type="module" src="firebase-frontend-config.js"></script>
+    <script src="app.js" defer></script>
+    <script src="assets/js/userMenu.js"></script>
+    <script src="favorites.js"></script>
+    <script type="module">
+        // Import Firestore functions
+        import { collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
+        import { db } from "./firebase-frontend-config.js";
+
+        // Helper function to get gender/type translation
+        function getTypeLabel(type) {
+            const lang = document.documentElement.lang || 'en';
+            const langCode = lang.split('-')[0];
+            const translations = {
+                'ar': { 'women': '💎 نسائي', 'men': '👔 رجالي', 'travel': '✈️ سفر' },
+                'he': { 'women': '💎 נשים', 'men': '👔 גברים', 'travel': '✈️ נסיעות' },
+                'en': { 'women': '💎 Women', 'men': '👔 Men', 'travel': '✈️ Travel' }
+            };
+            return translations[langCode]?.[type] || translations['en'][type] || type;
+        }
+
+        // Function to update type labels when language changes
+        function updateTypeLabels() {
+            const typeElements = document.querySelectorAll('.product-type-label');
+            typeElements.forEach(element => {
+                const type = element.dataset.type;
+                if (type) {
+                    element.textContent = getTypeLabel(type);
+                }
+            });
+        }
+
+        // Export for global access
+        window.updateTypeLabels = updateTypeLabels;
+
+        // Favorites management is now handled by favorites.js global click handler
+        // No duplicate handlers needed here
+
+        // Load bags from Firestore
+        let allProducts = [];
+        let brandFilter, genderFilter, priceFilter, sortBy, productsGrid, viewIcons;
+
+        // Render products function
+        // Helper function to get multilingual product name
+        function getProductName(product, lang = null) {
+            if (!product || !product.name) {
+                return "Unknown Product";
+            }
+            
+            // If name is an object with language keys
+            if (typeof product.name === 'object' && product.name !== null) {
+                const currentLang = lang || document.documentElement.lang || localStorage.getItem('language') || 'ar';
+                const langCode = currentLang.split('-')[0];
+                
+                // Try current language first
+                if (product.name[langCode]) {
+                    return product.name[langCode];
+                }
+                
+                // Fallback to Arabic
+                if (product.name.ar) {
+                    return product.name.ar;
+                }
+                
+                // Fallback to English
+                if (product.name.en) {
+                    return product.name.en;
+                }
+                
+                // Fallback to any available language
+                const availableLang = Object.keys(product.name)[0];
+                if (availableLang) {
+                    return product.name[availableLang];
+                }
+            }
+            
+            // Backward compatibility: if name is a string, return it
+            if (typeof product.name === 'string') {
+                return product.name;
+            }
+            
+            return "Unknown Product";
+        }
+        
+        // Store products for language updates
+        let cachedBagsForUpdate = [];
+        
+        function renderProducts(productsToRender) {
+            if (!productsGrid) return;
+            
+            productsGrid.innerHTML = '';
+            
+            if (productsToRender.length === 0) {
+                productsGrid.innerHTML = '<p style="text-align: center; color: var(--text-secondary); grid-column: 1/-1; padding: 2rem;">No bags found</p>';
+                return;
+            }
+            
+            // Store products for language updates
+            cachedBagsForUpdate = productsToRender;
+            
+            // Display ALL bags
+            productsToRender.forEach(product => {
+                const typeLabel = getTypeLabel(product.type || product.gender || 'unisex');
+                const priceAfter = product.price_after || product.price || 0;
+                const priceBefore = product.price_before || product.original_price || null;
+                const currency = product.currency || '₪';
+                const productName = getProductName(product);
+                const imageUrl = product.imageUrl || product.image || product.image_url || 'assets/images/products/placeholder.jpg';
+                
+                // Normalize product data - use ONLY: id, name, brand, price, image
+                const normalizedProduct = {
+                    id: product.id || '',
+                    name: product.name || {},
+                    price: priceAfter,
+                    original_price: priceBefore,
+                    currency: currency,
+                    image: imageUrl,
+                    gender: product.gender || 'unisex',
+                    brand: product.brand || '',
+                    category: product.category || 'bags',
+                    type: product.type || null
+                };
+                
+                const productDataEscaped = JSON.stringify(normalizedProduct).replace(/'/g, "&#39;").replace(/"/g, '&quot;');
+                const card = `
+                <div class="product-card" data-product-data='${productDataEscaped}'>
+                        <div class="favorite-icon" data-product-id="${product.id}">
+                            <i class="fa-solid fa-heart"></i>
+                        </div>
+                        <img src="${imageUrl}" alt="${productName}" class="product-image" onerror="this.src='assets/images/products/placeholder.jpg'">
+                    <div class="product-info">
+                            <h3 class="product-name" data-id="${product.id || ''}">${productName}</h3>
+                            <p class="product-brand product-type-label" data-type="${product.type || product.gender || 'unisex'}">${typeLabel}</p>
+                            <p class="product-price">
+                                ${priceBefore ? `<span class="old-price">${priceBefore}${currency}</span>` : ''}
+                                <span class="new-price">${priceAfter}${currency}</span>
+                            </p>
+                            <button class="add-to-cart" data-translate="btn-add-to-cart" data-id="${product.id || ''}" data-product="${JSON.stringify({
+                                id: product.id,
+                                name: productName,
+                                brand: product.brand || '',
+                                price: priceAfter || 0,
+                                image: normalizedProduct.image || 'assets/images/products/placeholder.jpg',
+                                category: product.category || 'bags'
+                            }).replace(/"/g, '&quot;')}" onclick="window.addToCart(JSON.parse(this.getAttribute('data-product')))">Add to Cart</button>
+                    </div>
+                </div>
+                `;
+                productsGrid.innerHTML += card;
+            });
+            
+            // Update type labels after rendering
+            if (window.updateTypeLabels) {
+                updateTypeLabels();
+            }
+            
+            // Update favorite icons after rendering
+            if (window.updateAllFavoriteIcons) {
+                window.updateAllFavoriteIcons();
+            }
+            
+            console.log(`✅ Displayed ${productsToRender.length} bags from Firestore`);
+            console.log('✅ Multilingual product name support enabled across all categories.');
+        }
+        
+        // Function to update product names when language changes
+        function updateBagNames() {
+            if (!productsGrid) return;
+            
+            const currentLang = document.documentElement.lang || localStorage.getItem('language') || 'ar';
+            const langCode = currentLang.split('-')[0];
+            
+            productsGrid.querySelectorAll('.product-name[data-product-id]').forEach(nameElement => {
+                const productCard = nameElement.closest('.product-card');
+                const productDataStr = productCard?.getAttribute('data-product-data');
+                if (productDataStr) {
+                    try {
+                        const productData = JSON.parse(productDataStr);
+                        const translatedName = getProductName(productData, langCode);
+                        nameElement.textContent = translatedName;
+                        
+                        // Update alt text
+                        const img = productCard.querySelector('.product-image');
+                        if (img) {
+                            img.alt = translatedName;
+                        }
+                    } catch (e) {
+                        console.warn('Failed to parse product data for name update:', e);
+                    }
+                }
+            });
+        }
+        
+        // Make function available globally
+        window.updateBagNames = updateBagNames;
+
+        // Filter products function
+            function filterProducts() {
+            if (!brandFilter || !genderFilter || !priceFilter || !sortBy) {
+                renderProducts(allProducts);
+                return;
+            }
+            
+                const selectedBrand = brandFilter.value;
+            const selectedType = genderFilter.value;
+                const selectedPrice = priceFilter.value;
+                
+            let filteredProducts = allProducts.filter(product => {
+                    let matches = true;
+                    
+                    if (selectedBrand !== 'all' && product.brand !== selectedBrand) {
+                        matches = false;
+                    }
+                    
+                if (selectedType !== 'all') {
+                    const productType = product.type || product.gender || '';
+                    if (productType !== selectedType) {
+                        matches = false;
+                    }
+                    }
+                    
+                    if (selectedPrice !== 'all') {
+                    const price = product.price_after || product.price || 0;
+                    if (selectedPrice === '100-200' && (price < 100 || price > 200)) {
+                            matches = false;
+                    } else if (selectedPrice === '200-400' && (price < 200 || price > 400)) {
+                            matches = false;
+                    } else if (selectedPrice === '400-600' && (price < 400 || price > 600)) {
+                        matches = false;
+                    } else if (selectedPrice === '600+' && price < 600) {
+                            matches = false;
+                        }
+                    }
+                    
+                    return matches;
+                });
+                
+                // Sort products
+                const sortValue = sortBy.value;
+                if (sortValue === 'price-low') {
+                filteredProducts.sort((a, b) => (a.price_after || a.price || 0) - (b.price_after || b.price || 0));
+                } else if (sortValue === 'price-high') {
+                filteredProducts.sort((a, b) => (b.price_after || b.price || 0) - (a.price_after || a.price || 0));
+                } else if (sortValue === 'name') {
+                filteredProducts.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+                }
+                
+                renderProducts(filteredProducts);
+            }
+            
+        // Load bags from Firestore "bags" collection
+        async function loadBags() {
+            try {
+                const querySnapshot = await getDocs(collection(db, "bags"));
+                allProducts = [];
+                querySnapshot.forEach((doc) => {
+                    const product = {
+                        id: doc.id,  // Use doc.id (Firestore document ID)
+                        ...doc.data()
+                    };
+                    allProducts.push(product);
+                });
+                console.log('✅ Loaded bags from Firestore "bags" collection:', allProducts.length);
+                // Call filterProducts to display all products
+                filterProducts();
+            } catch (error) {
+                console.error('❌ Error loading bags:', error);
+            }
+        }
+
+        // Filter functionality - Initialize on DOM ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize language system
+            // CRITICAL: REMOVED switchLanguage override to prevent infinite loops
+            // Use event listener only - do NOT override global function
+            // Also listen for language change events
+            document.addEventListener('languageChanged', () => {
+                setTimeout(() => {
+                    updateBagNames();
+                }, 100);
+            });
+            
+            // CRITICAL: Do NOT call switchLanguage here - it's handled globally by app.js
+            // Language will be set by app.js or other global handlers
+
+            // Get DOM elements
+            brandFilter = document.getElementById('brand-filter');
+            genderFilter = document.getElementById('gender-filter');
+            priceFilter = document.getElementById('price-filter');
+            sortBy = document.getElementById('sort-by');
+            productsGrid = document.querySelector('.products-grid') || document.getElementById('bags-container');
+            viewIcons = document.querySelectorAll('.view-icon');
+            
+            // Grid layout switching
+            function switchGridLayout(layout) {
+                viewIcons.forEach(icon => icon.classList.remove('active'));
+                const activeIcon = document.querySelector(`[data-layout="${layout}"]`);
+                if (activeIcon) activeIcon.classList.add('active');
+                if (productsGrid) {
+                productsGrid.className = 'products-grid';
+                productsGrid.classList.add(`grid-${layout}`);
+                }
+            }
+            
+            // Add event listeners for view icons
+            viewIcons.forEach(icon => {
+                icon.addEventListener('click', () => {
+                    const layout = icon.getAttribute('data-layout');
+                    switchGridLayout(layout);
+                });
+            });
+            
+            // Event listeners for filters
+            if (brandFilter) brandFilter.addEventListener('change', filterProducts);
+            if (genderFilter) genderFilter.addEventListener('change', filterProducts);
+            if (priceFilter) priceFilter.addEventListener('change', filterProducts);
+            if (sortBy) sortBy.addEventListener('change', filterProducts);
+            
+            // Load bags from Firestore after DOM is ready
+            loadBags();
+            
+            // Check login state from localStorage
+            if (typeof window.checkLoginState === 'function') {
+                window.checkLoginState();
+            } else {
+                // Import checkLoginState if not available
+                import('./assets/js/auth_frontend.js').then(module => {
+                    if (module.checkLoginState) {
+                        setTimeout(() => {
+                            module.checkLoginState();
+                        }, 500);
+                    }
+                }).catch(err => {
+                    console.warn('Could not load auth_frontend.js:', err);
+                });
+            }
+        });
+    </script>
+    
+    <!-- Load auth_frontend.js to make checkLoginState available -->
+    <script type="module" src="assets/js/auth_frontend.js"></script>
+    <script type="module" src="assets/js/welcome.js"></script>
+    
+    <!-- Set up auth UI updates after DOM loads -->
+    <script type="module">
+        import { auth, updateAuthUI } from './assets/js/auth_frontend.js';
+        import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js';
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('✅ DOM loaded, setting up auth UI updates on bags.html');
+            onAuthStateChanged(auth, (user) => {
+                console.log('🔐 Auth state changed on bags.html:', user ? 'User logged in' : 'User logged out');
+                updateAuthUI(user);
+            });
+        });
+    </script>
+    
+    <!-- Check login state on page load -->
+    <script type="module">
+        import { checkLoginState } from './assets/js/auth_frontend.js';
+        
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                setTimeout(() => {
+                    checkLoginState();
+                    if (typeof window.displayWelcomeMessage === 'function') {
+                        window.displayWelcomeMessage();
+                    }
+                }, 500);
+            });
+        } else {
+            setTimeout(() => {
+                checkLoginState();
+                if (typeof window.displayWelcomeMessage === 'function') {
+                    window.displayWelcomeMessage();
+                }
+            }, 500);
+        }
+    </script>
+    
+    <!-- Header Icons and Menu Toggle Handler -->
+    <script>
+        // Header icon navigation functions
+        function goToCartPage() {
+            window.location.href = 'cart.html';
+        }
+        
+        function goToFavoritesPage() {
+            window.location.href = 'favorites.html';
+        }
+        
+        function goToLoginPage() {
+            window.location.href = 'login.html';
+        }
+        
+        // Legacy toggleMenu function removed - using user-drawer instead
+        
+        // Initialize header icons on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cart icon - already wrapped in <a href="cart.html">, no need for event listener
+            
+            // Favorites icon
+            const favoritesIcon = document.querySelector('.nav-icons .fa-heart');
+            if (favoritesIcon) {
+                favoritesIcon.style.cursor = 'pointer';
+                favoritesIcon.addEventListener('click', goToFavoritesPage);
+            }
+            
+            // User/Login icon
+            const userIcon = document.querySelector('.nav-icons .fa-user');
+            if (userIcon) {
+                userIcon.style.cursor = 'pointer';
+                userIcon.addEventListener('click', goToLoginPage);
+            }
+            
+            // Menu toggle - handled by userMenu.js and onclick="window.toggleUserDrawer()" in HTML
+        });
+        
+        // Make functions globally available
+        window.goToCartPage = goToCartPage;
+        window.goToFavoritesPage = goToFavoritesPage;
+        window.goToLoginPage = goToLoginPage;
+    </script>
+    
+    <!-- Placeholder sections -->
+    <section id="about"></section>
+    <section id="contact"></section>
+
+    <!-- User Account Drawer -->
+    <div id="user-drawer-overlay" onclick="window.toggleUserDrawer()"></div>
+
+    <aside id="user-drawer">
+        <button class="user-drawer-close" onclick="window.toggleUserDrawer()">×</button>
+
+        <div class="user-drawer-header">
+            <span class="user-name" id="drawer-user-name"></span>
+            <button class="logout-btn" onclick="logout()" data-translate="navigation.logout">Logout</button>
+        </div>
+
+        <nav class="user-drawer-nav">
+            <a href="index.html" data-translate="navigation.home">Home</a>
+            <a href="perfumes.html" data-translate="navigation.perfumes">Perfumes</a>
+            <a href="watches.html" data-translate="navigation.watches">Watches</a>
+            <a href="bags.html" data-translate="navigation.bags">Bags</a>
+            <a href="accessories.html" data-translate="navigation.accessories">Accessories</a>
+            <a href="index.html#about-section" data-translate="navigation.about">About</a>
+            <a href="index.html#contact-section" data-translate="navigation.contact">Contact</a>
+        </nav>
+    </aside>
+</body>
+</html>

@@ -1,0 +1,2516 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - J&A Jewelry</title>
+    <link rel="icon" href="data:,">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Cairo:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="admin-styles.css">
+    <style>
+        /* CRITICAL HEADER OVERRIDE - Must come after styles.css to override .header from styles.css */
+        /* Override any .header styles from styles.css */
+        header.admin-header,
+        .admin-header,
+        header.header.admin-header,
+        body > header.admin-header {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 90px !important;
+            z-index: 9999 !important; /* Above sidebar (9998) */
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            margin-top: 0 !important;
+            background: #0e0e0e !important;
+            background-color: #0e0e0e !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            border-bottom: 2px solid #d4af37 !important;
+        }
+        
+        /* Ensure styles.css .header doesn't affect admin header */
+        .header:not(.admin-header) {
+            display: none !important;
+        }
+        
+        .admin-header-content {
+            width: 100% !important;
+            padding: 0 25px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            margin: 0 auto !important;
+            max-width: 1400px;
+        }
+        
+        .admin-header-left,
+        .admin-header-nav,
+        .admin-header-actions {
+            display: flex !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        
+        .admin-logo,
+        .admin-subtitle,
+        .nav-btn,
+        .lang-btn,
+        .logout-btn {
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+    </style>
+    <style>
+        /* RTL Support for Arabic */
+        body.rtl {
+            direction: rtl;
+            text-align: right;
+        }
+        
+        body.ltr {
+            direction: ltr;
+            text-align: left;
+        }
+        
+        /* GLOBAL RESET - Remove all margins and padding */
+        html, body {
+            margin: 0 !important;
+            padding: 0 !important;
+            border: 0 !important;
+            box-sizing: border-box !important;
+        }
+        
+        *, *::before, *::after {
+            box-sizing: border-box !important;
+        }
+
+        body {
+            background: #000000 !important;
+            color: #ffffff !important;
+            min-height: 100vh;
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+            opacity: 1 !important;
+            filter: none !important;
+            backdrop-filter: none !important;
+        }
+        
+        html {
+            opacity: 1 !important;
+            filter: none !important;
+            backdrop-filter: none !important;
+        }
+        
+        .admin-page-content * {
+            font-size: inherit;
+        }
+        
+        /* Scale up smaller text */
+        .admin-page-content p,
+        .admin-page-content span,
+        .admin-page-content td,
+        .admin-page-content label,
+        .admin-page-content input,
+        .admin-page-content select {
+            font-size: 1rem !important;
+        }
+        
+        .admin-page-content .filter-control label,
+        .admin-page-content .search-field label {
+            font-size: 0.95rem !important;
+        }
+        
+        .admin-page-content button,
+        .admin-page-content .btn {
+            font-size: 1rem !important;
+        }
+        
+        html {
+            opacity: 1 !important;
+            filter: none !important;
+            backdrop-filter: none !important;
+        }
+
+        body.rtl {
+            direction: rtl;
+            text-align: right;
+        }
+
+        body.ltr {
+            direction: ltr;
+            text-align: left;
+        }
+
+        body.rtl .admin-header-content {
+            flex-direction: row-reverse;
+        }
+
+        body.rtl .admin-header-nav,
+        body.rtl .admin-header-actions {
+            flex-direction: row-reverse;
+        }
+
+        body.rtl .admin-sidebar {
+            left: auto !important;
+            right: 0 !important;
+        }
+
+        body.rtl .admin-page-content {
+            margin-left: 0 !important;
+            margin-right: 260px !important;
+        }
+        
+        main {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+        }
+        
+        /* HEADER - Using override from first style block above */
+
+        /* Admin Header - Consolidated with override above */
+        /* Removed duplicate definition - using the one in the first style block */
+
+        .admin-header-left {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            flex-shrink: 0;
+        }
+        
+        .admin-logo {
+            font-family: var(--font-primary);
+            font-size: 50px !important; /* +40% from 36px */
+            font-weight: 700 !important;
+            color: #d4af37 !important;
+            letter-spacing: 0.05em !important;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5), 0 0 20px rgba(212, 175, 55, 0.3) !important;
+            margin: 0;
+            padding: 0;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        
+        .admin-subtitle {
+            font-family: var(--font-secondary);
+            font-size: 0.85rem;
+            color: rgba(212, 175, 55, 0.7) !important;
+            font-weight: 500;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        
+        .admin-header-nav {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .nav-btn {
+            font-family: var(--font-secondary);
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.8) !important;
+            text-decoration: none;
+            padding: 0.6rem 1.25rem;
+            border-radius: 999px;
+            border: 1px solid transparent;
+            background: transparent;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            cursor: pointer;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        
+        .nav-btn:hover {
+            color: #d4af37;
+            border-color: rgba(212, 175, 55, 0.4);
+            background: rgba(212, 175, 55, 0.1);
+        }
+        
+        .nav-btn.active {
+            background: linear-gradient(135deg, #d4af37, #f0d97a);
+            color: #0e0e0e;
+            border-color: #d4af37;
+            border-bottom: none !important;
+            box-shadow: none !important;
+        }
+        
+        .lang-btn {
+            font-family: var(--font-secondary);
+            font-weight: 600;
+            color: #d4af37 !important;
+            background: rgba(212, 175, 55, 0.15) !important;
+            border: 1px solid rgba(212, 175, 55, 0.3) !important;
+            padding: 0.6rem 1.25rem;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        
+        .lang-btn:hover {
+            background: rgba(212, 175, 55, 0.25);
+            border-color: rgba(212, 175, 55, 0.5);
+        }
+        
+        .logout-btn {
+            font-family: var(--font-secondary);
+            font-weight: 600;
+            color: #0b0b0b !important;
+            background: linear-gradient(135deg, #b8941f, #9d7f1a) !important;
+            border: none !important;
+            padding: 0.6rem 1.25rem;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-size: 0.9rem;
+            display: flex !important;
+            align-items: center;
+            gap: 0.5rem;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+        
+        .admin-header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-shrink: 0;
+        }
+
+        .admin-header-logo {
+            font-family: var(--font-primary);
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #d4af37;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .admin-header-logo:hover {
+            transform: scale(1.05);
+        }
+
+        .admin-header-logo i {
+            font-size: 1.5rem;
+            color: #d4af37;
+        }
+
+        .admin-header-subtitle {
+            font-family: var(--font-secondary);
+            font-size: 0.85rem;
+            color: rgba(212, 175, 55, 0.7);
+            font-weight: 500;
+        }
+
+        .admin-header-categories {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+        }
+
+        .admin-header-nav-main {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        .admin-header-nav-link {
+            font-family: var(--font-secondary);
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            padding: 0.6rem 1.25rem;
+            border-radius: 999px;
+            border: 1px solid transparent;
+            background: transparent;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .admin-header-nav-link:hover {
+            color: #d4af37;
+            border-color: rgba(212, 175, 55, 0.4);
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .admin-header-nav-link.active {
+            background: linear-gradient(135deg, #d4af37, #f0d97a);
+            color: #0e0e0e;
+            border-color: #d4af37;
+        }
+
+        .admin-header-category-link {
+            font-family: var(--font-secondary);
+            font-size: 16px;
+            color: #d4af37;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            text-transform: lowercase;
+        }
+
+        .admin-header-category-link:hover {
+            color: #f0d97a;
+            text-decoration: underline;
+        }
+
+        .admin-header-category-link.active {
+            font-weight: 700;
+            color: #f0d97a;
+        }
+
+        .admin-header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .admin-header-nav {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .admin-header-btn {
+            font-family: var(--font-secondary);
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            padding: 0.6rem 1.25rem;
+            border-radius: 999px;
+            border: 1px solid transparent;
+            background: transparent;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .admin-header-btn:hover {
+            color: #d4af37;
+            border-color: rgba(212, 175, 55, 0.4);
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .admin-header-btn.active {
+            background: linear-gradient(135deg, #d4af37, #f0d97a);
+            color: #0e0e0e;
+            border-color: #d4af37;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .admin-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-right: 1rem;
+        }
+
+        .admin-header-lang-toggle {
+            font-family: var(--font-secondary);
+            font-weight: 600;
+            color: #d4af37;
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 0.6rem 1.25rem;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .admin-header-lang-toggle:hover {
+            background: rgba(212, 175, 55, 0.25);
+            border-color: rgba(212, 175, 55, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .admin-header-logout {
+            font-family: var(--font-secondary);
+            font-weight: 600;
+            color: #0b0b0b;
+            background: linear-gradient(135deg, #b8941f, #9d7f1a);
+            border: none;
+            padding: 0.6rem 1.25rem;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .admin-header-logout:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Push admin content down so header becomes visible and shift right for sidebar */
+        /* Force white text for all admin content */
+        .admin-page-content,
+        .admin-page-content * {
+            color: #ffffff !important;
+        }
+        
+        /* Exclude header and sidebar from white text rule - they keep their original colors */
+        
+        /* Preserve gold for section titles and icons */
+        .admin-page-content .section-title,
+        .admin-page-content .category-label,
+        .admin-page-content .products-table th,
+        .admin-page-content .sidebar-title,
+        .admin-page-content .sidebar-title *,
+        .admin-page-content i.fa,
+        .admin-page-content [class*="icon"] {
+            color: #d4af37 !important;
+        }
+        
+        .admin-page-content {
+            margin-top: 90px !important; /* SAME AS HEADER HEIGHT */
+            margin-left: 260px !important; /* Shift right for fixed sidebar */
+            padding: 0 !important;
+        }
+
+        .admin-navbar-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        .admin-navbar-logo {
+            font-family: var(--font-primary);
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--gold);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .admin-navbar-logo:hover {
+            transform: scale(1.05);
+        }
+
+        .admin-navbar-logo i {
+            font-size: 1.5rem;
+        }
+
+        .admin-navbar-nav {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .admin-navbar-link {
+            font-family: var(--font-secondary);
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.65rem 1.25rem;
+            border-radius: 999px;
+            border: 1px solid transparent;
+            background: transparent;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .admin-navbar-link:hover {
+            color: var(--text-primary);
+            border-color: rgba(212, 175, 55, 0.4);
+            background: rgba(212, 175, 55, 0.1);
+        }
+        
+        .admin-navbar-link.active {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: #0b0b0b;
+            border-color: var(--gold);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .admin-navbar-link.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .admin-navbar-link.disabled:hover {
+            border-color: transparent;
+            background: transparent;
+        }
+
+        .admin-navbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .admin-lang-toggle {
+            font-family: var(--font-secondary);
+            font-weight: 600;
+            color: var(--gold);
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 0.65rem 1.25rem;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .admin-lang-toggle:hover {
+            background: rgba(212, 175, 55, 0.25);
+            border-color: rgba(212, 175, 55, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .admin-logout-btn {
+            font-family: var(--font-secondary);
+            font-weight: 600;
+            color: #0b0b0b;
+            background: linear-gradient(135deg, #b8941f, #9d7f1a);
+            border: none;
+            padding: 0.65rem 1.25rem;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .admin-logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .admin-hero {
+            position: relative;
+            padding: 0 !important;
+            padding-top: 0 !important;
+            margin: 0 !important;
+            margin-top: 0 !important;
+            background: radial-gradient(circle at top, rgba(212, 175, 55, 0.2), transparent 60%);
+            z-index: 0; /* Ensure it doesn't overlap header */
+        }
+        
+        main {
+            margin: 0 !important;
+            padding: 0 !important;
+            padding-top: 0 !important;
+            margin-top: 0 !important;
+        }
+        
+        .container {
+            margin: 0 !important;
+            margin-top: 0 !important;
+            padding: 0 !important;
+            padding-top: 0 !important;
+        }
+        
+        .admin-layout {
+            margin: 0 !important;
+            margin-top: 0 !important;
+            padding: 0 !important;
+            padding-top: 0 !important;
+        }
+        
+        .wrapper {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+        }
+
+        .admin-layout {
+            display: block;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .admin-sidebar {
+            width: 260px !important;
+            min-width: 260px !important;
+            max-width: 260px !important;
+            position: fixed !important;
+            left: 0 !important;
+            top: 90px !important; /* match header height */
+            height: calc(100vh - 90px) !important;
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
+            z-index: 9998 !important;
+            background: rgba(15, 15, 15, 0.95);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 0 20px 20px 0;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+            padding: 2rem 1.5rem;
+        }
+
+        /* Removed media query - sidebar is always fixed at 260px, content uses margin-left */
+
+        .sidebar-title {
+            font-family: var(--font-primary);
+            font-size: 1.5rem;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .admin-nav {
+            display: flex !important;
+            flex-direction: column !important;
+            flex-wrap: nowrap !important;
+            align-items: stretch !important;
+            gap: 0.75rem;
+        }
+
+        .admin-nav a,
+        .admin-nav button {
+            width: 100% !important;
+            display: flex !important;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.85rem 1rem;
+            border-radius: 12px;
+            border: 1px solid transparent;
+            background: transparent;
+            color: #d4af37 !important; /* Soft gold */
+            font-family: var(--font-secondary);
+            font-weight: 600;
+            font-size: 1.15rem !important; /* +15% increase */
+            transition: all 0.3s ease;
+            cursor: pointer !important;
+            pointer-events: auto !important;
+            text-align: left;
+            text-decoration: none !important;
+            border-bottom: none !important;
+            flex: none !important;
+        }
+
+        /* RTL text alignment override */
+        body.rtl .admin-nav a,
+        body.rtl .admin-nav button {
+            justify-content: flex-start;
+            text-align: right;
+        }
+
+        .admin-nav a .icon,
+        .admin-nav button .icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            background: rgba(212, 175, 55, 0.12);
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .admin-nav a.active,
+        .admin-nav a:hover,
+        .admin-nav button:hover {
+            border-color: rgba(212, 175, 55, 0.4);
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
+            color: var(--text-primary);
+            border-bottom: none !important;
+            box-shadow: none !important;
+            text-decoration: none !important;
+            filter: brightness(1.2);
+        }
+
+        .admin-nav a.active .icon,
+        .admin-nav a:hover .icon,
+        .admin-nav button:hover .icon {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: var(--bg-primary);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4);
+        }
+
+        .admin-content {
+            background: rgba(18, 18, 18, 0.85);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+            margin-left: 0;
+        }
+
+
+        .dashboard-section {
+            scroll-margin-top: 100px; /* Account for fixed header (90px) + some spacing */
+        }
+
+        .dashboard-section + .dashboard-section {
+            margin-top: 3rem;
+        }
+
+        .category-section {
+            margin-bottom: 3rem;
+        }
+
+        .category-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .category-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .category-title {
+            font-family: var(--font-primary);
+            font-size: 1.75rem;
+            color: var(--gold);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .category-count {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .section-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-family: var(--font-primary);
+            font-size: 2rem;
+            color: var(--gold);
+            margin: 0;
+        }
+
+        .admin-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: #0b0b0b;
+            padding: 0.4rem 1.1rem;
+            border-radius: 999px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            font-size: 0.85rem;
+            box-shadow: 0 12px 30px rgba(212, 175, 55, 0.35);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .stats-card {
+            background: rgba(22, 22, 22, 0.95);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 20px;
+            padding: 35px 20px !important;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .stats-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top, rgba(212, 175, 55, 0.15), transparent 55%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .stats-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(212, 175, 55, 0.6);
+        }
+
+        .stats-card:hover::after {
+            opacity: 1;
+        }
+
+        .clickable-category {
+            cursor: pointer;
+        }
+
+        .clickable-category:hover {
+            transform: translateY(-8px);
+            border-color: rgba(212, 175, 55, 0.8);
+        }
+
+        .stats-icon {
+            font-size: 32px !important;
+            color: #d4af37 !important; /* Gold */
+            margin-bottom: 0.5rem;
+        }
+
+        .stats-number {
+            font-size: 38px !important;
+            font-family: var(--font-primary);
+            color: #d4af37 !important; /* Gold */
+            font-weight: 700 !important;
+            margin: 0;
+        }
+
+        .stats-label {
+            font-size: 22px !important;
+            color: #ffffff !important;
+            font-weight: 600 !important;
+            letter-spacing: 0.05em;
+        }
+        
+        /* Center content in stats cards */
+        .stats-card {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-align: center !important;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3) !important; /* Subtle inner shadow */
+        }
+
+        .filters-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            background: rgba(18, 18, 18, 0.9);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 16px;
+            padding: 1rem;
+        }
+
+        .search-field {
+            position: relative;
+            flex: 1 1 220px;
+        }
+
+        .search-field input {
+            width: 100%;
+            padding: 0.85rem 1rem 0.85rem 3rem;
+            border-radius: 12px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            background: rgba(10, 10, 10, 0.8);
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        .search-field i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gold);
+        }
+
+        .filter-control {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            flex: 1 1 160px;
+        }
+
+        .filter-control label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .filter-control select,
+        .filter-control input {
+            border-radius: 10px;
+            padding: 0.65rem 0.85rem;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            background: rgba(10, 10, 10, 0.8);
+            color: var(--text-primary);
+        }
+
+        .products-table-wrapper {
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 18px;
+            overflow: hidden;
+        }
+
+        .products-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .products-table thead {
+            background: rgba(18, 18, 18, 0.9);
+        }
+
+        .products-table th {
+            text-align: left;
+            padding: 1rem 1.5rem;
+            color: var(--gold);
+            font-size: 0.95rem;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            font-weight: 600;
+        }
+
+        .products-table td {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+            vertical-align: middle;
+        }
+
+        .products-table tbody tr:hover {
+            background: rgba(20, 20, 20, 0.8);
+        }
+
+        .product-summary {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .product-thumb {
+            width: 70px;
+            height: 70px;
+            border-radius: 14px;
+            object-fit: cover;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            background: rgba(12, 12, 12, 0.8);
+        }
+
+        .product-names {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+        }
+
+        .product-names span {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .product-names .name-primary {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.35rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+        }
+
+        .tag-category {
+            background: rgba(212, 175, 55, 0.15);
+            color: var(--gold);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .tag-gender {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-secondary);
+        }
+
+        .pricing-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
+        .price-old {
+            color: rgba(255, 255, 255, 0.4);
+            text-decoration: line-through;
+            font-size: 0.85rem;
+        }
+
+        .price-new {
+            color: var(--gold);
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.35rem;
+        }
+
+        .action-buttons button {
+            border: none;
+            border-radius: 10px;
+            padding: 0.55rem 1rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: #0b0b0b;
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #f44336, #c62828);
+            color: #fff;
+            box-shadow: 0 10px 25px rgba(244, 67, 54, 0.35);
+        }
+
+        .action-buttons button:hover {
+            transform: translateY(-2px);
+        }
+
+        .categories-chip-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+
+        .category-chip {
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 999px;
+            padding: 0.45rem 1rem;
+            background: rgba(15, 15, 15, 0.7);
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .category-chip strong {
+            color: var(--gold);
+            margin-left: 0.35rem;
+        }
+
+        .upload-card,
+        .modal-card {
+            background: rgba(16, 16, 16, 0.95);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 24px;
+            padding: 2rem;
+        }
+
+        .upload-progress {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 999px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .upload-progress span {
+            display: block;
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            transition: width 0.3s ease;
+        }
+
+        .message {
+            margin-top: 1rem;
+            border-radius: 12px;
+            padding: 0.9rem 1.1rem;
+            display: none;
+            font-weight: 600;
+        }
+
+        .message.show {
+            display: block;
+        }
+
+        .message.success {
+            background: rgba(76, 175, 80, 0.15);
+            border: 1px solid rgba(76, 175, 80, 0.35);
+            color: #8bd18f;
+        }
+
+        .message.error {
+            background: rgba(244, 67, 54, 0.15);
+            border: 1px solid rgba(244, 67, 54, 0.35);
+            color: #ff8a80;
+        }
+
+        /* Unified Primary Action Button - Gold Background with White Text */
+        .admin-primary-btn {
+            background: linear-gradient(135deg, #d4af37, #f5d76e);
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 22px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.35);
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .admin-primary-btn:hover {
+            background: linear-gradient(135deg, #c9a227, #e6c558);
+            box-shadow: 0 6px 18px rgba(212, 175, 55, 0.55);
+            transform: translateY(-2px);
+            color: #ffffff;
+        }
+
+        .admin-primary-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            color: #ffffff;
+        }
+
+        /* Legacy support - map old classes to new unified class */
+        .primary-btn,
+        .admin-view-all-btn {
+            background: linear-gradient(135deg, #d4af37, #f5d76e);
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 22px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.35);
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .primary-btn:hover,
+        .admin-view-all-btn:hover {
+            background: linear-gradient(135deg, #c9a227, #e6c558);
+            box-shadow: 0 6px 18px rgba(212, 175, 55, 0.55);
+            transform: translateY(-2px);
+            color: #ffffff;
+        }
+
+        .primary-btn:disabled,
+        .admin-view-all-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            color: #ffffff;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            padding: 2rem;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-card {
+            width: min(600px, 100%);
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* Coupon Modal Styles */
+        #coupon-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        #coupon-modal.active {
+            display: flex;
+        }
+        
+        #coupon-modal .modal-content {
+            background: rgba(16, 16, 16, 0.95);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 24px;
+            padding: 2rem;
+            width: min(600px, 90vw);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h3 {
+            font-family: var(--font-primary);
+            color: var(--gold);
+            margin: 0;
+        }
+
+        .close-modal,
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.3s ease;
+        }
+        
+        .close-modal:hover,
+        .modal-close:hover {
+            color: var(--gold);
+        }
+        
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            border-radius: 10px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            background: rgba(10, 10, 10, 0.85);
+            color: var(--text-primary);
+            padding: 0.75rem;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 1.5rem;
+        }
+
+        .secondary-btn {
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            background: transparent;
+            color: var(--text-secondary);
+            padding: 0.85rem 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .table-empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: #ffffff !important;
+        }
+        
+        /* Comprehensive white text rules for all admin content */
+        .admin-page-content h1,
+        .admin-page-content h2,
+        .admin-page-content h3,
+        .admin-page-content h4,
+        .admin-page-content h5,
+        .admin-page-content h6,
+        .admin-page-content p,
+        .admin-page-content span,
+        .admin-page-content td,
+        .admin-page-content th,
+        .admin-page-content label,
+        .admin-page-content input,
+        .admin-page-content select,
+        .admin-page-content textarea,
+        .admin-page-content .dashboard-section,
+        .admin-page-content .stats-card,
+        .admin-page-content .category-count,
+        .admin-page-content .product-name,
+        .admin-page-content .product-price {
+            color: #ffffff !important;
+        }
+        
+        /* Preserve gold for titles and icons */
+        .admin-page-content .section-title,
+        .admin-page-content .category-title,
+        .admin-page-content .products-table th,
+        .admin-page-content .sidebar-title,
+        .admin-page-content .sidebar-title *,
+        .admin-page-content i.fa,
+        .admin-page-content [class*="icon"] {
+            color: #d4af37 !important;
+        }
+        
+        /* Table cells should be white */
+        .admin-page-content .products-table td,
+        .admin-page-content .products-table th {
+            color: #ffffff !important;
+        }
+        
+        /* Exception: Table headers should be gold */
+        .admin-page-content .products-table th {
+            color: #d4af37 !important;
+        }
+
+        @media (max-width: 1100px) {
+            /* Sidebar stays fixed at 260px, content adjusts */
+            .admin-page-content {
+                margin-left: 260px !important;
+            }
+            
+            .admin-layout {
+                padding-left: 2rem !important;
+            }
+
+            /* Keep sidebar fixed - never stretch or go static */
+            .admin-sidebar {
+                width: 260px !important;
+                min-width: 260px !important;
+                max-width: 260px !important;
+                position: fixed !important;
+                left: 0 !important;
+                top: 90px !important;
+                height: calc(100vh - 90px) !important;
+                z-index: 9998 !important;
+            }
+
+            .admin-nav {
+                display: flex !important;
+                flex-direction: column !important;
+                flex-wrap: nowrap !important;
+                align-items: stretch !important;
+            }
+
+            .admin-nav a,
+            .admin-nav button {
+                width: 100% !important;
+                flex: none !important;
+                display: flex !important;
+                justify-content: flex-start;
+            }
+
+            .admin-navbar-content {
+                flex-wrap: wrap;
+                padding: 0 1rem;
+            }
+
+            .admin-navbar-nav {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                margin-top: 0.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .admin-navbar-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .admin-navbar-nav {
+                order: 2;
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .admin-navbar-actions {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .admin-navbar-link {
+                font-size: 0.85rem;
+                padding: 0.5rem 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .admin-header {
+                height: auto !important;
+                min-height: 90px;
+                padding: 0.75rem 0 !important;
+            }
+            
+            .admin-sidebar {
+                top: auto !important;
+            }
+
+            .admin-header-content {
+                padding: 0 1rem;
+                gap: 0.75rem;
+            }
+
+            .admin-header-top {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .admin-header-left {
+                width: 100%;
+                align-items: center;
+            }
+
+            .admin-header-right {
+                width: 100%;
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .admin-header-nav {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .admin-header-btn {
+                font-size: 0.85rem;
+                padding: 0.5rem 1rem;
+            }
+
+            .admin-header-actions {
+                width: 100%;
+                justify-content: center;
+                margin-right: 0;
+            }
+
+            .admin-header-categories {
+                flex-wrap: wrap;
+                gap: 15px;
+                padding: 0;
+            }
+
+            .admin-header-category-link {
+                font-size: 14px;
+            }
+
+            .admin-content {
+                padding: 1.5rem;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .filters-bar {
+                flex-direction: column;
+            }
+
+            .products-table-wrapper {
+                overflow-x: auto;
+            }
+
+            .products-table {
+                min-width: 900px;
+            }
+        }
+        
+        /* ===== FONT SIZE INCREASE - Uniform scaling ===== */
+        html, body {
+            font-size: 18px !important;
+        }
+        
+        body * {
+            font-size: 1.05rem !important;
+            line-height: 1.7 !important;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-size: 1.3rem !important;
+        }
+        
+        .sidebar *,
+        header *,
+        .card *,
+        .stats-container *,
+        .button,
+        button,
+        input,
+        select,
+        label,
+        span,
+        p,
+        a {
+            font-size: 1rem !important;
+        }
+        
+        /* ===== UI ADJUSTMENTS ===== */
+        /* 1. Increase logo text size */
+        .header-logo,
+        .logo-title,
+        .navbar-logo,
+        #logo-text,
+        .admin-logo {
+            font-size: 36px !important;
+            font-weight: 700 !important;
+            color: #d4af37 !important;
+        }
+        
+        /* 2. Remove underline from active nav item */
+        .admin-nav a.active,
+        .topnav a.active,
+        .nav-btn.active {
+            border-bottom: none !important;
+            box-shadow: none !important;
+            text-decoration: none !important;
+        }
+        
+        /* Ensure header nav active item has no underline */
+        .admin-header-nav .nav-btn.active {
+            border-bottom: none !important;
+            text-decoration: none !important;
+        }
+        
+        /* 3. Increase font size in statistics cards */
+        .stats-card,
+        .dashboard-card,
+        .card,
+        .stats-box {
+            font-size: 20px !important;
+        }
+        
+        .stats-card *,
+        .dashboard-card *,
+        .card *,
+        .stats-box * {
+            color: #ffffff !important;
+        }
+        
+        /* 4. Numbers in stats boxes - big and gold */
+        .stats-card .number,
+        .dashboard-card .number,
+        .stats-box .number,
+        .stats-box .value,
+        .stats-box span:first-child,
+        .stats-card-number,
+        .dashboard-stat-number,
+        .stats-number {
+            color: #d4af37 !important; /* Gold */
+            font-size: 38px !important;
+            font-weight: 700 !important;
+        }
+        
+        /* 5. Labels in stats boxes - bigger and white */
+        .stats-card .label,
+        .dashboard-card .label,
+        .stats-box .label,
+        .stats-box .title,
+        .stats-card-title,
+        .dashboard-stat-label,
+        .stats-label {
+            font-size: 22px !important;
+            color: #ffffff !important;
+            font-weight: 600 !important;
+        }
+        
+        /* 6. Icons in stats boxes - larger and gold */
+        .stats-card i,
+        .stats-box i,
+        .dashboard-card i,
+        .stats-icon,
+        .dashboard-stat-icon {
+            font-size: 32px !important;
+            color: #d4af37 !important; /* Gold */
+        }
+        
+        /* 7. Padding for all stat boxes */
+        .stats-card,
+        .dashboard-card,
+        .stats-box,
+        .dashboard-stat-box {
+            padding: 35px 20px !important;
+        }
+        
+        /* Ensure stats cards are centered */
+        .stats-card {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-align: center !important;
+        }
+        
+        /* ===== DASHBOARD STAT BOXES - Enhanced Typography ===== */
+        /* Numbers - Big and Gold */
+        .dashboard-stat-number,
+        .stats-card .stats-number,
+        .stats-card .number,
+        .stats-box .number,
+        .stats-box .value,
+        .dashboard-card .number {
+            font-size: 38px !important;
+            font-weight: 700 !important;
+            color: #d4af37 !important; /* Gold */
+        }
+        
+        /* Labels - Bigger and White */
+        .dashboard-stat-label,
+        .stats-card .stats-label,
+        .stats-card .label,
+        .stats-box .label,
+        .stats-box .title,
+        .dashboard-card .label {
+            font-size: 22px !important;
+            font-weight: 600 !important;
+            color: #ffffff !important;
+        }
+        
+        /* Icons - Larger and Gold */
+        .dashboard-stat-icon,
+        .stats-card .stats-icon,
+        .stats-card i,
+        .stats-box i,
+        .dashboard-card i {
+            font-size: 32px !important;
+            color: #d4af37 !important; /* Gold */
+        }
+        
+        /* Padding for all stat boxes */
+        .dashboard-stat-box,
+        .stats-card,
+        .stats-box,
+        .dashboard-card {
+            padding: 35px 20px !important;
+        }
+        
+        /* Category pages - section titles, table titles, filters */
+        .section-title,
+        .category-title {
+            font-size: 1.3em !important; /* Larger section titles */
+        }
+        
+        .products-table th {
+            font-size: 1.1em !important; /* Larger table headers */
+        }
+        
+        .filter-control label,
+        .search-field label {
+            font-size: 1.1em !important; /* Larger filter labels */
+        }
+        
+        .filter-control input,
+        .filter-control select,
+        .search-field input {
+            font-size: 1.05em !important; /* Slightly larger inputs */
+        }
+        
+        /* ===== SIDEBAR - Remove all underlines ===== */
+        .admin-sidebar a,
+        .admin-sidebar li,
+        .admin-sidebar-item,
+        .admin-sidebar button,
+        .admin-nav a,
+        .admin-nav li,
+        .admin-nav button {
+            text-decoration: none !important;
+            border-bottom: none !important;
+        }
+        
+        .admin-sidebar a:hover,
+        .admin-sidebar li:hover,
+        .admin-sidebar-item:hover,
+        .admin-sidebar button:hover,
+        .admin-nav a:hover,
+        .admin-nav li:hover,
+        .admin-nav button:hover {
+            text-decoration: none !important;
+            border-bottom: none !important;
+            border: none !important;
+            filter: brightness(1.2);
+        }
+        
+        /* Analytics Chart Styles */
+        .analytics-chart-container {
+            position: relative;
+            background: rgba(22, 22, 22, 0.95);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        #analytics-chart {
+            width: 100% !important;
+            height: 100% !important;
+            max-height: 350px;
+        }
+        
+        .analytics-no-data {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 1.2rem;
+            font-weight: 500;
+            display: none;
+        }
+        
+        .analytics-no-data.show {
+            display: block;
+        }
+        
+        /* Analytics Summary Cards (Smaller) */
+        .analytics-summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+        
+        .analytics-summary-card {
+            background: rgba(22, 22, 22, 0.95);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 16px;
+            padding: 1.5rem 1rem;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .analytics-summary-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top, rgba(212, 175, 55, 0.1), transparent 55%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .analytics-summary-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(212, 175, 55, 0.5);
+        }
+        
+        .analytics-summary-card:hover::after {
+            opacity: 1;
+        }
+        
+        .analytics-summary-icon {
+            font-size: 24px !important;
+            color: #d4af37 !important;
+            margin-bottom: 0.5rem;
+        }
+        
+        .analytics-summary-number {
+            font-size: 28px !important;
+            font-family: var(--font-primary);
+            color: #d4af37 !important;
+            font-weight: 700 !important;
+            margin: 0.25rem 0;
+        }
+        
+        .analytics-summary-label {
+            font-size: 14px !important;
+            color: #ffffff !important;
+            font-weight: 500 !important;
+            letter-spacing: 0.03em;
+            margin: 0;
+        }
+        
+        /* Dashboard Coupons Section */
+        #dashboard-coupons-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .dashboard-coupon-card {
+            background: rgba(22, 22, 22, 0.95);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .dashboard-coupon-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top, rgba(212, 175, 55, 0.1), transparent 55%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .dashboard-coupon-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(212, 175, 55, 0.5);
+        }
+        
+        .dashboard-coupon-card:hover::after {
+            opacity: 1;
+        }
+        
+        .dashboard-coupon-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .dashboard-coupon-code {
+            font-size: 1.1rem;
+            color: var(--gold);
+            font-weight: 600;
+        }
+        
+        .dashboard-coupon-discount {
+            color: var(--text-primary);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .dashboard-coupon-discount-value {
+            color: var(--gold);
+            font-weight: 600;
+        }
+        
+        .dashboard-coupon-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .dashboard-coupon-status-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+<!-- ADMIN HEADER - MUST BE FIRST ELEMENT -->
+<header class="admin-header">
+    <div class="admin-header-content">
+        <div class="admin-header-left">
+            <h2 class="admin-logo">J&A Jewelry</h2>
+            <span class="admin-subtitle" data-translate="admin.subtitle">Admin Dashboard</span>
+        </div>
+
+        <nav class="admin-header-nav">
+            <a href="admin.html" class="nav-btn active" data-translate="admin.nav.dashboard">Dashboard</a>
+            <a href="admin_watches.html" class="nav-btn" data-translate="admin.nav.watches">watches</a>
+            <a href="admin_bags.html" class="nav-btn" data-translate="admin.nav.bags">bags</a>
+            <a href="admin_accessories.html" class="nav-btn" data-translate="admin.nav.accessories">accessories</a>
+            <a href="admin_perfumes.html" class="nav-btn" data-translate="admin.nav.perfumes">parfums</a>
+            <a href="admin_orders.html" class="nav-btn" data-translate="admin.nav.orders">Orders</a>
+        </nav>
+
+        <div class="admin-header-actions">
+            <button id="language-toggle" class="lang-btn" data-translate="admin.actions.language">العربية</button>
+            <button class="logout-btn admin-nav-logout" data-translate="admin.actions.logout">Logout</button>
+        </div>
+    </div>
+</header>
+
+    <div class="admin-page-content">
+        <main class="admin-hero">
+        <div class="container admin-layout">
+            <aside class="admin-sidebar">
+                <div class="sidebar-title">
+                    <i class="fa fa-crown"></i>
+                    <span data-translate="admin.subtitle">Admin Dashboard</span>
+                </div>
+                <nav class="admin-nav">
+                    <a href="#dashboard-panel" class="active" data-section="dashboard-panel">
+                        <span class="icon"><i class="fa fa-chart-line"></i></span>
+                        <span data-translate="admin.sidebar.dashboard">Dashboard</span>
+                    </a>
+                    <a href="#categories-panel" data-section="categories-panel">
+                        <span class="icon"><i class="fa fa-box-open"></i></span>
+                        <span data-translate="admin.sidebar.products">Site Statistics</span>
+                    </a>
+                    <a href="#dashboard-panel" data-section="dashboard-panel">
+                        <span class="icon"><i class="fa fa-layer-group"></i></span>
+                        <span data-translate="admin.sidebar.categories">Categories</span>
+                    </a>
+                    <a href="#orders-panel" data-section="orders-panel">
+                        <span class="icon"><i class="fa fa-shopping-cart"></i></span>
+                        <span data-translate="admin.sidebar.orders">Orders</span>
+                    </a>
+                    <a href="#dashboard-coupons-section" data-section="dashboard-coupons-section">
+                        <span class="icon"><i class="fa fa-ticket-alt"></i></span>
+                        <span data-translate="admin.sidebar.coupons">Coupons</span>
+                    </a>
+                    <a href="#upload-panel" data-section="upload-panel">
+                        <span class="icon"><i class="fa fa-file-upload"></i></span>
+                        <span data-translate="admin.sidebar.upload">Upload JSON</span>
+                    </a>
+                    <button id="sidebar-logout" type="button">
+                        <span class="icon"><i class="fa fa-sign-out-alt"></i></span>
+                        <span data-translate="admin.sidebar.logout">Logout</span>
+                    </button>
+                </nav>
+            </aside>
+
+            <section class="admin-content">
+                <section id="dashboard-panel" class="dashboard-section">
+                    <div class="section-header">
+                        <h2 class="section-title" data-translate="admin.statistics">Categories</h2>
+                        <span class="admin-badge" data-translate="admin.badge">Admin Mode</span>
+                    </div>
+                    <div class="stats-grid">
+                        <article class="stats-card clickable-category" data-category="accessories" onclick="window.location.href='admin_accessories.html'">
+                            <div class="stats-icon"><i class="fa fa-gem"></i></div>
+                            <p class="stats-number" id="accessories-count">--</p>
+                            <p class="stats-label" data-translate="admin.categories.accessories">Accessories</p>
+                        </article>
+                        <article class="stats-card clickable-category" data-category="bags" onclick="window.location.href='admin_bags.html'">
+                            <div class="stats-icon"><i class="fa fa-shopping-bag"></i></div>
+                            <p class="stats-number" id="bags-count">--</p>
+                            <p class="stats-label" data-translate="admin.categories.bags">Bags</p>
+                        </article>
+                        <article class="stats-card clickable-category" data-category="watches" onclick="window.location.href='admin_watches.html'">
+                            <div class="stats-icon"><i class="fa fa-clock"></i></div>
+                            <p class="stats-number" id="watches-count">--</p>
+                            <p class="stats-label" data-translate="admin.categories.watches">Watches</p>
+                        </article>
+                        <article class="stats-card clickable-category" data-category="perfumes" onclick="window.location.href='admin_perfumes.html'">
+                            <div class="stats-icon"><i class="fa fa-spray-can"></i></div>
+                            <p class="stats-number" id="perfumes-count">--</p>
+                            <p class="stats-label" data-translate="admin.categories.perfumes">Perfumes</p>
+                        </article>
+                    </div>
+                </section>
+
+                <section id="categories-panel" class="dashboard-section">
+                    <div class="section-header">
+                        <h2 class="section-title" data-translate="admin.analytics.title">Website Analytics</h2>
+                    </div>
+                    
+                    <!-- Chart Container -->
+                    <div class="analytics-chart-container">
+                        <canvas id="analytics-chart"></canvas>
+                        <div id="analytics-no-data" class="analytics-no-data" data-translate="admin.analytics.no_data">No data yet</div>
+                    </div>
+                    
+                    <!-- Summary Cards (Smaller) -->
+                    <div class="analytics-summary-grid">
+                        <article class="analytics-summary-card">
+                            <div class="analytics-summary-icon"><i class="fa fa-users"></i></div>
+                            <p class="analytics-summary-number" id="visitors-today">0</p>
+                            <p class="analytics-summary-label" data-translate="admin.analytics.visitors_today">Visitors Today</p>
+                        </article>
+                        <article class="analytics-summary-card">
+                            <div class="analytics-summary-icon"><i class="fa fa-chart-line"></i></div>
+                            <p class="analytics-summary-number" id="visitors-week">0</p>
+                            <p class="analytics-summary-label" data-translate="admin.analytics.visitors_week">Visitors This Week</p>
+                        </article>
+                        <article class="analytics-summary-card">
+                            <div class="analytics-summary-icon"><i class="fa fa-globe"></i></div>
+                            <p class="analytics-summary-number" id="visitors-total">0</p>
+                            <p class="analytics-summary-label" data-translate="admin.analytics.visitors_total">Total Visitors</p>
+                        </article>
+                    </div>
+                </section>
+
+                <section id="orders-panel" class="dashboard-section">
+                    <div class="section-header">
+                        <h2 class="section-title" data-translate="orders.dashboard.title">Orders</h2>
+                    </div>
+                    <div id="installment-orders-container">
+                        <p style="color: var(--text-secondary);" data-translate="orders.dashboard.empty">Loading orders...</p>
+                    </div>
+                    <div id="installment-orders-view-all" style="margin-top: 1.5rem; text-align: center; display: none;">
+                        <button class="admin-primary-btn" data-translate="orders.view_all" onclick="window.location.href='admin_orders.html'">
+                            <i class="fa fa-list"></i> <span data-translate="orders.view_all">View all orders</span>
+                        </button>
+                    </div>
+                </section>
+
+                <section id="dashboard-coupons-section" class="dashboard-section">
+                    <div class="section-header">
+                        <h2 class="section-title" data-translate="admin.coupons.dashboard_title">Latest Coupons</h2>
+                        <button id="open-coupon-modal" class="admin-primary-btn">
+                            <i class="fa fa-plus"></i>
+                            <span data-translate="admin.coupons.create">Create Coupon</span>
+                        </button>
+                    </div>
+                    <div id="dashboard-coupons-container">
+                        <p style="color: var(--text-secondary);" data-translate="admin.coupons.loading">Loading coupons...</p>
+                    </div>
+                    <div id="dashboard-coupons-view-all" style="margin-top: 1.5rem; text-align: center; display: none;">
+                        <button id="view-all-coupons-btn" class="admin-primary-btn" data-translate="coupon.view_all">
+                            <i class="fa fa-list"></i> <span data-translate="coupon.view_all">View all coupons</span>
+                        </button>
+                    </div>
+                </section>
+
+                <section id="upload-panel" class="dashboard-section">
+                    <div class="section-header">
+                        <h2 class="section-title" data-translate="admin.bulk_upload">Bulk Upload</h2>
+                    </div>
+                    <div class="upload-card">
+                        <p data-translate="admin.bulk_upload_hint">Upload a JSON file that contains an array of product objects.</p>
+                        <div class="form-group full-width">
+                            <label for="json-file" data-translate="admin.upload.json_file">JSON File</label>
+                            <input type="file" id="json-file" accept=".json">
+                        </div>
+                        <button id="bulk-upload-btn" class="admin-primary-btn">
+                            <i class="fa fa-file-upload"></i>
+                            <span data-translate="admin.upload.json_button">Upload JSON</span>
+                        </button>
+                        <div class="upload-progress">
+                            <span id="upload-progress-bar"></span>
+                        </div>
+                        <div class="message" id="upload-message"></div>
+                    </div>
+                </section>
+            </section>
+        </div>
+        </main>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h3 class="footer-brand"><span dir="ltr" class="brand-name">J&A Jewelry</span></h3>
+                        <p class="footer-tagline" data-translate="admin.footer.tagline">Your premier destination for luxury watches, perfumes, bags, and accessories.</p>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p><span class="footer-digits" data-translate="admin.footer.rights">© 2025</span> <span class="footer-brand">J&A Jewelry</span><span data-translate="admin.footer.rights_suffix">. All rights reserved.</span></p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Add/Edit Product Modal -->
+    <div class="modal-overlay" id="product-modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="modal-title" data-translate="admin.modal.title.add">Add Product</h3>
+                <button class="close-modal" id="close-product-modal">&times;</button>
+            </div>
+            <form id="product-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="product-name-ar" data-translate="admin.form.name_ar">Name (AR) <span style="color: red;">*</span></label>
+                        <input type="text" id="product-name-ar" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-name" data-translate="admin.form.name_en">Name (EN)</label>
+                        <input type="text" id="product-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="product-name-he" data-translate="admin.form.name_he">Name (HE)</label>
+                        <input type="text" id="product-name-he">
+                    </div>
+                    <div class="form-group">
+                        <label for="product-category" data-translate="admin.form.category">Category</label>
+                        <select id="product-category" required>
+                            <option value="" data-translate="admin.form.category_placeholder">Select category</option>
+                            <option value="perfumes" data-translate="admin.categories.perfumes">Perfumes</option>
+                            <option value="watches" data-translate="admin.categories.watches">Watches</option>
+                            <option value="bags" data-translate="admin.categories.bags">Bags</option>
+                            <option value="accessories" data-translate="admin.categories.accessories">Accessories</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-gender" data-translate="admin.form.gender">Gender</label>
+                        <select id="product-gender" required>
+                            <option value="" data-translate="admin.form.gender_placeholder">Select gender</option>
+                            <option value="women" data-translate="admin.filters.gender_women">Women</option>
+                            <option value="men" data-translate="admin.filters.gender_men">Men</option>
+                            <option value="unisex" data-translate="admin.filters.gender_unisex">Unisex</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-price-before" data-translate="admin.form.price_before">Price Before</label>
+                        <input type="number" id="product-price-before" min="0" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="product-price-after" data-translate="admin.form.price_after">Price After</label>
+                        <input type="number" id="product-price-after" min="0" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-brand" data-translate="admin.form.brand">Brand</label>
+                        <input type="text" id="product-brand" placeholder="e.g., Hugo Boss, Michael Kors" data-translate-placeholder="admin.form.brand_placeholder">
+                        <small style="color: #888; font-size: 0.85rem; display: block; margin-top: 0.25rem;" data-translate="admin.form.brand_hint">For watches/perfumes, leave empty to use product name as brand</small>
+                    </div>
+                    <div class="form-group">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                            <input type="checkbox" id="product-is-sale" style="width: auto; cursor: pointer;">
+                            <span data-translate="admin.form.is_sale">Sale</span>
+                        </label>
+                        <small style="color: #888; font-size: 0.85rem; display: block; margin-top: 0.25rem;" data-translate="admin.form.is_sale_hint">Mark this product as on sale/clearance</small>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="product-image" data-translate="admin.form.image">Product Image</label>
+                        <input type="file" id="product-image" accept="image/jpeg,image/jpg,image/png" required>
+                        <small style="color: #888; font-size: 0.85rem; display: block; margin-top: 0.25rem;">JPG, JPEG, or PNG (max 5MB)</small>
+                        <div id="image-preview-container" style="margin-top: 1rem; display: none;">
+                            <img id="image-preview" src="" alt="Preview" style="max-width: 200px; max-height: 200px; border-radius: 8px; border: 2px solid #d4af37;">
+                        </div>
+                    </div>
+                    <div class="form-group full-width" style="display: none;">
+                        <label for="product-image-url" data-translate="admin.form.image_url">Image URL (Legacy)</label>
+                        <input type="url" id="product-image-url" placeholder="https://example.com/image.jpg" data-translate-placeholder="admin.form.image_placeholder">
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="product-description" data-translate="admin.form.description">Description</label>
+                        <textarea id="product-description" rows="3" placeholder="Optional description…" data-translate-placeholder="admin.form.description_placeholder"></textarea>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="secondary-btn" id="cancel-product-modal" data-translate="admin.action.cancel">Cancel</button>
+                    <button type="submit" class="admin-primary-btn" id="product-form-submit">
+                        <i class="fa fa-save"></i>
+                        <span data-translate="admin.action.save">Save Product</span>
+                    </button>
+                </div>
+                <div class="message" id="modal-message"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Coupon Modal -->
+    <div id="coupon-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="coupon-modal-title" data-translate="admin.coupons.create">Create Coupon</h3>
+                <button class="modal-close" id="close-coupon-modal">&times;</button>
+            </div>
+            <form id="coupon-form">
+                <div class="form-group">
+                    <label for="coupon-code" data-translate="admin.coupons.code">Coupon Code</label>
+                    <input type="text" id="coupon-code" required maxlength="20" placeholder="WELCOME15">
+                    <small style="color: #888; font-size: 0.85rem; display: block; margin-top: 0.25rem;" data-translate="admin.coupons.code_hint">Code will be stored in uppercase</small>
+                </div>
+                <div class="form-group">
+                    <label for="coupon-type" data-translate="admin.coupons.type">Discount Type</label>
+                    <select id="coupon-type" required>
+                        <option value="percent" data-translate="admin.coupons.type_percent">Percentage</option>
+                        <option value="fixed" data-translate="admin.coupons.type_fixed">Fixed Amount</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="coupon-value" data-translate="admin.coupons.value">Discount Value</label>
+                    <input type="number" id="coupon-value" required min="0" step="0.01" placeholder="15">
+                    <small style="color: #888; font-size: 0.85rem; display: block; margin-top: 0.25rem;" data-translate="admin.coupons.value_hint">Percentage (0-100) or fixed amount in ₪</small>
+                </div>
+                <div class="form-group">
+                    <label for="coupon-expiry" data-translate="admin.coupons.expiry">Expiry Date (Optional)</label>
+                    <input type="date" id="coupon-expiry" placeholder="YYYY-MM-DD">
+                </div>
+                <div class="form-group">
+                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                        <input type="checkbox" id="coupon-first-order" style="width: auto; cursor: pointer;">
+                        <span data-translate="admin.coupons.first_order_only">First Order Only</span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                        <input type="checkbox" id="coupon-active" checked style="width: auto; cursor: pointer;">
+                        <span data-translate="admin.coupons.active">Active</span>
+                    </label>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="secondary-btn" id="cancel-coupon-modal" data-translate="admin.action.cancel">Cancel</button>
+                    <button type="submit" class="admin-primary-btn" id="coupon-form-submit">
+                        <i class="fa fa-save"></i>
+                        <span data-translate="admin.action.save">Save</span>
+                    </button>
+                </div>
+                <div class="message" id="coupon-modal-message"></div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        window.SKIP_APP_INIT = true;
+    </script>
+    <!-- Removed app.js - customer scripts should not run on admin pages -->
+    <script type="module" src="assets/js/admin.js"></script>
+    <script type="module" src="assets/js/admin_coupons.js"></script>
+    <script type="module">
+        // Ensure translations are applied after DOM is ready
+        import { applyAdminTranslations, getStoredAdminLang } from './assets/js/translations_admin.js';
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                applyAdminTranslations(getStoredAdminLang());
+            });
+        } else {
+            applyAdminTranslations(getStoredAdminLang());
+        }
+        
+        // Initialize Analytics Chart
+        (function() {
+            const ctx = document.getElementById('analytics-chart');
+            const noDataMsg = document.getElementById('analytics-no-data');
+            
+            if (!ctx) return;
+            
+            // Generate last 7 days labels
+            const labels = [];
+            for (let i = 6; i >= 0; i--) {
+                const date = new Date();
+                date.setDate(date.getDate() - i);
+                const day = date.getDate();
+                const month = date.toLocaleDateString('en-US', { month: 'short' });
+                labels.push(`${day} ${month}`);
+            }
+            
+            // Initialize chart with all zeros
+            const chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Visitors',
+                        data: [0, 0, 0, 0, 0, 0, 0],
+                        borderColor: '#d4af37',
+                        backgroundColor: 'rgba(212, 175, 55, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 4,
+                        pointBackgroundColor: '#d4af37',
+                        pointBorderColor: '#ffffff',
+                        pointBorderWidth: 2,
+                        pointHoverRadius: 6,
+                        pointHoverBackgroundColor: '#f0d97a',
+                        pointHoverBorderColor: '#d4af37'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            borderColor: '#d4af37',
+                            borderWidth: 1,
+                            titleColor: '#d4af37',
+                            bodyColor: '#ffffff',
+                            padding: 12,
+                            cornerRadius: 8
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: 'rgba(212, 175, 55, 0.1)',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)',
+                                font: {
+                                    size: 11
+                                }
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(212, 175, 55, 0.1)',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)',
+                                font: {
+                                    size: 11
+                                },
+                                stepSize: 1
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Check if all data is zero and show "No data yet" message
+            function checkDataState() {
+                const allZero = chart.data.datasets[0].data.every(val => val === 0);
+                if (allZero) {
+                    noDataMsg.classList.add('show');
+                    ctx.style.opacity = '0.3';
+                } else {
+                    noDataMsg.classList.remove('show');
+                    ctx.style.opacity = '1';
+                }
+            }
+            
+            checkDataState();
+            
+            // Store chart instance globally for future updates
+            window.analyticsChart = chart;
+            window.updateAnalyticsData = function(data) {
+                if (data && data.length === 7) {
+                    chart.data.datasets[0].data = data;
+                    chart.update();
+                    checkDataState();
+                }
+            };
+            
+            // Load analytics data
+            async function loadAnalyticsData() {
+                try {
+                    const { db } = await import('./firebase-frontend-config.js');
+                    const { collection, query, where, getDocs, orderBy, limit } = await import('https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js');
+                    
+                    // Try to fetch visitor data from Firestore
+                    // Check if 'visitors' or 'analytics' collection exists
+                    let visitorsData = [];
+                    let todayCount = 0;
+                    let weekCount = 0;
+                    let totalCount = 0;
+                    
+                    try {
+                        // Try visitors collection first
+                        const visitorsRef = collection(db, 'visitors');
+                        const visitorsSnapshot = await getDocs(visitorsRef);
+                        
+                        if (!visitorsSnapshot.empty) {
+                            visitorsSnapshot.forEach(doc => {
+                                const data = doc.data();
+                                const visitDate = data.date?.toDate?.() || new Date(data.date || data.timestamp);
+                                visitorsData.push(visitDate);
+                            });
+                        }
+                    } catch (err) {
+                        // Collection doesn't exist or no permission - that's OK
+                        console.log('No visitors collection found, using placeholder data');
+                    }
+                    
+                    // Calculate last 7 days data
+                    const last7Days = [];
+                    const today = new Date();
+                    today.setHours(0, 0, 0, 0);
+                    
+                    for (let i = 6; i >= 0; i--) {
+                        const date = new Date(today);
+                        date.setDate(date.getDate() - i);
+                        const dayEnd = new Date(date);
+                        dayEnd.setHours(23, 59, 59, 999);
+                        
+                        const count = visitorsData.filter(visitDate => {
+                            const visit = new Date(visitDate);
+                            return visit >= date && visit <= dayEnd;
+                        }).length;
+                        
+                        last7Days.push(count);
+                        
+                        // Calculate today and week counts
+                        if (i === 0) {
+                            todayCount = count;
+                        }
+                        weekCount += count;
+                    }
+                    
+                    // Calculate total (if we have data)
+                    totalCount = visitorsData.length;
+                    
+                    // Update chart
+                    if (window.updateAnalyticsData) {
+                        window.updateAnalyticsData(last7Days);
+                    }
+                    
+                    // Update summary cards
+                    document.getElementById('visitors-today').textContent = todayCount;
+                    document.getElementById('visitors-week').textContent = weekCount;
+                    document.getElementById('visitors-total').textContent = totalCount;
+                    
+                } catch (error) {
+                    console.error('Error loading analytics data:', error);
+                    // Keep zeros - already initialized
+                }
+            }
+            
+            // Load analytics when page is ready
+            loadAnalyticsData();
+        })();
+    </script>
+</body>
+</html>

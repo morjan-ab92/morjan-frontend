@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Products to Firestore</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #d4af37;
+            border-radius: 10px;
+        }
+        h1 {
+            color: #d4af37;
+            margin-bottom: 1rem;
+        }
+        #status {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 5px;
+            min-height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔥 Adding Products to Firestore</h1>
+        <p>Check the browser console for progress...</p>
+        <div id="status">Initializing...</div>
+    </div>
+    
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
+        import { firebaseConfig } from "./assets/js/firebase_config.js";
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const products = [
+          { name: "Dior Miss Dior", category: "perfumes", gender: "women", type: "original", price: 120, image_url: "" },
+          { name: "Boss Bottled", category: "perfumes", gender: "men", type: "original", price: 100, image_url: "" },
+          { name: "Gucci Bag", category: "bags", gender: "women", type: "original", price: 800, image_url: "" },
+          { name: "Louis Vuitton Bag", category: "bags", gender: "women", type: "original", price: 1200, image_url: "" },
+          { name: "Chanel Watch", category: "watches", gender: "women", type: "original", price: 1500, image_url: "" },
+          { name: "GANT Watch", category: "watches", gender: "men", type: "original", price: 900, image_url: "" },
+          { name: "Silver Necklace", category: "accessories", gender: "women", type: "original", price: 300, image_url: "" },
+          { name: "Gold Bracelet", category: "accessories", gender: "women", type: "original", price: 350, image_url: "" }
+        ];
+
+        // Display status updates in the page
+        const statusDiv = document.getElementById('status');
+        
+        const originalLog = console.log;
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const message = args.join(' ');
+            statusDiv.innerHTML += '<div style="color: #4ade80;">' + message + '</div>';
+            statusDiv.scrollTop = statusDiv.scrollHeight;
+        };
+        
+        const originalError = console.error;
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            const message = args.join(' ');
+            statusDiv.innerHTML += '<div style="color: #ff4444;">❌ ' + message + '</div>';
+            statusDiv.scrollTop = statusDiv.scrollHeight;
+        };
+
+        async function addProducts() {
+          try {
+            console.log("🚀 Starting to add products to Firestore...");
+            statusDiv.innerHTML = '<div style="color: #4ade80;">🚀 Starting to add products to Firestore...</div>';
+            
+            for (const product of products) {
+              await addDoc(collection(db, "products"), product);
+              console.log(`✅ Added: ${product.name}`);
+            }
+            
+            console.log("🎉 All products added successfully!");
+            statusDiv.innerHTML += '<div style="color: #d4af37; font-weight: bold; margin-top: 1rem;">🎉 All products added successfully!</div>';
+            alert("✅ All products added successfully to Firestore!");
+          } catch (error) {
+            console.error("❌ Error adding products:", error);
+            statusDiv.innerHTML += '<div style="color: #ff4444; font-weight: bold; margin-top: 1rem;">❌ Error: ' + error.message + '</div>';
+            alert("❌ Error adding products: " + error.message);
+          }
+        }
+
+        // Run immediately
+        addProducts();
+    </script>
+</body>
+</html>

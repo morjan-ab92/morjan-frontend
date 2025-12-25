@@ -1,0 +1,533 @@
+[
+  {
+    "id": "bag_guess_women_001",
+    "name": "Guess Women Bag",
+    "brand": "GUESS",
+    "category": "bags",
+    "type": "women",
+    "price_before": 600,
+    "price_after": 500,
+    "image_url": ""
+  },
+  {
+    "id": "bag_guess_women_002",
+    "name": "Guess Women Bag",
+    "brand": "GUESS",
+    "category": "bags",
+    "type": "women",
+    "price_before": 600,
+    "price_after": 500,
+    "image_url": ""
+  },
+  {
+    "id": "bag_guess_women_003",
+    "name": "Guess Women Bag",
+    "brand": "GUESS",
+    "category": "bags",
+    "type": "women",
+    "price_before": 600,
+    "price_after": 500,
+    "image_url": ""
+  },
+  {
+    "id": "bag_guess_women_004",
+    "name": "Guess Women Bag",
+    "brand": "GUESS",
+    "category": "bags",
+    "type": "women",
+    "price_before": 600,
+    "price_after": 500,
+    "image_url": ""
+  },
+  {
+    "id": "bag_guess_women_005",
+    "name": "Guess Women Bag",
+    "brand": "GUESS",
+    "category": "bags",
+    "type": "women",
+    "price_before": 600,
+    "price_after": 500,
+    "image_url": ""
+  },
+  {
+    "id": "bag_guess_women_006",
+    "name": "Guess Women Bag",
+    "brand": "GUESS",
+    "category": "bags",
+    "type": "women",
+    "price_before": 600,
+    "price_after": 500,
+    "image_url": ""
+  },
+  {
+    "id": "bag_guess_women_007",
+    "name": "Guess Women Bag",
+    "brand": "GUESS",
+    "category": "bags",
+    "type": "women",
+    "price_before": 600,
+    "price_after": 500,
+    "image_url": ""
+  },
+  {
+    "id": "bag_guess_women_008",
+    "name": "Guess Women Bag",
+    "brand": "GUESS",
+    "category": "bags",
+    "type": "women",
+    "price_before": 600,
+    "price_after": 500,
+    "image_url": ""
+  },
+  {
+    "id": "bag_guess_women_009",
+    "name": "Guess Women Bag",
+    "brand": "GUESS",
+    "category": "bags",
+    "type": "women",
+    "price_before": 600,
+    "price_after": 500,
+    "image_url": ""
+  },
+  {
+    "id": "bag_guess_women_010",
+    "name": "Guess Women Bag",
+    "brand": "GUESS",
+    "category": "bags",
+    "type": "women",
+    "price_before": 600,
+    "price_after": 500,
+    "image_url": ""
+  },
+  {
+    "id": "bag_guess_women_011",
+    "name": "Guess Women Bag",
+    "brand": "GUESS",
+    "category": "bags",
+    "type": "women",
+    "price_before": 600,
+    "price_after": 500,
+    "image_url": ""
+  },
+  {
+    "id": "bag_guess_women_012",
+    "name": "Guess Women Bag",
+    "brand": "GUESS",
+    "category": "bags",
+    "type": "women",
+    "price_before": 600,
+    "price_after": 500,
+    "image_url": ""
+  },
+  {
+    "id": "bag_guess_women_013",
+    "name": "Guess Women Bag",
+    "brand": "GUESS",
+    "category": "bags",
+    "type": "women",
+    "price_before": 600,
+    "price_after": 500,
+    "image_url": ""
+  },
+  {
+    "id": "bag_guess_women_014",
+    "name": "Guess Women Bag",
+    "brand": "GUESS",
+    "category": "bags",
+    "type": "women",
+    "price_before": 600,
+    "price_after": 500,
+    "image_url": ""
+  },
+  {
+    "id": "bag_guess_women_015",
+    "name": "Guess Women Bag",
+    "brand": "GUESS",
+    "category": "bags",
+    "type": "women",
+    "price_before": 600,
+    "price_after": 500,
+    "image_url": ""
+  },
+  {
+    "id": "bag_guess_women_016",
+    "name": "Guess Women Bag",
+    "brand": "GUESS",
+    "category": "bags",
+    "type": "women",
+    "price_before": 600,
+    "price_after": 500,
+    "image_url": ""
+  },
+  {
+    "id": "bag_guess_women_017",
+    "name": "Guess Women Bag",
+    "brand": "GUESS",
+    "category": "bags",
+    "type": "women",
+    "price_before": 600,
+    "price_after": 500,
+    "image_url": ""
+  },
+  {
+    "id": "bag_guess_women_018",
+    "name": "Guess Women Bag",
+    "brand": "GUESS",
+    "category": "bags",
+    "type": "women",
+    "price_before": 600,
+    "price_after": 500,
+    "image_url": ""
+  },
+  {
+    "id": "bag_emilyloran_women_001",
+    "name": "Emily Loran Women Bag",
+    "brand": "EMILY LORAN",
+    "category": "bags",
+    "type": "women",
+    "price_before": 250,
+    "price_after": 220,
+    "image_url": ""
+  },
+  {
+    "id": "bag_emilyloran_women_002",
+    "name": "Emily Loran Women Bag",
+    "brand": "EMILY LORAN",
+    "category": "bags",
+    "type": "women",
+    "price_before": 250,
+    "price_after": 220,
+    "image_url": ""
+  },
+  {
+    "id": "bag_emilyloran_women_003",
+    "name": "Emily Loran Women Bag",
+    "brand": "EMILY LORAN",
+    "category": "bags",
+    "type": "women",
+    "price_before": 250,
+    "price_after": 220,
+    "image_url": ""
+  },
+  {
+    "id": "bag_emilyloran_women_004",
+    "name": "Emily Loran Women Bag",
+    "brand": "EMILY LORAN",
+    "category": "bags",
+    "type": "women",
+    "price_before": 250,
+    "price_after": 220,
+    "image_url": ""
+  },
+  {
+    "id": "bag_emilyloran_women_005",
+    "name": "Emily Loran Women Bag",
+    "brand": "EMILY LORAN",
+    "category": "bags",
+    "type": "women",
+    "price_before": 250,
+    "price_after": 220,
+    "image_url": ""
+  },
+  {
+    "id": "bag_emilyloran_women_006",
+    "name": "Emily Loran Women Bag",
+    "brand": "EMILY LORAN",
+    "category": "bags",
+    "type": "women",
+    "price_before": 250,
+    "price_after": 220,
+    "image_url": ""
+  },
+  {
+    "id": "bag_emilyloran_women_007",
+    "name": "Emily Loran Women Bag",
+    "brand": "EMILY LORAN",
+    "category": "bags",
+    "type": "women",
+    "price_before": 250,
+    "price_after": 220,
+    "image_url": ""
+  },
+  {
+    "id": "bag_emilyloran_women_008",
+    "name": "Emily Loran Women Bag",
+    "brand": "EMILY LORAN",
+    "category": "bags",
+    "type": "women",
+    "price_before": 250,
+    "price_after": 220,
+    "image_url": ""
+  },
+  {
+    "id": "bag_emilyloran_women_009",
+    "name": "Emily Loran Women Bag",
+    "brand": "EMILY LORAN",
+    "category": "bags",
+    "type": "women",
+    "price_before": 250,
+    "price_after": 220,
+    "image_url": ""
+  },
+  {
+    "id": "bag_emilyloran_women_010",
+    "name": "Emily Loran Women Bag",
+    "brand": "EMILY LORAN",
+    "category": "bags",
+    "type": "women",
+    "price_before": 250,
+    "price_after": 220,
+    "image_url": ""
+  },
+  {
+    "id": "bag_emilyloran_women_011",
+    "name": "Emily Loran Women Bag",
+    "brand": "EMILY LORAN",
+    "category": "bags",
+    "type": "women",
+    "price_before": 250,
+    "price_after": 220,
+    "image_url": ""
+  },
+  {
+    "id": "bag_emilyloran_women_012",
+    "name": "Emily Loran Women Bag",
+    "brand": "EMILY LORAN",
+    "category": "bags",
+    "type": "women",
+    "price_before": 250,
+    "price_after": 220,
+    "image_url": ""
+  },
+  {
+    "id": "bag_emilyloran_women_013",
+    "name": "Emily Loran Women Bag",
+    "brand": "EMILY LORAN",
+    "category": "bags",
+    "type": "women",
+    "price_before": 250,
+    "price_after": 220,
+    "image_url": ""
+  },
+  {
+    "id": "bag_emilyloran_women_014",
+    "name": "Emily Loran Women Bag",
+    "brand": "EMILY LORAN",
+    "category": "bags",
+    "type": "women",
+    "price_before": 250,
+    "price_after": 220,
+    "image_url": ""
+  },
+  {
+    "id": "bag_emilyloran_women_015",
+    "name": "Emily Loran Women Bag",
+    "brand": "EMILY LORAN",
+    "category": "bags",
+    "type": "women",
+    "price_before": 250,
+    "price_after": 220,
+    "image_url": ""
+  },
+  {
+    "id": "bag_emilyloran_women_016",
+    "name": "Emily Loran Women Bag",
+    "brand": "EMILY LORAN",
+    "category": "bags",
+    "type": "women",
+    "price_before": 250,
+    "price_after": 220,
+    "image_url": ""
+  },
+  {
+    "id": "bag_emilyloran_women_017",
+    "name": "Emily Loran Women Bag",
+    "brand": "EMILY LORAN",
+    "category": "bags",
+    "type": "women",
+    "price_before": 250,
+    "price_after": 220,
+    "image_url": ""
+  },
+  {
+    "id": "bag_emilyloran_women_018",
+    "name": "Emily Loran Women Bag",
+    "brand": "EMILY LORAN",
+    "category": "bags",
+    "type": "women",
+    "price_before": 250,
+    "price_after": 220,
+    "image_url": ""
+  },
+  {
+    "id": "bag_emilyloran_women_019",
+    "name": "Emily Loran Women Bag",
+    "brand": "EMILY LORAN",
+    "category": "bags",
+    "type": "women",
+    "price_before": 250,
+    "price_after": 220,
+    "image_url": ""
+  },
+  {
+    "id": "bag_emilyloran_women_020",
+    "name": "Emily Loran Women Bag",
+    "brand": "EMILY LORAN",
+    "category": "bags",
+    "type": "women",
+    "price_before": 250,
+    "price_after": 220,
+    "image_url": ""
+  },
+  {
+    "id": "bag_emilyloran_women_021",
+    "name": "Emily Loran Women Bag",
+    "brand": "EMILY LORAN",
+    "category": "bags",
+    "type": "women",
+    "price_before": 250,
+    "price_after": 220,
+    "image_url": ""
+  },
+  {
+    "id": "bag_emilyloran_women_022",
+    "name": "Emily Loran Women Bag",
+    "brand": "EMILY LORAN",
+    "category": "bags",
+    "type": "women",
+    "price_before": 250,
+    "price_after": 220,
+    "image_url": ""
+  },
+  {
+    "id": "bag_emilyloran_women_023",
+    "name": "Emily Loran Women Bag",
+    "brand": "EMILY LORAN",
+    "category": "bags",
+    "type": "women",
+    "price_before": 250,
+    "price_after": 220,
+    "image_url": ""
+  },
+  {
+    "id": "bag_emilyloran_women_024",
+    "name": "Emily Loran Women Bag",
+    "brand": "EMILY LORAN",
+    "category": "bags",
+    "type": "women",
+    "price_before": 250,
+    "price_after": 220,
+    "image_url": ""
+  },
+  {
+    "id": "bag_emilyloran_women_025",
+    "name": "Emily Loran Women Bag",
+    "brand": "EMILY LORAN",
+    "category": "bags",
+    "type": "women",
+    "price_before": 250,
+    "price_after": 220,
+    "image_url": ""
+  },
+  {
+    "id": "bag_emilyloran_women_026",
+    "name": "Emily Loran Women Bag",
+    "brand": "EMILY LORAN",
+    "category": "bags",
+    "type": "women",
+    "price_before": 250,
+    "price_after": 220,
+    "image_url": ""
+  },
+  {
+    "id": "bag_emilyloran_women_027",
+    "name": "Emily Loran Women Bag",
+    "brand": "EMILY LORAN",
+    "category": "bags",
+    "type": "women",
+    "price_before": 250,
+    "price_after": 220,
+    "image_url": ""
+  },
+  {
+    "id": "bag_emilyloran_women_028",
+    "name": "Emily Loran Women Bag",
+    "brand": "EMILY LORAN",
+    "category": "bags",
+    "type": "women",
+    "price_before": 250,
+    "price_after": 220,
+    "image_url": ""
+  },
+  {
+    "id": "bag_emilyloran_women_029",
+    "name": "Emily Loran Women Bag",
+    "brand": "EMILY LORAN",
+    "category": "bags",
+    "type": "women",
+    "price_before": 250,
+    "price_after": 220,
+    "image_url": ""
+  },
+  {
+    "id": "bag_emilyloran_women_030",
+    "name": "Emily Loran Women Bag",
+    "brand": "EMILY LORAN",
+    "category": "bags",
+    "type": "women",
+    "price_before": 250,
+    "price_after": 220,
+    "image_url": ""
+  },
+  {
+    "id": "bag_versse_women_001",
+    "name": "Versse Women Bag",
+    "brand": "VERSSE",
+    "category": "bags",
+    "type": "women",
+    "price_before": 300,
+    "price_after": 250,
+    "image_url": ""
+  },
+  {
+    "id": "bag_versse_women_002",
+    "name": "Versse Women Bag",
+    "brand": "VERSSE",
+    "category": "bags",
+    "type": "women",
+    "price_before": 300,
+    "price_after": 250,
+    "image_url": ""
+  },
+  {
+    "id": "bag_versse_women_003",
+    "name": "Versse Women Bag",
+    "brand": "VERSSE",
+    "category": "bags",
+    "type": "women",
+    "price_before": 300,
+    "price_after": 250,
+    "image_url": ""
+  },
+  {
+    "id": "bag_versse_women_004",
+    "name": "Versse Women Bag",
+    "brand": "VERSSE",
+    "category": "bags",
+    "type": "women",
+    "price_before": 300,
+    "price_after": 250,
+    "image_url": ""
+  },
+  {
+    "id": "bag_versse_women_005",
+    "name": "Versse Women Bag",
+    "brand": "VERSSE",
+    "category": "bags",
+    "type": "women",
+    "price_before": 300,
+    "price_after": 250,
+    "image_url": ""
+  }
+]
+

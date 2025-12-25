@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Favorites - J&A Jewelry</title>
+    <link rel="icon" href="data:,">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Cairo:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <style>
+        /* Reset margins and padding */
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: #111;
+            color: #eee;
+            font-family: "Poppins", sans-serif;
+        }
+        
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            padding: 0;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 1rem;
+            margin-top: 2.5rem;
+            position: relative;
+        }
+        
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: #d4af37;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+            position: relative;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 2.5rem;
+        }
+        
+        /* Products Grid - matches perfumes.html exactly */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Scoped product card styles - matches perfumes.html exactly */
+        .products-grid .product-card {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            position: relative;
+        }
+
+        .products-grid .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.2);
+            border-color: var(--gold);
+        }
+
+        .products-grid .product-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+            position: static;
+            pointer-events: none;
+        }
+
+        .products-grid .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .products-grid .favorite-icon {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 1000;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 50%;
+            min-width: 36px;
+            width: 36px;
+            min-height: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            border: none;
+            padding: 0;
+            margin: 0;
+            pointer-events: auto;
+            isolation: isolate;
+        }
+
+        .products-grid .favorite-icon:hover {
+            background: rgba(0, 0, 0, 0.8);
+            transform: scale(1.15);
+        }
+
+        .products-grid .favorite-icon i {
+            font-size: 18px;
+            color: transparent;
+            -webkit-text-stroke: 2px #ffffff;
+            text-stroke: 2px #ffffff;
+            transition: all 0.3s ease;
+            font-weight: 400;
+            pointer-events: none;
+        }
+
+        .products-grid .favorite-icon.active i {
+            color: #d4af37;
+            -webkit-text-stroke: 0;
+            text-stroke: 0;
+            font-weight: 900;
+        }
+
+        .products-grid .favorite-icon.active {
+            background: rgba(212, 175, 55, 0.15);
+        }
+
+        .products-grid .favorite-icon.active:hover {
+            background: rgba(212, 175, 55, 0.25);
+        }
+
+        .products-grid .product-info {
+            padding: 1.5rem;
+        }
+
+        .products-grid .product-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .products-grid .product-brand {
+            color: var(--gold);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .products-grid .product-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .products-grid .product-price .old-price {
+            text-decoration: line-through;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-right: 0.5rem;
+            font-weight: 400;
+        }
+
+        .products-grid .product-price .new-price {
+            color: var(--gold);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .products-grid .add-to-cart {
+            width: 100%;
+            background: #d4af37;
+            color: #000000;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .products-grid .add-to-cart:hover {
+            background: linear-gradient(135deg, var(--gold-light), var(--gold));
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header / Navbar -->
+    <header class="header" style="background: #111 !important; display: flex !important; align-items: center !important; justify-content: space-between !important; padding: 0 40px !important; direction: ltr !important; flex-direction: row !important;">
+        <a href="index.html" class="logo" style="font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; background: linear-gradient(45deg, #d4af37, #ffd700); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; transition: all 0.3s ease; color: #d4af37;">
+            <span dir="ltr" class="brand-name">J&amp;A Jewelry</span>
+        </a>
+
+        <nav class="nav-links" style="display: flex !important; gap: 30px !important; align-items: center !important; flex-direction: row !important; direction: ltr !important; flex-wrap: nowrap !important; margin: 0 !important;">
+            <a href="index.html" data-translate="nav-home" style="color: #d4af37 !important; text-decoration: none !important; font-size: 1rem !important; font-weight: 500 !important; white-space: nowrap !important;">Home</a>
+            <a href="perfumes.html" data-translate="nav-perfumes" style="color: #d4af37 !important; text-decoration: none !important; font-size: 1rem !important; font-weight: 500 !important; white-space: nowrap !important;">Perfumes</a>
+            <a href="watches.html" data-translate="nav-watches" style="color: #d4af37 !important; text-decoration: none !important; font-size: 1rem !important; font-weight: 500 !important; white-space: nowrap !important;">Watches</a>
+            <a href="bags.html" data-translate="nav-bags" style="color: #d4af37 !important; text-decoration: none !important; font-size: 1rem !important; font-weight: 500 !important; white-space: nowrap !important;">Bags</a>
+            <a href="accessories.html" data-translate="nav-accessories" style="color: #d4af37 !important; text-decoration: none !important; font-size: 1rem !important; font-weight: 500 !important; white-space: nowrap !important;">Accessories</a>
+            <a href="#about" data-translate="nav-about" style="color: #d4af37 !important; text-decoration: none !important; font-size: 1rem !important; font-weight: 500 !important; white-space: nowrap !important;">About</a>
+            <a href="#contact" data-translate="nav-contact" style="color: #d4af37 !important; text-decoration: none !important; font-size: 1rem !important; font-weight: 500 !important; white-space: nowrap !important;">Contact</a>
+        </nav>
+
+        <div class="nav-icons" style="display: flex !important; gap: 1.5rem !important; align-items: center !important; flex-direction: row !important; direction: ltr !important; flex-wrap: nowrap !important;">
+            <a href="cart.html" style="color: #d4af37 !important; text-decoration: none !important; position: relative !important; display: inline-flex !important; align-items: center !important; justify-content: center !important;">
+                <i class="fa-solid fa-bag-shopping" id="header-cart-icon" style="color: #d4af37 !important; font-size: 1.25rem !important;">
+                    <span class="cart-badge" id="cart-badge" style="position: absolute; top: -8px; right: -8px; background: #d4af37; color: #ffffff; border-radius: 50%; min-width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: bold;">5</span>
+                </i>
+            </a>
+            <i class="fa-solid fa-heart" style="color: #d4af37 !important; font-size: 1.25rem !important; cursor: pointer !important;"></i>
+            <button onclick="window.handleUserIconClick()" style="background: none !important; border: none !important; color: inherit !important; cursor: pointer !important; padding: 0 !important;">
+                <i class="fa-solid fa-user" id="header-account-icon" style="color: #d4af37 !important; font-size: 1.25rem !important;"></i>
+            </button>
+            <div id="user-profile-area" class="user-profile-area" style="display: flex !important; margin-left: 1.5rem !important; align-items: center !important;">
+                <span id="user-greeting" class="user-greeting" style="color: #fff !important; font-size: 0.95rem !important; font-weight: 500 !important; white-space: nowrap !important;">Welcome, <span id="user-display-name" style="color: #d4af37 !important; font-weight: 600 !important;">testmorjan</span> 👑</span>
+            </div>
+        </div>
+
+        <button id="lang-toggle" class="lang-switch" data-lang="ar" onclick="cycleLanguage()" style="background: #0a0a0a !important; border: 1px solid #d4af37 !important; padding: 0.5rem 1rem !important; border-radius: 25px !important; color: #d4af37 !important; font-size: 0.9rem !important; font-weight: 500 !important; cursor: pointer !important; min-width: 100px !important; text-align: center !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; margin-left: 1rem !important; white-space: nowrap !important;">English</button>
+        <button class="menu-toggle" type="button" onclick="window.toggleUserDrawer()" aria-label="Open menu" aria-expanded="false" aria-controls="user-drawer">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </header>
+    
+    <!-- Login Dropdown (accessible via user icon) -->
+    <div id="login-dropdown" class="login-dropdown" aria-hidden="true">
+        <form id="login-form">
+            <input type="email" id="login-email" placeholder="Email" required>
+            <input type="password" id="login-password" placeholder="Password" required>
+            <button type="submit" data-translate="auth.login">Login</button>
+            <button type="button" id="login-google" data-translate="auth.google_login">Login with Google</button>
+            <a href="signup.html" id="create-account-link" data-translate="auth.create_account">Create Account</a>
+        </form>
+        <a href="#" id="logout-link" style="display: none;" data-translate="auth.logout">Logout</a>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title" data-translate="favorites-title">My Favorites</h1>
+            </div>
+
+            <div class="products-grid" id="favorites-container">
+                <!-- Favorites will be loaded dynamically -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script type="module" src="./firebase-frontend-config.js"></script>
+    <script type="module" src="./assets/js/auth_frontend.js"></script>
+    <script defer src="./app.js"></script>
+    <script src="./assets/js/userMenu.js"></script>
+    <script src="./favorites.js"></script>
+    <script>
+        // Helper functions for favorites page
+        function getProductName(product) {
+            if (!product || !product.name) {
+                return "Unknown Product";
+            }
+            
+            if (typeof product.name === 'object' && product.name !== null) {
+                const currentLang = document.documentElement.lang || localStorage.getItem('language') || 'ar';
+                const langCode = currentLang.split('-')[0];
+                
+                if (product.name[langCode]) {
+                    return product.name[langCode];
+                }
+                
+                if (product.name.ar) return product.name.ar;
+                if (product.name.en) return product.name.en;
+                
+                const availableLang = Object.keys(product.name)[0];
+                if (availableLang) {
+                    return product.name[availableLang];
+                }
+            }
+            
+            if (typeof product.name === 'string') {
+                return product.name;
+            }
+            
+            return "Unknown Product";
+        }
+        
+        function getGenderLabel(gender) {
+            if (!gender) return '';
+            
+            if (window.getTranslation) {
+                const translation = window.getTranslation(`product-gender-${gender}`);
+                if (translation && translation !== `product-gender-${gender}`) {
+                    return translation;
+                }
+            }
+            
+            const lang = document.documentElement.lang || 'en';
+            const translations = {
+                'ar': { 'men': '👔 رجالي', 'women': '💎 نسائي' },
+                'he': { 'men': '👔 גברים', 'women': '💎 נשים' },
+                'en': { 'men': '👔 Men', 'women': '💎 Women' }
+            };
+            const langCode = lang.split('-')[0];
+            return translations[langCode]?.[gender] || translations['en'][gender] || (gender === 'men' ? '👔 Men' : '💎 Women');
+        }
+        
+        // CRITICAL: DISABLED storage listener to prevent infinite reload loops
+        // PAGE GUARD: Only set up event listeners on favorites.html
+        // if (document.querySelector('#favorites-container') || window.location.pathname.includes('favorites.html')) {
+        //     // Listen for storage changes to update favorites when items are added/removed from other pages
+        //     window.addEventListener('storage', function(e) {
+        //         // Guard: Only handle if still on favorites page
+        //         if (!document.querySelector('#favorites-container') && !window.location.pathname.includes('favorites.html')) {
+        //             return;
+        //         }
+        //         
+        //         if (e.key === 'favorites') {
+        //             if (window.renderFavorites) {
+        //                 window.renderFavorites();
+        //             }
+        //         }
+        //     });
+        // }
+        console.warn('⚠️ STORAGE LISTENER DISABLED - Prevented to stop infinite reload loop');
+            
+            // Also listen for custom event for same-tab updates
+            window.addEventListener('favoritesUpdated', function() {
+                // Guard: Only handle if still on favorites page
+                if (!document.querySelector('#favorites-container') && !window.location.pathname.includes('favorites.html')) {
+                    return;
+                }
+                
+                if (window.renderFavorites) {
+                    window.renderFavorites();
+                }
+            });
+        }
+    </script>
+    <script type="module">
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
+import { auth } from "./firebase-frontend-config.js";
+import { updateAuthUI } from "./assets/js/auth_frontend.js";
+
+document.addEventListener("DOMContentLoaded", () => {
+    // PAGE GUARD: Only run on favorites.html
+    if (!document.querySelector('#favorites-container') && !window.location.pathname.includes('favorites.html')) {
+        return;
+    }
+    
+    onAuthStateChanged(auth, (user) => {
+        // Guard: Only proceed if still on favorites page
+        if (!document.querySelector('#favorites-container') && !window.location.pathname.includes('favorites.html')) {
+            return;
+        }
+        
+        console.log("Favorites auth state:", user);
+
+        // Update the header UI
+        updateAuthUI(user);
+
+        // Render favorites after authentication is resolved
+        // Retry mechanism to ensure renderFavorites is available
+        const maxRetries = 10;
+        let retries = 0;
+        
+        const tryRender = () => {
+            if (typeof window.renderFavorites === "function") {
+                window.renderFavorites();
+            } else if (retries < maxRetries) {
+                retries++;
+                setTimeout(tryRender, 100); // Check every 100ms
+            } else {
+                console.error('⚠️ Favorites: renderFavorites not available after 1 second');
+            }
+        };
+        
+        tryRender();
+    });
+});
+</script>
+
+    <!-- User Account Drawer -->
+    <div id="user-drawer-overlay" onclick="window.toggleUserDrawer()"></div>
+
+    <aside id="user-drawer">
+        <button class="user-drawer-close" onclick="window.toggleUserDrawer()">×</button>
+
+        <div class="user-drawer-header">
+            <span class="user-name" id="drawer-user-name"></span>
+            <button class="logout-btn" onclick="logout()" data-translate="navigation.logout">Logout</button>
+        </div>
+
+        <nav class="user-drawer-nav">
+            <a href="index.html" data-translate="navigation.home">Home</a>
+            <a href="perfumes.html" data-translate="navigation.perfumes">Perfumes</a>
+            <a href="watches.html" data-translate="navigation.watches">Watches</a>
+            <a href="bags.html" data-translate="navigation.bags">Bags</a>
+            <a href="accessories.html" data-translate="navigation.accessories">Accessories</a>
+            <a href="index.html#about-section" data-translate="navigation.about">About</a>
+            <a href="index.html#contact-section" data-translate="navigation.contact">Contact</a>
+        </nav>
+    </aside>
+</body>
+</html>
+

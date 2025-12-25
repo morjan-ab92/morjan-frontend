@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate="cart.title">J&A Jewelry - Shopping Cart</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Cairo:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="cart.css">
+    
+    <!-- Cart Page Specific Styles -->
+    <style>
+        /* Force navigation to be visible on cart page */
+        .nav {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center;
+            gap: 2rem;
+            visibility: visible !important;
+            opacity: 1 !important;
+            position: static !important;
+        }
+        
+        
+        .nav-link {
+            position: relative;
+            color: var(--text-secondary);
+            font-weight: 500;
+            padding: var(--spacing-xs) 0;
+            transition: color var(--transition-fast);
+            text-decoration: none;
+            font-size: 1rem;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--gold);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width var(--transition-normal);
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        /* Language Toggle Button Styles */
+        .language-toggle {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .lang-toggle-btn {
+            background: #2C2C2C; /* Dark gray background */
+            color: #E5B800; /* Gold text */
+            border: 1px solid #E5B800; /* Gold border */
+            padding: 0.5rem 1rem;
+            border-radius: 25px; /* Pill shape */
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            min-width: 120px;
+            justify-content: center;
+            font-size: 1rem;
+        }
+        
+        .lang-toggle-btn:hover {
+            background: #3C3C3C; /* Lighter gray on hover */
+            border-color: #F5C800; /* Brighter gold border on hover */
+            color: #F5C800; /* Brighter gold text on hover */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(229, 184, 0, 0.3);
+        }
+        
+        /* Language Switch Button in Navigation Bar */
+        .lang-switch-btn {
+            background: #0a0a0a; /* Dark black background */
+            color: #d4af37; /* Gold text */
+            border: 1px solid #d4af37; /* Gold border */
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            min-width: 50px;
+            height: 36px;
+            margin-right: 1rem;
+        }
+        
+        .lang-switch-btn:hover {
+            background: #d4af37; /* Gold background on hover */
+            color: #000; /* Black text on hover */
+            border-color: #f5c800; /* Brighter gold border */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+        }
+        
+        .lang-switch-btn:active {
+            transform: translateY(0);
+        }
+        
+        #lang-code {
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Cart Loading State - Centered and Elegant */
+        .cart-loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            font-size: 18px;
+            color: #d4af37;
+        }
+        
+        .cart-loading i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #d4af37;
+        }
+        
+        .cart-loading p {
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        
+        /* Cart Item Styles */
+        .cart-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #0a0a0a;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            color: #fff;
+            transition: background 0.3s ease;
+            gap: 20px;
+            margin-bottom: 12px;
+        }
+        
+        .cart-item:hover {
+            background: rgba(212, 175, 55, 0.05);
+        }
+        
+        .cart-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+        
+        .cart-details {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .cart-details h3 {
+            color: #fff;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin: 0 0 8px 0;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+        
+        .cart-details h3:hover {
+            color: #d4af37;
+        }
+        
+        .cart-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .qty-btn {
+            background: none;
+            color: #d4af37;
+            border: 1px solid #d4af37;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .qty-btn:hover {
+            background: #d4af37;
+            color: #000;
+        }
+        
+        .qty {
+            color: #fff;
+            font-weight: 600;
+            min-width: 30px;
+            text-align: center;
+        }
+        
+        .cart-price {
+            color: #d4af37;
+            font-weight: bold;
+            font-size: 1.1rem;
+            min-width: 80px;
+            text-align: right;
+        }
+        
+        .remove-item {
+            background: none;
+            color: #d4af37;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            transition: color 0.3s;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .remove-item:hover {
+            color: #ff3b3b;
+        }
+        
+        /* Empty Cart State */
+        .empty-cart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        
+        .empty-cart i {
+            font-size: 4rem;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+        }
+        
+        .empty-cart h3 {
+            color: #fff;
+            font-size: 1.5rem;
+            margin: 0 0 1rem 0;
+        }
+        
+        .empty-cart .continue-btn {
+            background: linear-gradient(90deg, #d4af37, #f5d76e);
+            color: #000;
+            font-weight: bold;
+            border-radius: 8px;
+            padding: 12px 24px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: transform 0.2s ease;
+            margin-top: 1rem;
+        }
+        
+        .empty-cart .continue-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Cart Summary Enhancements */
+        .cart-summary-card {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid #d4af37;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+            padding: 24px;
+        }
+        
+        .cart-summary-card h3 {
+            color: var(--gold);
+            font-size: 1.5rem;
+            margin: 0 0 20px 0;
+            text-align: center;
+        }
+        
+        .summary-line {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+            color: var(--text-secondary);
+        }
+        
+        .summary-line.total {
+            border-bottom: 2px solid rgba(212, 175, 55, 0.5);
+            border-top: 2px solid rgba(212, 175, 55, 0.5);
+            margin: 16px 0;
+            padding: 16px 0;
+            color: var(--gold);
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        
+        .summary-line.total .cart-total {
+            color: var(--gold);
+            font-size: 1.3rem;
+        }
+        
+        .checkout-btn {
+            background: linear-gradient(90deg, #d4af37, #f5d76e);
+            color: #000;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            padding: 12px;
+            text-transform: uppercase;
+            transition: transform 0.2s ease;
+            width: 100%;
+            margin-top: 16px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .checkout-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .continue-shopping {
+            background: transparent;
+            color: var(--gold);
+            border: 2px solid var(--gold);
+            font-weight: 600;
+            border-radius: 8px;
+            padding: 12px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 12px;
+            display: block;
+            text-align: center;
+            text-decoration: none;
+        }
+        
+        .continue-shopping:hover {
+            background: var(--gold);
+            color: #000;
+        }
+        
+        /* Cart Section Layout */
+        .cart-section {
+            padding: 3rem 1rem;
+            min-height: calc(100vh - 200px);
+        }
+        
+        .cart-content {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .cart-items-container h2 {
+            color: var(--gold);
+            font-size: 1.5rem;
+            margin: 0 0 20px 0;
+            text-align: center;
+        }
+        
+        .cart-container {
+            min-height: 200px;
+        }
+        
+        /* Remove border from cart-container - only cart-items-container should have it */
+        .cart-items-container .cart-container {
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            padding: 0;
+        }
+        
+        .cart-summary-container {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+        
+        /* RTL Support */
+        [dir="rtl"] .cart-item {
+            flex-direction: row-reverse;
+        }
+        
+        [dir="rtl"] .cart-price {
+            text-align: left;
+        }
+        
+        [dir="rtl"] .cart-controls {
+            flex-direction: row-reverse;
+        }
+        
+        [dir="rtl"] .summary-line {
+            flex-direction: row-reverse;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .cart-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .cart-summary-container {
+                position: relative;
+                top: 0;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .cart-section {
+                padding: 2rem 0;
+            }
+            
+            .cart-item {
+                flex-wrap: wrap;
+                padding: 15px;
+                gap: 15px;
+            }
+            
+            .cart-item img {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .cart-price {
+                min-width: 60px;
+                font-size: 1rem;
+            }
+            
+            .cart-summary-card {
+                padding: 20px;
+            }
+            
+            .cart-items-container {
+                padding: 20px;
+            }
+            
+            .cart-details h3 {
+                font-size: 1rem;
+            }
+        }
+        
+        /* Page Background - Solid Black */
+        body {
+            background: #000 !important;
+            color: #fff !important;
+            min-height: 100vh;
+        }
+        
+        html {
+            background: #000 !important;
+        }
+        
+        .cart-section {
+            background: #000;
+            padding-top: 100px;
+        }
+        
+        /* Cart Container and Order Summary Styling - Only outer containers */
+        .cart-items-container,
+        .cart-summary-card {
+            background: #0a0a0a;
+            border: 1px solid #d4af37;
+            border-radius: 12px;
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.15);
+            padding: 24px;
+        }
+        
+        /* Cart Loading Spinner */
+        .cart-loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            font-size: 18px;
+            color: #d4af37;
+        }
+        
+        .cart-loading i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .cart-loading p {
+            margin: 0;
+            color: var(--text-secondary);
+        }
+        
+        /* Center Cart Section Content */
+        .cart-section {
+            padding: 3rem 1rem;
+        }
+        
+        .cart-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body class="cart-page">
+    <!-- Header / Navbar -->
+    <header class="header" style="background: #111 !important; display: flex !important; align-items: center !important; justify-content: space-between !important; padding: 0 40px !important; direction: ltr !important; flex-direction: row !important;">
+        <a href="index.html" class="logo" style="font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; background: linear-gradient(45deg, #d4af37, #ffd700); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; transition: all 0.3s ease; color: #d4af37;">
+            <span dir="ltr" class="brand-name">J&amp;A Jewelry</span>
+        </a>
+
+        <nav class="nav-links" style="display: flex !important; gap: 30px !important; align-items: center !important; flex-direction: row !important; direction: ltr !important; flex-wrap: nowrap !important; margin: 0 !important;">
+            <a href="index.html" data-translate="nav-home" style="color: #d4af37 !important; text-decoration: none !important; font-size: 1rem !important; font-weight: 500 !important; white-space: nowrap !important;">Home</a>
+            <a href="perfumes.html" data-translate="nav-perfumes" style="color: #d4af37 !important; text-decoration: none !important; font-size: 1rem !important; font-weight: 500 !important; white-space: nowrap !important;">Perfumes</a>
+            <a href="watches.html" data-translate="nav-watches" style="color: #d4af37 !important; text-decoration: none !important; font-size: 1rem !important; font-weight: 500 !important; white-space: nowrap !important;">Watches</a>
+            <a href="bags.html" data-translate="nav-bags" style="color: #d4af37 !important; text-decoration: none !important; font-size: 1rem !important; font-weight: 500 !important; white-space: nowrap !important;">Bags</a>
+            <a href="accessories.html" data-translate="nav-accessories" style="color: #d4af37 !important; text-decoration: none !important; font-size: 1rem !important; font-weight: 500 !important; white-space: nowrap !important;">Accessories</a>
+            <a href="#about" data-translate="nav-about" style="color: #d4af37 !important; text-decoration: none !important; font-size: 1rem !important; font-weight: 500 !important; white-space: nowrap !important;">About</a>
+            <a href="#contact" data-translate="nav-contact" style="color: #d4af37 !important; text-decoration: none !important; font-size: 1rem !important; font-weight: 500 !important; white-space: nowrap !important;">Contact</a>
+        </nav>
+
+        <div class="nav-icons" style="display: flex !important; gap: 1.5rem !important; align-items: center !important; flex-direction: row !important; direction: ltr !important; flex-wrap: nowrap !important;">
+            <a href="cart.html" style="color: #d4af37 !important; text-decoration: none !important; position: relative !important; display: inline-flex !important; align-items: center !important; justify-content: center !important;">
+                <i class="fa-solid fa-bag-shopping" id="header-cart-icon" style="color: #d4af37 !important; font-size: 1.25rem !important;">
+                    <span class="cart-badge" id="cart-badge" style="position: absolute; top: -8px; right: -8px; background: #d4af37; color: #ffffff; border-radius: 50%; min-width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: bold;">5</span>
+                </i>
+            </a>
+            <i class="fa-solid fa-heart" style="color: #d4af37 !important; font-size: 1.25rem !important; cursor: pointer !important;"></i>
+            <button onclick="window.handleUserIconClick()" style="background: none !important; border: none !important; color: inherit !important; cursor: pointer !important; padding: 0 !important;">
+                <i class="fa-solid fa-user" id="header-account-icon" style="color: #d4af37 !important; font-size: 1.25rem !important;"></i>
+            </button>
+            <div id="user-profile-area" class="user-profile-area" style="display: flex !important; margin-left: 1.5rem !important; align-items: center !important;">
+                <span id="user-greeting" class="user-greeting" style="color: #fff !important; font-size: 0.95rem !important; font-weight: 500 !important; white-space: nowrap !important;">Welcome, <span id="user-display-name" style="color: #d4af37 !important; font-weight: 600 !important;">testmorjan</span> 👑</span>
+            </div>
+        </div>
+
+        <button id="lang-toggle" class="lang-switch" data-lang="ar" onclick="cycleLanguage()" style="background: #0a0a0a !important; border: 1px solid #d4af37 !important; padding: 0.5rem 1rem !important; border-radius: 25px !important; color: #d4af37 !important; font-size: 0.9rem !important; font-weight: 500 !important; cursor: pointer !important; min-width: 100px !important; text-align: center !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; margin-left: 1rem !important; white-space: nowrap !important;">English</button>
+        <button class="menu-toggle" type="button" onclick="window.toggleUserDrawer()" aria-label="Open menu" aria-expanded="false" aria-controls="user-drawer">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </header>
+    
+    <!-- Login Dropdown (accessible via user icon) -->
+    <div id="login-dropdown" class="login-dropdown" aria-hidden="true">
+        <form id="login-form">
+            <input type="email" id="login-email" placeholder="Email" required>
+            <input type="password" id="login-password" placeholder="Password" required>
+            <button type="submit" data-translate="auth.login">Login</button>
+            <button type="button" id="login-google" data-translate="auth.google_login">Login with Google</button>
+            <a href="signup.html" id="create-account-link" data-translate="auth.create_account">Create Account</a>
+        </form>
+        <a href="#" id="logout-link" style="display: none;" data-translate="auth.logout">Logout</a>
+    </div>
+
+    <!-- Page Content -->
+    <main style="background: #000; min-height: 100vh;">
+        <!-- Cart Content -->
+        <section class="cart-section">
+            <div class="container">
+                <!-- Cart Items -->
+                <div class="cart-content fade-in">
+                    <div class="cart-items-container">
+                        <h2 data-translate="cart.items">Cart Items</h2>
+                        <div id="cart-items" class="cart-container cart-items-list">
+                            <!-- Cart items will be loaded here -->
+                            <div class="cart-loading">
+                                <i class="fa-solid fa-spinner fa-spin"></i>
+                                <p>Loading your luxury items...</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Cart Summary -->
+                    <div class="cart-summary-container">
+                        <div class="cart-summary-card">
+                            <h3 data-translate="cart.order_summary">ملخص الطلب</h3>
+                            
+                            <div class="summary-line">
+                                <span data-translate="cart.subtotal">Subtotal:</span>
+                                <span id="subtotal">₪0.00</span>
+                            </div>
+                            
+                            <div class="summary-line total">
+                                <span data-translate="cart.total">Total:</span>
+                                <span class="cart-total">₪0.00</span>
+                            </div>
+                            
+                            <button type="button" class="btn btn-primary w-full checkout-btn" onclick="window.proceedToCheckout()" data-translate="cart.checkout">
+                                Proceed to Checkout
+                            </button>
+                            
+                            <a href="index.html" class="continue-shopping" data-translate="cart.continue_shopping">
+                                Continue Shopping
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Empty Cart State -->
+                <div id="emptyCartState" class="empty-cart" style="display: none;">
+                    <i class="fa-regular fa-bag-shopping"></i>
+                    <h3 data-translate="cart.empty_title">Your cart is empty</h3>
+                    <p data-translate="cart.empty_message" style="color: var(--text-secondary); margin-bottom: 1rem;">Looks like you haven't added any items to your cart yet.</p>
+                    <a href="index.html" class="continue-btn" data-translate="cart.start_shopping">Continue Shopping</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><span dir="ltr" class="brand-name">J&amp;A Jewelry</span></h3>
+                    <p data-translate="footer.description">
+                        Your premier destination for luxury watches, perfumes, bags, and accessories.
+                    </p>
+                </div>
+                
+                <div class="footer-section footer-links">
+                    <h4 class="footer-title footer-links" data-translate="footer.quick_links">Quick Links</h4>
+                    <div class="footer-links">
+                        <ul>
+                            <li><a href="index.html" data-translate="navigation.home">Home</a></li>
+                            <li><a href="client.html" data-translate="navigation.products">Products</a></li>
+                            <li><a href="cart.html" data-translate="navigation.cart">Cart</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="footer-section footer-contact">
+                    <h4 class="footer-title footer-contact" data-translate="footer.contact">Contact Info</h4>
+                    <div class="footer-contact">
+                        <ul>
+                            <li>📧 j.a.jewelry33@gmail.com</li>
+                            <li>📞 <a href="https://wa.me/972503701179" target="_blank" rel="noopener">0503701179</a></li>
+                            <li>📍 <span id="footer-location" data-translate="footer.location">باقة الغربية – شارع بير بورين</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p><span class="footer-copyright">© 2025 <span class="brand-name">J&amp;A Jewelry</span>. <span data-translate="footer.rights">All rights reserved.</span></span></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <!-- Language and menu functionality is handled by app.js's initializeApp() -->
+    
+    <!-- Firebase Frontend Configuration and Shop Scripts -->
+    <script type="module" src="firebase-frontend-config.js"></script>
+    <script src="app.js" defer></script>
+    <script src="assets/js/userMenu.js"></script>
+    <script src="favorites.js"></script>
+    
+    <!-- Load cart.js AFTER app.js to handle cart logic -->
+    <script src="cart.js"></script>
+    
+    <script>
+        // Page-specific variables
+        // Note: cartItems is managed in cart.js - no duplicate declarations here
+
+        // Make toggleLoginDropdown available globally
+        window.toggleLoginDropdown = function toggleLoginDropdown(event) {
+            console.log('🔥 toggleLoginDropdown called');
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            
+            const dropdown = document.getElementById('loginDropdown');
+            console.log('Dropdown element:', dropdown);
+            
+            if (!dropdown) {
+                console.error('❌ Login dropdown not found!');
+                return;
+            }
+            
+            const isOpening = !dropdown.classList.contains('open');
+            console.log('Is opening?', isOpening);
+            
+            dropdown.classList.toggle('open');
+            
+            if (isOpening) {
+                const button = event?.target || document.getElementById('header-account-icon');
+                if (button) {
+                    const rect = button.getBoundingClientRect();
+                    dropdown.style.top = `${rect.bottom + 8}px`;
+                    if (document.documentElement.dir === 'rtl') {
+                        dropdown.style.right = `${window.innerWidth - rect.right}px`;
+                        dropdown.style.left = 'auto';
+                    } else {
+                        dropdown.style.left = `${rect.left}px`;
+                        dropdown.style.right = 'auto';
+                    }
+                }
+                dropdown.style.display = '';
+                dropdown.setAttribute('aria-hidden', 'false');
+                console.log('✅ Login dropdown opened');
+            } else {
+                dropdown.style.display = 'none';
+                dropdown.setAttribute('aria-hidden', 'true');
+                console.log('✅ Login dropdown closed');
+            }
+        };
+
+        // toggleMobileMenu is handled by app.js - no need to redefine here
+        // app.js will set up the menu toggle automatically via initializeApp()
+        
+        // Smooth scroll to products section
+        window.scrollToProducts = function scrollToProducts(event) {
+            if (event) {
+                event.preventDefault();
+            }
+            
+            // Check if we're on index.html or home page
+            const isOnIndexPage = window.location.pathname.endsWith('index.html') || 
+                                   window.location.pathname === '/' || 
+                                   window.location.pathname.endsWith('/');
+            
+            if (isOnIndexPage) {
+                // Try to find products section or first product category
+                const productsSection = document.getElementById('products') || 
+                                       document.getElementById('perfumes') || 
+                                       document.getElementById('watches') ||
+                                       document.getElementById('bags') ||
+                                       document.getElementById('accessories');
+                
+                if (productsSection) {
+                    productsSection.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'start' 
+                    });
+                    console.log('✅ Scrolled to products section');
+                } else {
+                    console.warn('⚠️ Products section not found on current page');
+                }
+            } else {
+                // If we're on a different page, navigate to index.html first
+                window.location.href = 'index.html#perfumes';
+            }
+        };
+        
+        // Language toggle is handled by app.js's initializeApp()
+        // No custom language functions needed
+
+        // Initialize page - wait for app.js to initialize first
+        document.addEventListener('DOMContentLoaded', async () => {
+            console.log('🛒 Cart page loaded');
+            
+            // Wait for app.js to initialize (it runs with defer, so it should be ready)
+            // Give it a moment to set up JAJewelry and initializeApp()
+            await new Promise(resolve => {
+                if (typeof JAJewelry !== 'undefined') {
+                    resolve();
+                } else {
+                    // Wait for app.js to load
+                    const checkInterval = setInterval(() => {
+                        if (typeof JAJewelry !== 'undefined') {
+                            clearInterval(checkInterval);
+                            resolve();
+                        }
+                    }, 50);
+                    // Timeout after 2 seconds
+                    setTimeout(() => {
+                        clearInterval(checkInterval);
+                        resolve();
+                    }, 2000);
+                }
+            });
+            
+            // Load cart items when page loads
+            // This is the ONLY place cart loading should happen - it waits for onAuthStateChanged
+            console.log('🛒 Cart page initialized - waiting for auth state...');
+            
+            // Load cart items - this function waits for onAuthStateChanged
+            if (typeof loadCartItems === 'function') {
+                loadCartItems().catch(error => {
+                    console.error('❌ Error loading cart from Firestore:', error);
+                });
+            } else {
+                console.error('❌ loadCartItems function not found');
+            }
+            
+            // Initialize navbar icon event listeners (cart-specific)
+            initializeNavbarIcons();
+            
+            // Initialize scroll animations (cart-specific)
+            initializeScrollAnimations();
+            
+            // Legacy closeMobileMenu function removed - using user-drawer instead
+        });
+        
+        // Navigation functions for navbar icons
+        function goToFavoritesPage() {
+            window.location.href = 'favorites.html';
+        }
+        
+        function goToLoginPage() {
+            window.location.href = 'login.html';
+        }
+        
+        // Initialize navbar icon click handlers
+        function initializeNavbarIcons() {
+            // Favorites icon
+            const favoritesIcon = document.querySelector('.nav-icons .fa-heart');
+            if (favoritesIcon) {
+                favoritesIcon.style.cursor = 'pointer';
+                favoritesIcon.addEventListener('click', goToFavoritesPage);
+            }
+            
+            // User/Login icon
+            const userIcon = document.querySelector('.nav-icons .fa-user');
+            if (userIcon) {
+                userIcon.style.cursor = 'pointer';
+                userIcon.addEventListener('click', goToLoginPage);
+            }
+        }
+
+        // Verify cart data integrity and persistence
+        function verifyCartPersistence() {
+            console.log('🔍 Verifying cart data persistence...');
+            
+            try {
+                // Get current cart data
+                const currentCart = JSON.parse(localStorage.getItem("cart")) || [];
+                console.log('📊 Current cart state:', {
+                    itemCount: currentCart.length,
+                    totalItems: currentCart.reduce((sum, item) => sum + (item.quantity || 1), 0),
+                    totalValue: currentCart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0)
+                });
+                
+                // Verify each item has required properties
+                const validItems = currentCart.filter(item => {
+                    const isValid = item.id && item.name && typeof item.price === 'number' && item.quantity > 0;
+                    if (!isValid) {
+                        console.warn('⚠️ Invalid cart item found:', item);
+                    }
+                    return isValid;
+                });
+                
+                if (validItems.length !== currentCart.length) {
+                    console.warn('⚠️ Some cart items are invalid, cleaning up...');
+                    localStorage.setItem("cart", JSON.stringify(validItems));
+                }
+                
+                console.log('✅ Cart data integrity verified');
+                return validItems;
+                
+            } catch (error) {
+                console.error('❌ Error verifying cart persistence:', error);
+                // Reset cart if corrupted
+                localStorage.setItem("cart", JSON.stringify([]));
+                return [];
+            }
+        }
+        
+        // Add sample cart data for testing
+        function addSampleCartData() {
+            const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
+            if (existingCart.length === 0) {
+                const sampleItems = [
+                    {
+                        id: 'sample-1',
+                        name: 'Gold Diamond Ring',
+                        price: 299.99,
+                        image: 'assets/images/products/placeholder.jpg',
+                        brand: 'J&A Jewelry',
+                        quantity: 1
+                    },
+                    {
+                        id: 'sample-2',
+                        name: 'Silver Pearl Necklace',
+                        price: 149.99,
+                        image: 'assets/images/products/placeholder.jpg',
+                        brand: 'J&A Jewelry',
+                        quantity: 2
+                    }
+                ];
+                localStorage.setItem("cart", JSON.stringify(sampleItems));
+                console.log('Added sample cart data:', sampleItems);
+            }
+        }
+
+        // Language and menu functionality is handled by app.js's initializeApp()
+        // No need for custom initialization here
+
+        // Load cart items from Firestore - waits for auth state
+        // This is the ONLY function that should load/render the cart
+        // It waits for onAuthStateChanged to fire before doing anything
+        async function loadCartItems() {
+            console.log('🛒 Loading cart items from Firestore...');
+            
+            // Import Firebase modules
+            const { onAuthStateChanged } = await import('https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js');
+            const { auth } = await import('./firebase-frontend-config.js');
+            // Find the cart container - prioritize cart-items-list class
+            const cartContainer = document.querySelector('.cart-items-list') || document.getElementById("cart-items");
+            const cartLoading = document.querySelector('.cart-loading');
+            
+            // Show loading animation
+            if (cartLoading) {
+                cartLoading.style.display = 'flex';
+            }
+            if (cartContainer) {
+                cartContainer.innerHTML = '<div class="cart-loading"><i class="fa-solid fa-spinner fa-spin"></i><p>Loading your luxury items...</p></div>';
+            }
+            
+            // Wait for Firebase authentication to be ready
+            return new Promise((resolve) => {
+                let resolved = false;
+                const unsubscribe = onAuthStateChanged(auth, async (user) => {
+                    if (resolved) return; // Prevent multiple calls
+                    
+                    try {
+                        console.log('🔍 Auth state changed:', user ? `User logged in: ${user.email}` : 'No user logged in');
+                        
+                        // If user is not logged in, show login message
+                        if (!user) {
+                            if (cartLoading) cartLoading.style.display = 'none';
+                            if (cartContainer) {
+                                cartContainer.innerHTML = `
+                                    <div class="empty-cart">
+                                        <i class="fa-regular fa-user-lock"></i>
+                                        <h3>Please log in to view your cart</h3>
+                                        <p style="color: var(--text-secondary); margin-bottom: 1rem;">You need to be logged in to see your cart items.</p>
+                                        <a href="index.html" class="continue-btn">Go to Login</a>
+                                    </div>`;
+                            }
+                            // Update summary totals to zero - use cart.js function
+                            if (typeof window.updateCartTotals === 'function') {
+                                window.updateCartTotals();
+                            }
+                            // Update badge to 0
+                            await updateCartBadge();
+                            resolved = true;
+                            unsubscribe();
+                            resolve();
+                            return;
+                        }
+                        
+                        // User is logged in - load and render cart from Firestore
+                        try {
+                            // Hide loading animation
+                            if (cartLoading) cartLoading.style.display = 'none';
+                            
+                            // Hide empty cart state div if it exists
+                            const emptyCartState = document.getElementById('emptyCartState');
+                            if (emptyCartState) {
+                                emptyCartState.style.display = 'none';
+                            }
+                            
+                            // Load cart using cart.js function (loads from Firestore)
+                            // This populates the cartItems array
+                            if (typeof window.loadCart === 'function') {
+                                await window.loadCart();
+                            }
+                            
+                            // Render cart using cart.js function
+                            // This will show empty message if cartItems.length === 0, or render items if not
+                            if (typeof window.renderCart === 'function') {
+                                window.renderCart();
+                            }
+                            
+                            // Update cart badge
+                            if (typeof window.updateCartBadge === 'function') {
+                                await window.updateCartBadge();
+                            }
+                            
+                            console.log('✅ Cart loaded and rendered successfully:', window.cartItems?.length || 0, 'items');
+                            
+                            resolved = true;
+                            unsubscribe();
+                            resolve();
+                        } catch (error) {
+                            console.error('❌ Error loading cart items:', error);
+                            console.error('Error details:', error.message, error.stack);
+                            if (cartLoading) cartLoading.style.display = 'none';
+                            if (cartContainer) {
+                                cartContainer.innerHTML = `
+                                    <div class="error-message" style="text-align: center; padding: 3rem; color: #cc0000;">
+                                        <h2>Error loading cart</h2>
+                                        <p>There was an error loading your cart data. Please refresh the page.</p>
+                                        <p style="font-size: 0.9rem; margin-top: 1rem;">Error: ${error.message}</p>
+                                    </div>
+                                `;
+                            }
+                            // Update totals - use cart.js function
+                            if (typeof window.updateCartTotals === 'function') {
+                                window.updateCartTotals();
+                            }
+                            await updateCartBadge();
+                            resolved = true;
+                            unsubscribe();
+                            resolve();
+                        }
+                    } catch (error) {
+                        console.error('❌ Error in auth state callback:', error);
+                        console.error('Error details:', error.message, error.stack);
+                        resolved = true;
+                        unsubscribe();
+                        resolve();
+                    }
+                });
+                
+                // Add timeout to prevent infinite loading
+                setTimeout(() => {
+                    if (!resolved) {
+                        console.warn('⚠️ Cart loading timeout - forcing resolution');
+                        if (cartLoading) cartLoading.style.display = 'none';
+                        if (cartContainer && cartContainer.innerHTML.includes('Loading your luxury items')) {
+                            cartContainer.innerHTML = `
+                                <div class="error-message" style="text-align: center; padding: 3rem; color: #cc0000;">
+                                    <h2>Loading timeout</h2>
+                                    <p>Please refresh the page to try again.</p>
+                                </div>
+                            `;
+                        }
+                        resolved = true;
+                        unsubscribe();
+                        resolve();
+                    }
+                }, 10000); // 10 second timeout
+            });
+        }
+        
+        // updateCartTotals is now ONLY in cart.js - no local definition here
+        // All calls should use window.updateCartTotals() from cart.js
+
+        // Add event listeners for remove buttons
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('remove-btn')) {
+                const itemId = e.target.getAttribute('data-id');
+                removeFromCart(itemId);
+            }
+        });
+
+        // NOTE: increaseQuantity and decreaseQuantity are defined in cart.js
+        // Do NOT redefine them here to avoid infinite recursion
+        // The functions from cart.js are already available via window.increaseQuantity and window.decreaseQuantity
+        
+        // Update quantity (syncs with Firestore if logged in)
+        async function updateQuantity(itemId, newQuantity) {
+            // Enforce min 1 and max 10
+            newQuantity = Math.max(1, Math.min(10, newQuantity));
+            
+            if (newQuantity <= 0) {
+                await removeFromCart(itemId);
+                return;
+            }
+            
+            try {
+                const authModule = await import('./assets/js/auth_frontend.js');
+                const { auth, updateFirestoreCartItem } = authModule;
+                const currentUser = auth?.currentUser;
+                
+                if (currentUser && updateFirestoreCartItem) {
+                    // Update in Firestore
+                    await updateFirestoreCartItem(itemId, newQuantity);
+                    console.log('✅ Updated quantity in Firestore:', itemId, newQuantity);
+                    // Reload the cart display to reflect changes and recalculate totals
+                    await loadCartItems();
+                    // Update cart badge
+                    await updateCartBadge();
+                    return;
+                } else {
+                    console.warn('⚠️ User not logged in or updateFirestoreCartItem not available');
+                    // Fallback to localStorage for guests
+                    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+                    const item = cart.find(item => item.id === itemId);
+                    if (item) {
+                        item.quantity = newQuantity;
+                        localStorage.setItem("cart", JSON.stringify(cart));
+                        await loadCartItems();
+                        await updateCartBadge();
+                    }
+                }
+            } catch (error) {
+                console.error('❌ Error updating quantity:', error);
+                // Fallback to localStorage on error
+                try {
+                    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+                    const item = cart.find(item => item.id === itemId);
+                    if (item) {
+                        item.quantity = newQuantity;
+                        localStorage.setItem("cart", JSON.stringify(cart));
+                        await loadCartItems();
+                        await updateCartBadge();
+                    }
+                } catch (fallbackError) {
+                    console.error('❌ Error in fallback update:', fallbackError);
+                }
+            }
+        }
+        
+        // Change quantity by delta (positive for increase, negative for decrease)
+        async function changeQuantity(itemId, delta) {
+            try {
+                const { auth } = await import('./firebase-frontend-config.js');
+                const { db } = await import('./firebase-frontend-config.js');
+                const { doc, getDoc, updateDoc } = await import('https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js');
+                const currentUser = auth?.currentUser;
+                
+                if (currentUser) {
+                    // Get current quantity from Firestore
+                    const cartItemRef = doc(db, 'users', currentUser.uid, 'cart', itemId);
+                    const cartItemSnap = await getDoc(cartItemRef);
+                    
+                    if (cartItemSnap.exists()) {
+                        const currentData = cartItemSnap.data();
+                        const currentQuantity = currentData.quantity || 1;
+                        const newQuantity = currentQuantity + delta;
+                        
+                        // Enforce min 1 and max 10
+                        if (newQuantity < 1) {
+                            // Remove item if quantity would be less than 1
+                            await removeFromCart(itemId);
+                            return;
+                        }
+                        
+                        const clampedQuantity = Math.max(1, Math.min(10, newQuantity));
+                        
+                        // Update quantity
+                        await updateQuantity(itemId, clampedQuantity);
+                    } else {
+                        console.error('❌ Cart item not found in Firestore:', itemId);
+                    }
+                } else {
+                    // Fallback to localStorage for guests
+                    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+                    const item = cart.find(item => item.id === itemId);
+                    
+                    if (item) {
+                        const currentQuantity = item.quantity || 1;
+                        const newQuantity = currentQuantity + delta;
+                        
+                        // Enforce min 1 and max 10
+                        if (newQuantity < 1) {
+                            // Remove item
+                            cart = cart.filter(item => item.id !== itemId);
+                            localStorage.setItem("cart", JSON.stringify(cart));
+                            await loadCartItems();
+                            await updateCartBadge();
+                            return;
+                        }
+                        
+                        const clampedQuantity = Math.max(1, Math.min(10, newQuantity));
+                        item.quantity = clampedQuantity;
+                        localStorage.setItem("cart", JSON.stringify(cart));
+                        await loadCartItems();
+                        await updateCartBadge();
+                    }
+                }
+            } catch (error) {
+                console.error('❌ Error changing quantity:', error);
+                alert('Error updating quantity. Please try again.');
+            }
+        }
+
+        // Remove item from cart - use cart.js function (Firestore only, requires login)
+        // This function is already defined in cart.js and handles Firestore
+        // No need to override it here
+
+
+        // Update quantity of cart item (legacy function - redirects to new functions)
+        function updateQuantityLegacy(productId, change) {
+            // Redirect to new quantity functions from cart.js
+            if (change > 0) {
+                if (typeof window.increaseQuantity === 'function') {
+                    window.increaseQuantity(productId);
+                }
+            } else if (change < 0) {
+                if (typeof window.decreaseQuantity === 'function') {
+                    window.decreaseQuantity(productId);
+                }
+            }
+        }
+        
+        // Remove item from cart (legacy function - redirects to async version)
+        function removeFromCartLegacy(productId) {
+            // Redirect to async removeFromCart function
+            removeFromCart(productId).catch(error => {
+                console.error('Error removing item:', error);
+            });
+        }
+
+        // Update cart badge - ensures it matches the cart items
+        // Use global updateCartBadge from app.js if available, otherwise define local version
+        async function updateCartBadge() {
+            // If global updateCartBadge exists (from app.js), use it
+            if (typeof window.updateCartBadge === 'function' && window.updateCartBadge !== updateCartBadge) {
+                return await window.updateCartBadge();
+            }
+            
+            // Local fallback implementation (matches app.js logic)
+            const badges = document.querySelectorAll('.cart-badge');
+            if (badges.length > 0) {
+                try {
+                    let totalItems = 0;
+                    
+                    const authModule = await import('./assets/js/auth_frontend.js');
+                    const { auth, getFirestoreCart } = authModule;
+                    
+                    // Get current user directly (more reliable than waiting for onAuthStateChanged)
+                    const currentUser = auth.currentUser;
+                    
+                    if (currentUser && getFirestoreCart) {
+                        // User is logged in - MUST use Firestore cart, ignore localStorage
+                        try {
+                            const cartItems = await getFirestoreCart();
+                            totalItems = cartItems.reduce((sum, item) => sum + (item.quantity || 1), 0);
+                            console.log('✅ Cart badge updated from Firestore (logged-in user):', totalItems, 'items');
+                        } catch (error) {
+                            console.error('❌ Error fetching Firestore cart:', error);
+                            // If Firestore fails, show 0 (don't fall back to guest cart)
+                            totalItems = 0;
+                            console.log('⚠️ Firestore cart fetch failed, showing 0 items');
+                        }
+                    } else {
+                        // User is NOT logged in - show 0 (guests cannot have cart)
+                        totalItems = 0;
+                        console.log('✅ Cart badge updated: 0 items (guest user - login required)');
+                    }
+                    
+                    // Update all badges
+                    badges.forEach(badge => {
+                        badge.textContent = totalItems;
+                        badge.style.display = totalItems > 0 ? 'block' : 'none';
+                    });
+                    
+                } catch (error) {
+                    console.error('❌ Error updating cart badge:', error);
+                    badges.forEach(badge => {
+                        badge.textContent = '0';
+                        badge.style.display = 'none';
+                    });
+                }
+            }
+        }
+
+        // Initialize scroll animations
+        function initializeScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+            
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+        }
+    </script>
+    
+    <!-- Auth UI updates are handled by auth_frontend.js automatically -->
+    <!-- No need for manual imports - auth_frontend.js is loaded as a script above -->
+    
+    <!-- Placeholder sections -->
+    <section id="about"></section>
+    <section id="contact"></section>
+
+    <!-- User Account Drawer -->
+    <div id="user-drawer-overlay" onclick="window.toggleUserDrawer()"></div>
+
+    <aside id="user-drawer">
+        <button class="user-drawer-close" onclick="window.toggleUserDrawer()">×</button>
+
+        <div class="user-drawer-header">
+            <span class="user-name" id="drawer-user-name"></span>
+            <button class="logout-btn" onclick="logout()" data-translate="navigation.logout">Logout</button>
+        </div>
+
+        <nav class="user-drawer-nav">
+            <a href="index.html" data-translate="navigation.home">Home</a>
+            <a href="perfumes.html" data-translate="navigation.perfumes">Perfumes</a>
+            <a href="watches.html" data-translate="navigation.watches">Watches</a>
+            <a href="bags.html" data-translate="navigation.bags">Bags</a>
+            <a href="accessories.html" data-translate="navigation.accessories">Accessories</a>
+            <a href="index.html#about-section" data-translate="navigation.about">About</a>
+            <a href="index.html#contact-section" data-translate="navigation.contact">Contact</a>
+        </nav>
+    </aside>
+</body>
+</html>

@@ -1,0 +1,172 @@
+{
+  "site": {
+    "title": "J&A Jewelry",
+    "slogan": "Luxury Watches, Perfumes & Accessories"
+  },
+  "brand": {
+    "title": "J&A Jewelry – Where elegance meets luxury",
+    "slogan": "Luxury that defines you."
+  },
+  "navigation": {
+    "home": "Home",
+    "perfumes": "Perfumes",
+    "watches": "Watches",
+    "bags": "Bags",
+    "accessories": "Accessories",
+    "about": "About",
+    "contact": "Contact",
+    "cart": "Cart",
+    "admin": "Admin",
+    "login": "Login",
+    "logout": "Logout"
+  },
+  "greeting": {
+    "hello": "Hello",
+    "welcome": "Welcome"
+  },
+  "login": {
+    "email": "Email Address",
+    "password": "Password",
+    "login_button": "Login",
+    "google_login": "Login with Google",
+    "create_account": "Create New Account",
+    "no_account": "Don't have an account?"
+  },
+  "categories": {
+    "perfumes": "Luxury Perfumes",
+    "watches": "Elegant Watches",
+    "bags": "Luxury Bags",
+    "accessories": "Elegant Accessories"
+  },
+  "products": {
+    "add_to_cart": "Add to Cart",
+    "dior": {
+      "name": "Dior Perfume",
+      "price": "$120"
+    },
+    "chanel": {
+      "name": "Chanel Perfume",
+      "price": "$150"
+    },
+    "boss": {
+      "name": "Boss Perfume",
+      "price": "$100"
+    },
+    "rolex": {
+      "name": "Rolex Watch",
+      "price": "$5000"
+    },
+    "guess": {
+      "name": "Guess Watch",
+      "price": "$200"
+    },
+    "tissot": {
+      "name": "Tissot Watch",
+      "price": "$300"
+    },
+    "gucci": {
+      "name": "Gucci Bag",
+      "price": "$800"
+    },
+    "prada": {
+      "name": "Prada Bag",
+      "price": "$700"
+    },
+    "ring": {
+      "name": "Gold Ring",
+      "brand": "18K Gold",
+      "price": "$400"
+    },
+    "necklace": {
+      "name": "Elegant Necklace",
+      "brand": "Gold and Diamonds",
+      "price": "$600"
+    }
+  },
+  "about": {
+    "title": "About Us",
+    "text1": "J&A Jewelry is a luxury store that offers a carefully selected collection of original perfumes, elegant watches, elegant accessories and luxury bags for men and women.",
+    "text2": "We believe that every small detail makes a big difference, so we ensure that every piece in our collection is a reflection of luxury, elegance and high quality."
+  },
+  "contact": {
+    "title": "Contact Us",
+    "address_title": "Address",
+    "address": "Baqa al-Gharbiyye – Beer Burin Street",
+    "phone_title": "Phone and WhatsApp",
+    "instagram_title": "Instagram",
+    "facebook_title": "Facebook",
+    "tiktok_title": "TikTok",
+    "whatsapp_btn": "💬 Contact us on WhatsApp"
+  },
+  "footer": {
+    "title": "J&A Jewelry",
+    "description": "Luxury store for perfumes, watches and accessories",
+    "quick_links": "Quick Links",
+    "contact": "Contact Information",
+    "rights": "All rights reserved.",
+    "location": "Baqa al-Gharbiyye – Bir Bureen Street"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "price": "Price",
+    "quantity": "Quantity",
+    "total": "Total",
+    "empty_cart": "Your cart is empty"
+  },
+  "filter": {
+    "shop-by": "SHOP BY",
+    "view-as": "VIEW AS",
+    "brand": "BRAND",
+    "category": "CATEGORY",
+    "material": "MATERIAL",
+    "color": "COLOR",
+    "type": "TYPE",
+    "price": "PRICE",
+    "sort-by": "SORT BY",
+    "featured": "Featured",
+    "price-low": "Price: Low to High",
+    "price-high": "Price: High to Low",
+    "name": "Name A-Z",
+    "address-content": "Baqa al-Gharbiyye – Bir Burin Street"
+  },
+  "product": {
+    "material": "Material",
+    "color": "Color",
+    "type": "Type",
+    "brand": "Brand",
+    "types": {
+      "bracelet": "Bracelet",
+      "ring": "Ring",
+      "necklace": "Necklace",
+      "earring": "Earring",
+      "earrings": "Earrings",
+      "set": "Set"
+    },
+    "materials": {
+      "silver": "Silver",
+      "silver_925": "Silver 925",
+      "gold": "Gold",
+      "gold_filled": "Gold Filled",
+      "stainless_steel": "Stainless Steel",
+      "platinum": "Platinum",
+      "rose_gold": "Rose Gold"
+    },
+    "colors": {
+      "gold": "Gold",
+      "silver": "Silver",
+      "rose_gold": "Rose Gold"
+    }
+  },
+  "admin": {
+    "dashboard": "Admin Dashboard",
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "products": "Products",
+      "categories": "Categories",
+      "upload": "Upload JSON"
+    },
+    "upload_hint": "Select a JSON file to upload products"
+  }
+}

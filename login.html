@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="login-page">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - J&A Jewelry</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Cairo:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <style>
+        /* Reset margins and padding */
+        html, body {
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        
+        /* Language switch button - top right (RTL: right side) */
+        .lang-switch-top {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(11, 11, 11, 0.9);
+            border: 2px solid #d4af37;
+            padding: 10px 22px;
+            border-radius: 50px;
+            color: #d4af37;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .lang-switch-top:hover {
+            background: rgba(212, 175, 55, 0.2);
+            color: #ffd879;
+        }
+        
+        /* Login Page Styles */
+        .login-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0b0b0b 0%, #1a1a1a 100%);
+            display: flex;
+            align-items: stretch;
+            padding: 0;
+        }
+        
+        .login-left {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, #0b0b0b 0%, #1a1a1a 50%, #0b0b0b 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-left::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("e7eb3394-038a-4ba6-ba8c-ac759d3f42b8.jpeg") center/cover no-repeat;
+            opacity: 0.15;
+            z-index: 0;
+        }
+        
+        .login-left-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 500px;
+        }
+        
+        .login-logo-image {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 2rem;
+            background: url("e7eb3394-038a-4ba6-ba8c-ac759d3f42b8.jpeg") center/contain no-repeat;
+            filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.5));
+        }
+        
+        .login-brand-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .login-brand-tagline {
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.5rem;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .login-brand-slogan {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            color: #ffffff;
+            margin-bottom: 2rem;
+        }
+        
+        .login-right {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            background: rgba(26, 26, 26, 0.5);
+        }
+        
+        .login-container {
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        .login-card {
+            background: rgba(26, 26, 26, 0.95);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
+                        0 0 0 1px rgba(212, 175, 55, 0.1);
+            backdrop-filter: blur(10px);
+            width: 100%;
+        }
+        
+        .login-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--gold);
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .login-subtitle {
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.95rem;
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .form-group label {
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.9rem;
+            color: #ffffff;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            background: var(--bg-primary);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            color: #ffffff;
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 1rem;
+            font-family: 'Cairo', sans-serif;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+        }
+        
+        .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .btn-login {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: var(--bg-primary);
+            border: none;
+            border-radius: 8px;
+            padding: 14px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+        }
+        
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+        }
+        
+        .btn-login:active {
+            transform: translateY(0);
+        }
+        
+        .btn-login:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-google-login {
+            background: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 14px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 0.5rem;
+        }
+        
+        .btn-google-login:hover {
+            background: #357ae8;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(66, 133, 244, 0.3);
+        }
+        
+        .login-divider {
+            text-align: center;
+            margin: 1.5rem 0;
+            position: relative;
+            color: #ffffff;
+            font-size: 0.9rem;
+        }
+        
+        .login-divider::before,
+        .login-divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 40%;
+            height: 1px;
+            background: rgba(212, 175, 55, 0.2);
+        }
+        
+        .login-divider::before {
+            right: 0;
+        }
+        
+        .login-divider::after {
+            left: 0;
+        }
+        
+        .login-links {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-family: 'Cairo', sans-serif;
+        }
+        
+        .login-links a {
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+        
+        .login-links a:hover {
+            color: var(--gold-light);
+            text-decoration: underline;
+        }
+        
+        .message {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.9rem;
+            text-align: center;
+            display: none;
+        }
+        
+        .message.success {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid rgba(76, 175, 80, 0.5);
+            color: #4caf50;
+        }
+        
+        .message.error {
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid rgba(244, 67, 54, 0.5);
+            color: #f44336;
+        }
+        
+        /* Ensure all text in login container is visible */
+        .login-container,
+        .login-card {
+            color: #ffffff;
+        }
+        
+        .login-container h1,
+        .login-container h2,
+        .login-container h3,
+        .login-container p,
+        .login-container label,
+        .login-container span:not(.brand-name),
+        .login-container small,
+        .login-card h1,
+        .login-card h2,
+        .login-card h3,
+        .login-card p,
+        .login-card label,
+        .login-card span:not(.brand-name),
+        .login-card small {
+            color: #ffffff;
+        }
+        
+        /* Keep brand name gold */
+        .login-container .brand-name,
+        .login-card .brand-name {
+            color: var(--gold);
+        }
+        
+        /* Keep title gold */
+        .login-title {
+            color: var(--gold);
+        }
+        
+        /* Keep message colors (success/error) */
+        .message.success,
+        .message.error {
+            /* Colors already defined above */
+        }
+        
+        /* Ensure input text is readable */
+        .form-group input {
+            color: #ffffff;
+        }
+        
+        @media (max-width: 968px) {
+            .login-page {
+                flex-direction: column;
+            }
+            
+            .login-left {
+                min-height: 40vh;
+                padding: 40px 20px;
+            }
+            
+            .login-logo-image {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .login-brand-name {
+                font-size: 2.5rem;
+            }
+            
+            .login-brand-tagline {
+                font-size: 1.2rem;
+            }
+            
+            .login-right {
+                padding: 40px 20px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .login-card {
+                padding: 2rem 1.5rem;
+                border-radius: 16px;
+            }
+            
+            .login-title {
+                font-size: 1.75rem;
+            }
+            
+            .login-logo-image {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .login-brand-name {
+                font-size: 2rem;
+            }
+            
+            .lang-switch-top {
+                top: 15px;
+                right: 15px;
+                padding: 8px 18px;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Switch Button - Top Right -->
+    <button id="lang-toggle" class="lang-switch-top" data-lang="ar">עברית</button>
+
+    <!-- Login Page Content -->
+    <div class="login-page">
+        <!-- Left Side - Logo and Branding -->
+        <div class="login-left">
+            <div class="login-left-content">
+                <div class="login-logo-image"></div>
+                <h1 class="login-brand-name"><span dir="ltr" class="brand-name">J&amp;A Jewelry</span></h1>
+                <h2 class="login-brand-tagline" data-translate="login-slogan-title">Where elegance meets luxury</h2>
+                <p class="login-brand-slogan" data-translate="login-slogan-subtitle">Luxury that defines you.</p>
+            </div>
+        </div>
+        
+        <!-- Right Side - Login Form -->
+        <div class="login-right">
+            <div class="login-container">
+                <div class="login-card">
+                    <h2 class="login-title" data-translate="login-title">تسجيل الدخول</h2>
+                    <p class="login-subtitle" data-translate="login-welcome">مرحباً بك في <span dir="ltr" class="brand-name">J&amp;A Jewelry</span></p>
+                    
+                    <!-- Message Container -->
+                    <div id="message-container"></div>
+                    
+                    <form id="login-form" class="login-form">
+                        <div class="form-group">
+                            <label for="email" data-translate="login-email">البريد الإلكتروني</label>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                name="email" 
+                                placeholder="example@mail.com" 
+                                autocomplete="email"
+                                required
+                            >
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="password" data-translate="login-password">كلمة المرور</label>
+                            <input 
+                                type="password" 
+                                id="password" 
+                                name="password" 
+                                placeholder="••••••••" 
+                                autocomplete="current-password"
+                                required
+                            >
+                        </div>
+                        
+                        <button type="submit" class="btn-login" id="btn-login" data-translate="login-button">
+                            تسجيل الدخول
+                        </button>
+                        
+                        <div class="login-divider" data-translate="login-or">أو</div>
+                        
+                        <button type="button" class="btn-google-login" id="btn-google-login">
+                            <i class="fab fa-google"></i>
+                            <span data-translate="login-google">تسجيل الدخول بواسطة Google</span>
+                        </button>
+                        
+                        <div class="login-links">
+                            <p>
+                                <span data-translate="login-no-account">ليس لديك حساب؟</span> 
+                                <a href="signup.html" class="create-account-link" data-translate="login-create-account">إنشاء حساب جديد</a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+    <script type="module" src="login.js?v=6001"></script>
+    <script type="module" src="assets/js/welcome.js"></script>
+    
+    <!-- Language Toggle Handler and Translation -->
+    <script>
+        // Ensure translatePage is called on load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Wait for app.js to load, then translate
+            if (window.translatePage) {
+                window.translatePage();
+            } else {
+                // If app.js hasn't loaded yet, wait a bit
+                setTimeout(() => {
+                    if (window.translatePage) {
+                        window.translatePage();
+                    }
+                }, 100);
+            }
+            
+            // Add event listener for language toggle button
+            const langToggle = document.getElementById('lang-toggle');
+            if (langToggle) {
+                langToggle.addEventListener('click', () => {
+                    if (window.switchLanguage) {
+                        const currentLang = document.documentElement.lang || 'ar';
+                        const newLang = currentLang === 'ar' ? 'he' : currentLang === 'he' ? 'en' : 'ar';
+                        window.switchLanguage(newLang);
+                        // Re-translate after language change
+                        setTimeout(() => {
+                            if (window.translatePage) {
+                                window.translatePage();
+                            }
+                        }, 100);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+
