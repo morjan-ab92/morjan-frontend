@@ -10,9 +10,7 @@ const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
 // Backend API URL
-const BACKEND_URL = window.location.origin.includes('localhost') || window.location.origin.includes('127.0.0.1')
-    ? 'http://127.0.0.1:8000'  // FastAPI default port
-    : window.location.origin;  // Use same origin in production
+const BACKEND_URL = 'https://morjan-backend.onrender.com';
 
 // DOM Elements (only for login.html - may be null in other pages)
 const loginForm = document.getElementById("login-form");
