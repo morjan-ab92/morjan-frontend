@@ -759,9 +759,7 @@
                     console.log('✅ Firebase token obtained:', idToken.substring(0, 20) + '...');
                     
                     // Step 3: Send token to backend for verification
-                    const BACKEND_URL = window.location.origin.includes('localhost') || window.location.origin.includes('127.0.0.1')
-                        ? 'http://127.0.0.1:8000'
-                        : window.location.origin;
+                    const BACKEND_URL = 'https://morjan-backend.onrender.com';
                     
                     console.log('🔄 Sending token to backend:', `${BACKEND_URL}/auth/verify-token`);
                     const response = await fetch(`${BACKEND_URL}/auth/verify-token`, {
@@ -910,9 +908,7 @@
                     console.log('✅ Firebase token obtained:', idToken.substring(0, 20) + '...');
                     
                     // Step 3: Send token to backend for verification
-                    const BACKEND_URL = window.location.origin.includes('localhost') || window.location.origin.includes('127.0.0.1')
-                        ? 'http://127.0.0.1:8000'
-                        : window.location.origin;
+                    const BACKEND_URL = 'https://morjan-backend.onrender.com';
                     
                     console.log('🔄 Sending token to backend:', `${BACKEND_URL}/auth/verify-token`);
                     const response = await fetch(`${BACKEND_URL}/auth/verify-token`, {
