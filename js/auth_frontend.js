@@ -934,40 +934,61 @@ export async function addToCart(productId) {
  */
 export async function addToFirestoreCart(product) {
     try {
+        console.log('🔄 addToFirestoreCart called with product:', product);
+        
         const currentUser = auth.currentUser;
         if (!currentUser) {
+            console.error('❌ No current user found');
             throw new Error('User must be logged in to add items to cart');
         }
         
+        console.log('✅ Current user found:', currentUser.uid);
+        
         // Validate and ensure product.id is a string
         if (!product || !product.id) {
+            console.error('❌ Invalid product object:', product);
             throw new Error('Product object must have an id property');
         }
         const productId = String(product.id);
+        console.log('✅ Product ID validated:', productId);
         
         // Get Firebase ID token for authentication
         console.log('🔄 Getting Firebase ID token for cart API call...');
-        const firebaseToken = await currentUser.getIdToken();
+        let firebaseToken;
+        try {
+            firebaseToken = await currentUser.getIdToken();
+            console.log('✅ Firebase token obtained (length:', firebaseToken.length, ')');
+        } catch (tokenError) {
+            console.error('❌ Error getting Firebase token:', tokenError);
+            throw new Error('Failed to get authentication token. Please try logging in again.');
+        }
         
         // Call backend API to add item to cart
-        console.log('🔄 Calling backend API to add product to cart:', productId);
-        const response = await fetch(`${BACKEND_URL}/cart/add`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${firebaseToken}`
-            },
-            body: JSON.stringify({
-                product_id: productId,
-                quantity: 1
-            })
-        });
+        console.log('🔄 Calling backend API:', `${BACKEND_URL}/cart/add`);
+        console.log('🔄 Request payload:', { product_id: productId, quantity: 1 });
         
-        console.log('📡 Backend response status:', response.status);
+        let response;
+        try {
+            response = await fetch(`${BACKEND_URL}/cart/add`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${firebaseToken}`
+                },
+                body: JSON.stringify({
+                    product_id: productId,
+                    quantity: 1
+                })
+            });
+            console.log('📡 Backend response received, status:', response.status);
+        } catch (fetchError) {
+            console.error('❌ Network error calling backend:', fetchError);
+            throw new Error(`Network error: ${fetchError.message}. Please check your connection.`);
+        }
         
         if (!response.ok) {
             const errorText = await response.text();
-            console.error('❌ Backend error response:', errorText);
+            console.error('❌ Backend error response (status', response.status, '):', errorText);
             let errorMessage = 'Error adding product to cart. Please try again.';
             
             try {
@@ -986,14 +1007,18 @@ export async function addToFirestoreCart(product) {
         const responseData = await response.json();
         console.log('✅ Product added to cart via backend API:', responseData);
         
-        // Update cart badge (you may need to fetch cart from backend instead)
-        // For now, keeping the Firestore badge update - you might want to update this
-        // to call the backend /cart endpoint instead
-        updateCartBadgeFromFirestore();
+        // Update cart badge by calling backend /cart endpoint
+        try {
+            await updateCartBadgeFromBackend();
+        } catch (badgeError) {
+            console.warn('⚠️ Error updating cart badge:', badgeError);
+            // Don't fail the whole operation if badge update fails
+        }
         
         return responseData;
     } catch (error) {
         console.error('❌ Error adding to cart via backend API:', error);
+        console.error('❌ Error stack:', error.stack);
         throw error;
     }
 }
@@ -1132,6 +1157,55 @@ async function updateCartBadgeFromFirestore() {
         console.log('✅ Cart badge updated:', totalItems);
     } catch (error) {
         console.error('❌ Error updating cart badge:', error);
+    }
+}
+
+/**
+ * Update cart badge from backend API
+ * @returns {Promise<void>}
+ */
+async function updateCartBadgeFromBackend() {
+    try {
+        const currentUser = auth.currentUser;
+        if (!currentUser) {
+            // Guest user - show 0
+            const badges = document.querySelectorAll('.cart-badge');
+            badges.forEach(badge => {
+                badge.textContent = '0';
+                badge.style.display = 'none';
+            });
+            return;
+        }
+        
+        // Get Firebase ID token
+        const firebaseToken = await currentUser.getIdToken();
+        
+        // Call backend API to get cart
+        const response = await fetch(`${BACKEND_URL}/cart/`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${firebaseToken}`
+            }
+        });
+        
+        if (!response.ok) {
+            console.warn('⚠️ Failed to fetch cart from backend for badge update:', response.status);
+            return;
+        }
+        
+        const cartData = await response.json();
+        const totalItems = cartData.total_items || 0;
+        
+        // Update all cart badges
+        const badges = document.querySelectorAll('.cart-badge');
+        badges.forEach(badge => {
+            badge.textContent = totalItems;
+            badge.style.display = totalItems > 0 ? 'block' : 'none';
+        });
+        
+        console.log('✅ Cart badge updated from backend:', totalItems, 'items');
+    } catch (error) {
+        console.error('❌ Error updating cart badge from backend:', error);
     }
 }
 
