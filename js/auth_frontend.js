@@ -933,69 +933,118 @@ export async function addToCart(productId) {
  * @returns {Promise<void>}
  */
 export async function addToFirestoreCart(product) {
+    // Log immediately - even before try block to catch any issues
+    console.log('🚀 [addToFirestoreCart] FUNCTION CALLED - Entry point');
+    console.log('🚀 [addToFirestoreCart] Product received:', product);
+    console.log('🚀 [addToFirestoreCart] BACKEND_URL:', BACKEND_URL);
+    console.log('🚀 [addToFirestoreCart] Auth object exists:', typeof auth !== 'undefined');
+    
     try {
-        console.log('🔄 addToFirestoreCart called with product:', product);
+        // Check auth object
+        if (typeof auth === 'undefined') {
+            console.error('❌ [addToFirestoreCart] Auth object is undefined!');
+            throw new Error('Firebase auth not initialized');
+        }
         
         const currentUser = auth.currentUser;
+        console.log('🚀 [addToFirestoreCart] Current user check:', currentUser ? `Found: ${currentUser.uid}` : 'NOT FOUND');
+        
         if (!currentUser) {
-            console.error('❌ No current user found');
+            console.error('❌ [addToFirestoreCart] No current user found');
             throw new Error('User must be logged in to add items to cart');
         }
         
-        console.log('✅ Current user found:', currentUser.uid);
-        
         // Validate and ensure product.id is a string
         if (!product || !product.id) {
-            console.error('❌ Invalid product object:', product);
+            console.error('❌ [addToFirestoreCart] Invalid product object:', product);
             throw new Error('Product object must have an id property');
         }
         const productId = String(product.id);
-        console.log('✅ Product ID validated:', productId);
+        console.log('✅ [addToFirestoreCart] Product ID validated:', productId);
         
         // Get Firebase ID token for authentication
-        console.log('🔄 Getting Firebase ID token for cart API call...');
+        console.log('🔄 [addToFirestoreCart] Getting Firebase ID token...');
         let firebaseToken;
         try {
             firebaseToken = await currentUser.getIdToken();
-            console.log('✅ Firebase token obtained (length:', firebaseToken.length, ')');
+            console.log('✅ [addToFirestoreCart] Firebase token obtained, length:', firebaseToken.length);
+            console.log('✅ [addToFirestoreCart] Token preview:', firebaseToken.substring(0, 20) + '...');
         } catch (tokenError) {
-            console.error('❌ Error getting Firebase token:', tokenError);
+            console.error('❌ [addToFirestoreCart] Error getting Firebase token:', tokenError);
+            console.error('❌ [addToFirestoreCart] Token error details:', tokenError.message, tokenError.stack);
             throw new Error('Failed to get authentication token. Please try logging in again.');
         }
         
-        // Call backend API to add item to cart
-        console.log('🔄 Calling backend API:', `${BACKEND_URL}/cart/add`);
-        console.log('🔄 Request payload:', { product_id: productId, quantity: 1 });
+        // Prepare request
+        const requestUrl = `${BACKEND_URL}/cart/add`;
+        const requestPayload = {
+            product_id: productId,
+            quantity: 1
+        };
+        const requestHeaders = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${firebaseToken}`
+        };
         
+        console.log('🔄 [addToFirestoreCart] About to call fetch...');
+        console.log('🔄 [addToFirestoreCart] URL:', requestUrl);
+        console.log('🔄 [addToFirestoreCart] Method: POST');
+        console.log('🔄 [addToFirestoreCart] Headers:', {
+            'Content-Type': requestHeaders['Content-Type'],
+            'Authorization': `Bearer ${firebaseToken.substring(0, 20)}...` // Log only preview
+        });
+        console.log('🔄 [addToFirestoreCart] Payload:', requestPayload);
+        
+        // Call backend API to add item to cart
         let response;
         try {
-            response = await fetch(`${BACKEND_URL}/cart/add`, {
+            console.log('🚀 [addToFirestoreCart] EXECUTING FETCH NOW...');
+            response = await fetch(requestUrl, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${firebaseToken}`
-                },
-                body: JSON.stringify({
-                    product_id: productId,
-                    quantity: 1
-                })
+                headers: requestHeaders,
+                body: JSON.stringify(requestPayload)
             });
-            console.log('📡 Backend response received, status:', response.status);
+            console.log('📡 [addToFirestoreCart] Fetch completed!');
+            console.log('📡 [addToFirestoreCart] Response status:', response.status);
+            console.log('📡 [addToFirestoreCart] Response ok:', response.ok);
+            console.log('📡 [addToFirestoreCart] Response headers:', Object.fromEntries(response.headers.entries()));
         } catch (fetchError) {
-            console.error('❌ Network error calling backend:', fetchError);
-            throw new Error(`Network error: ${fetchError.message}. Please check your connection.`);
+            console.error('❌ [addToFirestoreCart] FETCH ERROR CAUGHT!');
+            console.error('❌ [addToFirestoreCart] Error type:', fetchError.constructor.name);
+            console.error('❌ [addToFirestoreCart] Error message:', fetchError.message);
+            console.error('❌ [addToFirestoreCart] Error stack:', fetchError.stack);
+            console.error('❌ [addToFirestoreCart] Full error object:', fetchError);
+            throw new Error(`Network error: ${fetchError.message}. Please check your connection and CORS settings.`);
         }
         
+        // Handle response
         if (!response.ok) {
-            const errorText = await response.text();
-            console.error('❌ Backend error response (status', response.status, '):', errorText);
-            let errorMessage = 'Error adding product to cart. Please try again.';
+            console.error('❌ [addToFirestoreCart] Response not OK, status:', response.status);
             
+            // Handle 401/403 explicitly
+            if (response.status === 401) {
+                console.error('❌ [addToFirestoreCart] 401 Unauthorized - Token may be invalid or expired');
+                throw new Error('Authentication failed. Please log in again.');
+            }
+            if (response.status === 403) {
+                console.error('❌ [addToFirestoreCart] 403 Forbidden - Access denied');
+                throw new Error('Access denied. Please check your permissions.');
+            }
+            
+            let errorText;
+            try {
+                errorText = await response.text();
+                console.error('❌ [addToFirestoreCart] Error response text:', errorText);
+            } catch (textError) {
+                console.error('❌ [addToFirestoreCart] Could not read error response:', textError);
+                errorText = `HTTP ${response.status}`;
+            }
+            
+            let errorMessage = 'Error adding product to cart. Please try again.';
             try {
                 const errorData = JSON.parse(errorText);
-                errorMessage = errorData.detail || errorMessage;
+                errorMessage = errorData.detail || errorData.message || errorMessage;
             } catch (e) {
-                // If response is not JSON, use the text or default message
                 if (errorText) {
                     errorMessage = errorText;
                 }
@@ -1004,21 +1053,34 @@ export async function addToFirestoreCart(product) {
             throw new Error(errorMessage);
         }
         
-        const responseData = await response.json();
-        console.log('✅ Product added to cart via backend API:', responseData);
+        // Success
+        let responseData;
+        try {
+            responseData = await response.json();
+            console.log('✅ [addToFirestoreCart] Success! Response data:', responseData);
+        } catch (jsonError) {
+            console.error('❌ [addToFirestoreCart] Error parsing JSON response:', jsonError);
+            throw new Error('Invalid response from server');
+        }
         
         // Update cart badge by calling backend /cart endpoint
         try {
+            console.log('🔄 [addToFirestoreCart] Updating cart badge...');
             await updateCartBadgeFromBackend();
+            console.log('✅ [addToFirestoreCart] Cart badge updated');
         } catch (badgeError) {
-            console.warn('⚠️ Error updating cart badge:', badgeError);
+            console.warn('⚠️ [addToFirestoreCart] Error updating cart badge (non-fatal):', badgeError);
             // Don't fail the whole operation if badge update fails
         }
         
+        console.log('✅ [addToFirestoreCart] Function completed successfully');
         return responseData;
     } catch (error) {
-        console.error('❌ Error adding to cart via backend API:', error);
-        console.error('❌ Error stack:', error.stack);
+        console.error('❌ [addToFirestoreCart] ERROR IN CATCH BLOCK');
+        console.error('❌ [addToFirestoreCart] Error type:', error.constructor.name);
+        console.error('❌ [addToFirestoreCart] Error message:', error.message);
+        console.error('❌ [addToFirestoreCart] Error stack:', error.stack);
+        console.error('❌ [addToFirestoreCart] Full error:', error);
         throw error;
     }
 }
